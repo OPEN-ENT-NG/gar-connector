@@ -74,10 +74,10 @@ export const parameterController = ng.controller("ParameterController", [
             window.open(`/admin/${structureId}/groups/manual/${id}/details`);
         };
 
-        $scope.addUser = async (groupId, structureId) => {
+        $scope.addUser = async (groupId, structureId, source) => {
             $scope.addButton = true;
             $scope.$apply();
-            await ParameterService.addUsersToGarGroup(groupId, structureId);
+            await ParameterService.addUsersToGarGroup(groupId, structureId, source);
             $scope.addButton = false;
             $scope.$apply();
         };

@@ -1,6 +1,7 @@
 package fr.openent.gar.service.impl;
 
 import fr.openent.gar.service.TarService;
+import fr.openent.gar.utils.FileUtils;
 import fr.wseduc.webutils.Either;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
@@ -57,7 +58,7 @@ public class DefaultTarService implements TarService {
             if (children != null) {
                 File first = children[0];
                 String archiveName = extractArchiveName(first.getName());
-                out = getTarArchiveOutputStream(dirDest + archiveName + ".tar.gz");
+                out = getTarArchiveOutputStream(FileUtils.appendPath(dirDest, archiveName + ".tar.gz"));
                 result.put("archive", archiveName + ".tar.gz");
                 result.put("md5File", archiveName + ".md5");
                 for (File child : children) {
@@ -86,9 +87,9 @@ public class DefaultTarService implements TarService {
                 log.info("Compress ok");
                 out.close();
                 result.put("status", true);
-                String tarToMd5 = (dirDest + result.getString("archive"));
+                String tarToMd5 = FileUtils.appendPath(dirDest, result.getString("archive"));
                 String md5 = DefaultTarService.getMD5Checksum(tarToMd5);
-                OutputStream outputStream = new FileOutputStream(dirDest + result.getString("md5File"));
+                OutputStream outputStream = new FileOutputStream(FileUtils.appendPath(dirDest, result.getString("md5File")));
                 InputStream stream = new ByteArrayInputStream(md5.getBytes(StandardCharsets.UTF_8));
                 IOUtils.copy(stream, outputStream);
                 outputStream.close();

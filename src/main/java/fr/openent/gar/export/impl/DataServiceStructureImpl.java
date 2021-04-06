@@ -4,6 +4,7 @@ import fr.openent.gar.export.DataService;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
 import fr.wseduc.webutils.Either;
+import fr.wseduc.webutils.Utils;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -15,14 +16,19 @@ import static fr.openent.gar.constants.GarConstants.*;
 
 public class DataServiceStructureImpl extends DataServiceBaseImpl implements DataService {
 
+    private final String entId;
+    private final Boolean hasAcademyPrefix;
+    private final String source;
     private final PaginatorHelperImpl paginator;
     private final JsonObject config;
 
-    DataServiceStructureImpl(JsonObject config, String strDate) {
-        super(config);
+    DataServiceStructureImpl(String entId, String source, JsonObject config, String strDate) {
+        this.entId = entId;
+        this.source = source;
         this.config = config;
-        xmlExportHelper = new XmlExportHelperImpl(config, STRUCTURE_ROOT, STRUCTURE_FILE_PARAM, strDate);
+        xmlExportHelper = new XmlExportHelperImpl(entId, source, config, STRUCTURE_ROOT, STRUCTURE_FILE_PARAM, strDate);
         paginator = new PaginatorHelperImpl();
+        hasAcademyPrefix = this.config.containsKey("academy-prefix") && !"".equals(this.config.getString("academy-prefix").trim());
     }
 
     /**
@@ -33,26 +39,24 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      */
     @Override
     public void exportData(final Handler<Either<String, JsonObject>> handler) {
-
-        getAndProcessStructuresInfo(structInfoResults -> {
+        getAndProcessStructuresInfo(0, structInfoResults -> {
             if (validResponse(structInfoResults, handler)) {
-
-                getAndProcessStructuresMefs(structMefsResults -> {
-                    if (validResponse(structMefsResults, handler)) {
-
-                        getAndProcessStructuresFos(structFosResults -> {
-                            if (validResponse(structFosResults, handler)) {
-
-                                xmlExportHelper.closeFile();
-                                handler.handle(new Either.Right<>(
-                                        new JsonObject().put(
-                                                FILE_LIST_KEY,
-                                                xmlExportHelper.getFileList()
-                                        )));
-
+                getAndProcessStructuresTeachersMefs(0, structMefsTeachersResults -> {
+                    if (validResponse(structMefsTeachersResults, handler)) {
+                        getAndProcessStructuresStudentsMefs(0, structMefsStudentsResults -> {
+                            if (validResponse(structMefsStudentsResults, handler)) {
+                                getAndProcessStructuresFos(structFosResults -> {
+                                    if (validResponse(structFosResults, handler)) {
+                                        xmlExportHelper.closeFile();
+                                        handler.handle(new Either.Right<>(
+                                                new JsonObject().put(
+                                                        FILE_LIST_KEY,
+                                                        xmlExportHelper.getFileList()
+                                                )));
+                                    }
+                                });
                             }
                         });
-
                     }
                 });
             }
@@ -64,12 +68,16 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      *
      * @param handler result handler
      */
-    private void getAndProcessStructuresInfo(final Handler<Either<String, JsonObject>> handler) {
-
-        getStucturesInfoFromNeo4j(structResults -> {
+    private void getAndProcessStructuresInfo(int skip, final Handler<Either<String, JsonObject>> handler) {
+        getStucturesInfoFromNeo4j(skip, this.source, entId, paginator, structResults -> {
             if (validResponseNeo4j(structResults, handler)) {
                 Either<String, JsonObject> result = processStructuresInfo(structResults.right().getValue());
-                handler.handle(result);
+
+                if (structResults.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessStructuresInfo(skip + PaginatorHelperImpl.LIMIT, handler);
+                } else {
+                    handler.handle(result);
+                }
             } else {
                 log.error("[DataServiceStructureImpl@getAndProcessStructuresInfo] Failed to process");
             }
@@ -77,18 +85,43 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
     }
 
     /**
-     * Process structure mefs, validate data and save to xml
+     * Process structure Teachers mefs, validate data and save to xml
      *
      * @param handler result handler
      */
-    private void getAndProcessStructuresMefs(final Handler<Either<String, JsonObject>> handler) {
-
-        getStucturesMefsFromNeo4j(structResults -> {
+    private void getAndProcessStructuresTeachersMefs(int skip, final Handler<Either<String, JsonObject>> handler) {
+        getStucturesTeachersMefsFromNeo4j(skip, structResults -> {
             if (validResponseNeo4j(structResults, handler)) {
                 Either<String, JsonObject> result = processStucturesMefs(structResults.right().getValue());
-                handler.handle(result);
+
+                if (structResults.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessStructuresTeachersMefs(skip + PaginatorHelperImpl.LIMIT, handler);
+                } else {
+                    handler.handle(result);
+                }
             } else {
-                log.error("[DataServiceStructureImpl@getAndProcessStructuresMefs] Failed to process");
+                log.error("[DataServiceStructureImpl@getAndProcessStructuresTeachersMefs] Failed to process");
+            }
+        });
+    }
+
+    /**
+     * Process structure Students mefs, validate data and save to xml
+     *
+     * @param handler result handler
+     */
+    private void getAndProcessStructuresStudentsMefs(int skip, final Handler<Either<String, JsonObject>> handler) {
+        getStucturesStudentsMefsFromNeo4j(skip, structResults -> {
+            if (validResponseNeo4j(structResults, handler)) {
+                Either<String, JsonObject> result = processStucturesMefs(structResults.right().getValue());
+
+                if (structResults.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessStructuresStudentsMefs(skip + PaginatorHelperImpl.LIMIT, handler);
+                } else {
+                    handler.handle(result);
+                }
+            } else {
+                log.error("[DataServiceStructureImpl@getAndProcessStructuresStudentsMefs] Failed to process");
             }
         });
     }
@@ -99,102 +132,155 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      * @param handler result handler
      */
     private void getAndProcessStructuresFos(final Handler<Either<String, JsonObject>> handler) {
+        final Map<String, String> fieldOfStudyLabels = new HashMap<>();
+        final Map<String, Map<String, String>> subjectLabelsByCodeUai = new HashMap<>();
 
-        getStucturesFosFromNeo4j(structResults -> {
-            if (validResponseNeo4j(structResults, handler)) {
-                getFosLabelFromNeo4j(structResults.right().getValue(), structResultsWithLabel -> {
-                    Either<String, JsonObject> result = processStucturesFos(structResultsWithLabel.right().getValue());
-                    handler.handle(result);
+        getFieldOfStudyLabelsFromNeo4j(fieldOfStudyLabels, fieldOfStudyResult -> {
+            if (fieldOfStudyResult.isRight()) {
+                getSubjectLabelsFromNeo4j(subjectLabelsByCodeUai, subjectLabelsResult -> {
+                    if (subjectLabelsResult.isRight()) {
+                        getAndProcessStructuresFosFromNeo4j(0, fieldOfStudyLabels, subjectLabelsByCodeUai, processStructureFos -> {
+                            if (processStructureFos.isRight()) {
+                                getAndProcessStudentFosFromNeo4j(0, fieldOfStudyLabels, subjectLabelsByCodeUai, handler);
+                            } else {
+                                handler.handle(new Either.Left<>(processStructureFos.left().getValue()));
+                            }
+                        });
+                    } else {
+                        handler.handle(new Either.Left<>(subjectLabelsResult.left().getValue()));
+                    }
                 });
-
             } else {
-                log.error("[DataServiceStructureImple@getAndProcessStructureFos] Failed to process");
+                handler.handle(new Either.Left<>(fieldOfStudyResult.left().getValue()));
             }
         });
     }
 
-    private void getFosLabelFromNeo4j(JsonArray fosList, Handler<Either<String, JsonArray>> handler) {
-        String query2 = "MATCH (fos:FieldOfStudy) " +
-                "RETURN fos.externalId as id, fos.name as name ORDER BY fos.externalId";
-        neo4j.execute(query2, new JsonObject(), res2 -> {
+    private void getAndProcessStructuresFosFromNeo4j(int skip, final Map<String, String> fieldOfStudyLabels,
+                                                     final Map<String, Map<String, String>> subjectLabelsByCodeUai,
+                                                     final Handler<Either<String, JsonObject>> handler) {
+        getStucturesFosFromNeo4j(skip, fosResults -> {
+            if (validResponseNeo4j(fosResults, handler)) {
+                final JsonArray jrFosRes = fosResults.right().getValue();
+                applyFosLabel(fieldOfStudyLabels, subjectLabelsByCodeUai, jrFosRes);
 
-            if (res2.body() != null && res2.body().containsKey("result")) {
-                JsonArray fieldOfStudyResult = res2.body().getJsonArray("result");
-                Map<String, String> fieldOfStudyLabels = new HashMap<>();
-                try {
-                    fieldOfStudyResult.forEach((entry2) -> {
+                Either<String, JsonObject> result = processStucturesFos(jrFosRes);
 
-                        if (entry2 instanceof JsonObject) {
-                            JsonObject field = (JsonObject) entry2;
-                            String id = field.getString("id", "");
-                            String name = field.getString("name", "");
-
-                            if (!id.isEmpty() && !name.isEmpty()) {
-                                if (this.config.containsKey("academy-prefix") &&
-                                        id.matches("(" + this.config.getString("academy-prefix") + ")-[A-Z0-9-]+")) {
-                                    id = id.split("-", 2)[1];
-                                }
-                                fieldOfStudyLabels.put(id, name);
-                            }
-                        }
-                    });
-
-                } catch (Exception e) {
-                    log.error("Error when getFosLabelFromNeo4j - first part : ", e);
-                    throw e;
+                if (jrFosRes.size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessStructuresFosFromNeo4j(skip + PaginatorHelperImpl.LIMIT, fieldOfStudyLabels,
+                            subjectLabelsByCodeUai, handler);
+                } else {
+                    handler.handle(result);
                 }
+            } else {
+                log.error("[DataServiceStructureImpl@getAndProcessStructuresFosFromNeo4j] Failed to process");
+            }
+        });
+    }
 
-                String query = "MATCH (s:Structure)<-[:SUBJECT]-(sub:Subject) " +
-                        "RETURN s.UAI as UAI, sub.code as code, sub.label as label";
-                neo4j.execute(query, new JsonObject(), res -> {
-                    if (res.body() != null && res.body().containsKey("result")) {
-                        try {
-                            JsonArray queryResult = res.body().getJsonArray("result");
+    private void getAndProcessStudentFosFromNeo4j(int skip, final Map<String, String> fieldOfStudyLabels,
+                                                     final Map<String, Map<String, String>> subjectLabelsByCodeUai,
+                                                     final Handler<Either<String, JsonObject>> handler) {
+        getStudentFosFromNeo4j(skip, fosResults -> {
+            if (validResponseNeo4j(fosResults, handler)) {
+                final JsonArray jrFosRes = fosResults.right().getValue();
+                applyFosLabel(fieldOfStudyLabels, subjectLabelsByCodeUai, jrFosRes);
 
-                            Map<String, Map<String, String>> labelsByCodeUai = new HashMap<>();
-                            queryResult.forEach((entry) -> {
-                                if (entry instanceof JsonObject) {
-                                    JsonObject field = (JsonObject) entry;
-                                    String uai = field.getString("UAI", "");
-                                    String code = field.getString("code", "");
-                                    String label = field.getString("label", "");
-                                    if (!uai.isEmpty() && !code.isEmpty() && !label.isEmpty()) {
-                                        if (!labelsByCodeUai.containsKey(uai)) {
-                                            labelsByCodeUai.put(uai, new HashMap<>());
-                                        }
-                                        if (this.config.containsKey("academy-prefix") &&
-                                                code.matches("(" + this.config.getString("academy-prefix") + ")-[A-Z0-9-]+")) {
-                                            code = code.split("-", 2)[1];
-                                        }
-                                        labelsByCodeUai.get(uai).put(code, label);
-                                    }
-                                }
-                            });
+                Either<String, JsonObject> result = processStucturesFos(jrFosRes);
 
-                            for (int i = 0; i < fosList.size(); i++) {
-                                JsonObject entry = fosList.getJsonObject(i);
-                                if (entry.containsKey(STRUCTURE_UAI) && entry.containsKey(STUDYFIELD_CODE)) {
-                                    String UIA = entry.getString(STRUCTURE_UAI);
-                                    String fosCode = entry.getString(STUDYFIELD_CODE);
-                                    if (labelsByCodeUai.containsKey(UIA) && labelsByCodeUai.get(UIA).containsKey(fosCode)) {
-                                        entry.put(STUDYFIELD_DESC, labelsByCodeUai.get(UIA).get(fosCode));
-                                    } else {
-                                        if (fieldOfStudyLabels.containsKey(fosCode)) {
-                                            entry.put(STUDYFIELD_DESC, fieldOfStudyLabels.get(fosCode));
-                                        } else {
-                                            entry.put(STUDYFIELD_DESC, "MATIERE " + fosCode);
-                                        }
-                                    }
-                                }
-                            }
-                        } catch (Exception e) {
-                            log.error("Error when getFosLabelFromNeo4j - Second part : ", e);
-                            throw e;
+                if (jrFosRes.size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessStudentFosFromNeo4j(skip + PaginatorHelperImpl.LIMIT, fieldOfStudyLabels,
+                            subjectLabelsByCodeUai, handler);
+                } else {
+                    handler.handle(result);
+                }
+            } else {
+                log.error("[DataServiceStructureImpl@getAndProcessStudentFosFromNeo4j] Failed to process");
+            }
+        });
+    }
+
+    private void applyFosLabel(final Map<String, String> fieldOfStudyLabels, final Map<String, Map<String, String>> subjectLabelsByCodeUai,
+                               final JsonArray fosResults) {
+        fosResults.forEach(fosResult -> {
+            if (fosResult instanceof JsonObject) {
+                JsonObject entry = (JsonObject) fosResult;
+                if (entry.containsKey(STRUCTURE_UAI) && entry.containsKey(STUDYFIELD_CODE)) {
+                    String uai = entry.getString(STRUCTURE_UAI);
+                    String fosCode = entry.getString(STUDYFIELD_CODE);
+                    if (subjectLabelsByCodeUai.containsKey(uai) && subjectLabelsByCodeUai.get(uai).containsKey(fosCode)) {
+                        entry.put(STUDYFIELD_DESC, subjectLabelsByCodeUai.get(uai).get(fosCode));
+                    } else {
+                        if (fieldOfStudyLabels.containsKey(fosCode)) {
+                            entry.put(STUDYFIELD_DESC, fieldOfStudyLabels.get(fosCode));
+                        } else {
+                            entry.put(STUDYFIELD_DESC, "MATIERE " + fosCode);
                         }
                     }
-                    handler.handle(new Either.Right<>(fosList));
+                }
+            }
+        });
+    }
+
+    private void getFieldOfStudyLabelsFromNeo4j(final Map<String, String> fieldOfStudyLabels, Handler<Either<String, Boolean>> handler) {
+        String query = "MATCH (fos:FieldOfStudy) " +
+                "RETURN fos.externalId as id, fos.name as name ORDER BY fos.externalId ";
+
+        neo4j.execute(query, new JsonObject(), res -> {
+            if (res.body() != null && res.body().containsKey("result")) {
+                JsonArray fieldOfStudyResult = Utils.getOrElse(res.body().getJsonArray("result"), new JsonArray());
+                fieldOfStudyResult.forEach((entry) -> {
+                    if (entry instanceof JsonObject) {
+                        JsonObject field = (JsonObject) entry;
+                        String id = field.getString("id", "");
+                        String name = field.getString("name", "");
+
+                        if (!id.isEmpty() && !name.isEmpty()) {
+                            if (hasAcademyPrefix) {
+                                id = id.replaceFirst("(" + this.config.getString("academy-prefix") + ")-", "");
+                            }
+                            fieldOfStudyLabels.put(id, name);
+                        }
+                    }
+                });
+                handler.handle(new Either.Right<>(true));
+            } else {
+                log.error("[DataServiceStructureImpl@getFosLabelsFromNeo4j] Failed to process FieldOfStudy label query");
+                handler.handle(new Either.Left<>("error"));
+            }
+        });
+    }
+
+    private void getSubjectLabelsFromNeo4j(final Map<String, Map<String, String>> subjectLabelsByCodeUai, Handler<Either<String, Boolean>> handler) {
+        String query = "MATCH (s:Structure {source:'" + this.source + "'})<-[:SUBJECT]-(sub:Subject) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                "RETURN s.UAI as UAI, sub.code as code, sub.label as label";
+        neo4j.execute(query, new JsonObject().put("entId", entId), res -> {
+            if (res.body() != null && res.body().containsKey("result")) {
+                JsonArray queryResult = Utils.getOrElse(res.body().getJsonArray("result"), new JsonArray());
+
+                queryResult.forEach((entry) -> {
+                    if (entry instanceof JsonObject) {
+                        JsonObject field = (JsonObject) entry;
+                        String uai = field.getString("UAI", "");
+                        String code = field.getString("code", "");
+                        String label = field.getString("label", "");
+                        if (!uai.isEmpty() && !code.isEmpty() && !label.isEmpty()) {
+                            if (!subjectLabelsByCodeUai.containsKey(uai)) {
+                                subjectLabelsByCodeUai.put(uai, new HashMap<>());
+                            }
+                            if (hasAcademyPrefix) {
+                                code = code.replaceFirst("(" + this.config.getString("academy-prefix") + ")-", "");
+                            }
+                            subjectLabelsByCodeUai.get(uai).put(code, label);
+                        }
+                    }
                 });
 
+                handler.handle(new Either.Right<>(true));
+            } else {
+                log.error("[DataServiceStructureImpl@getSubjectLabelsFromNeo4j] Failed to process subject label query");
+                handler.handle(new Either.Left<>("error"));
             }
         });
     }
@@ -204,9 +290,10 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      *
      * @param handler results
      */
-    private void getStucturesInfoFromNeo4j(Handler<Either<String, JsonArray>> handler) {
-        String query = "MATCH (s:Structure) " +
-                "WHERE HAS(s.exports) AND 'GAR' IN s.exports ";
+    static void getStucturesInfoFromNeo4j(int skip, String source, String entId, PaginatorHelperImpl paginator,
+                                          Handler<Either<String, JsonArray>> handler) {
+        String query = "MATCH (s:Structure {source:'" + source + "'}) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports ";
 // Don't export optional attachment structure attribute
 //                "OPTIONAL MATCH (g2:ManualGroup{name:\\\"\" + CONTROL_GROUP + \"\\\"})-[:DEPENDS]->(s2:Structure)<-[:HAS_ATTACHMENT]-(s:Structure) ";
         String dataReturn = "RETURN distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
@@ -221,8 +308,8 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
         query = query + dataReturn;
         query += " ASC SKIP {skip} LIMIT {limit} ";
 
-        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT);
-        paginator.neoStreamList(query, params, new JsonArray(), 0, handler);
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
+        paginator.neoStream(query, params, skip, handler);
     }
 
     /**
@@ -257,55 +344,59 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      *
      * @param structure object with structure info
      */
-    private void updateMap(JsonObject structure) {
+    static void updateMap(JsonObject structure) {
         String structId = structure.getString("structid");
         String structUAI = structure.getString(STRUCTURE_UAI);
         mapStructures.put(structId, structUAI);
         structure.remove("structid");
     }
 
-
     /**
-     * Get structures mefs from Neo4j
+     * Get structures students mefs from Neo4j
      * For each structure :
      * Each student has one mef attached
      * Each teacher can have many mefs attached
      *
      * @param handler results
      */
-    private void getStucturesMefsFromNeo4j(Handler<Either<String, JsonArray>> handler) {
-        String queryStudentsMefs = "MATCH (n:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s:Structure) " +
-                "WHERE exists(n.module) AND  NOT(has(n.deleteDate)) AND NOT(HAS(n.disappearanceDate))" +
-                " AND HAS(s.exports) AND 'GAR' IN s.exports " +
+    private void getStucturesStudentsMefsFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
+        String queryStudentsMefs = "MATCH (n:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                " AND exists(n.module) AND  NOT(has(n.deleteDate)) " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
                 "n.module as `" + MEF_CODE + "`, " +
                 "n.moduleName as `" + MEF_DESCRIPTION + "` " +
-                "order by `" + STRUCTURE_UAI + "` , `" + MEF_CODE + "` ";
+                "order by `" + STRUCTURE_UAI + "` , `" + MEF_CODE + "` ASC SKIP {skip} LIMIT {limit} ";
 
-        String queryTeachersMefs = "MATCH (n:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup)-[:DEPENDS]->(s:Structure)" +
-                "where exists(n.modules) and not has(n.deleteDate) " +
-                "AND NOT(HAS(n.disappearanceDate)) AND HAS(s.exports) AND 'GAR' IN s.exports " +
-                "with s,n " +
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
+
+        paginator.neoStream(queryStudentsMefs, params, skip, handler);
+    }
+
+    /**
+     * Get structures Teachers mefs from Neo4j
+     * For each structure :
+     * Each student has one mef attached
+     * Each teacher can have many mefs attached
+     *
+     * @param handler results
+     */
+    private void getStucturesTeachersMefsFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
+        String queryTeachersMefs = "MATCH (n:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup {filter:'Teacher'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
+                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                "AND exists(n.modules) and not has(n.deleteDate) " +
+                "with distinct s,n " +
                 "unwind n.modules as rows " +
                 "with s, split(rows,\"$\") as modules " +
+                "where modules[0] = s.externalId " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
                 "modules[1] as `" + MEF_CODE + "`, " +
                 "modules[2] as `" + MEF_DESCRIPTION + "` " +
-                "order by `" + STRUCTURE_UAI + "` , `" + MEF_CODE + "` ";
+                "order by `" + STRUCTURE_UAI + "` , `" + MEF_CODE + "` ASC SKIP {skip} LIMIT {limit} ";
 
-        queryStudentsMefs += " ASC SKIP {skip} LIMIT {limit} ";
-        queryTeachersMefs += " ASC SKIP {skip} LIMIT {limit} ";
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
 
-        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT);
-
-        String finalQueryTeachersMefs = queryTeachersMefs;
-        paginator.neoStreamList(queryStudentsMefs, params, new JsonArray(), 0, result -> {
-            if (result.isRight()) {
-                paginator.neoStreamList(finalQueryTeachersMefs, params, result.right().getValue(), 0, handler);
-            } else {
-                log.error("[DataServiceStructureImpl@getStucturesMefsFromNeo4j] Failed to process queryStudentsMefs");
-            }
-        });
+        paginator.neoStream(queryTeachersMefs, params, skip, handler);
     }
 
     /**
@@ -326,52 +417,52 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
     /**
      * Get structures fields of study from Neo4j
      * - Structure FOS codes may be prefixed by ACADEMY-
-     * - Students FOS codes and description are lists in two different fields and must be mapped
      *
      * @param handler results
      */
-    private void getStucturesFosFromNeo4j(Handler<Either<String, JsonArray>> handler) {
+    private void getStucturesFosFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
         String condition;
-        boolean containsAcademyPrefix = this.config.containsKey("academy-prefix") && !"".equals(this.config.getString("academy-prefix").trim());
-        if (containsAcademyPrefix) {
-            condition = "CASE WHEN sub.code =~ '(" + this.config.getString("academy-prefix") + ")-[A-Z0-9-]+' THEN substring(sub.code, size(head(split(sub.code,\"-\"))) + 1) ELSE sub.code END as codelist";
+        if (hasAcademyPrefix) {
+            condition = "CASE WHEN sub.code =~ '(" + this.config.getString("academy-prefix") + ")-[A-Z0-9-]+' " +
+                    "THEN reduce(v=sub.code, prefix in split('" +
+                    this.config.getString("academy-prefix") +"', '|') | replace(v, prefix + '-', '')) " +
+                    "ELSE sub.code END as codelist";
         } else {
             condition = "split(sub.code,\"-\") as codelist";
         }
 
-        String queryStructureFos = "MATCH (sub:Subject)-[:SUBJECT]->(s:Structure)" +
-                "WHERE HAS(s.exports) AND sub.code =~ '^(.*-)?([0-9]{2})([A-Z0-9]{4})$' AND 'GAR' IN s.exports " +
+        String queryStructureFos = "MATCH (sub:Subject)-[:SUBJECT]->(s:Structure {source:'" + this.source + "'}) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND sub.code =~ '^(.*-)?([0-9]{2})([A-Z0-9]{4})$' " +
                 "with s, sub.label as label, " + condition +
                 " return distinct s.UAI as `" + STRUCTURE_UAI + "`, toUpper(" +
-                (containsAcademyPrefix ? "codelist" : "codelist[size(codelist)-1]") + ") as `" + STUDYFIELD_CODE + "`, " +
-                "label as `" + STUDYFIELD_DESC + "` " +
-                "order by `" + STRUCTURE_UAI + "` , `" + STUDYFIELD_CODE + "` ";
+                (hasAcademyPrefix ? "codelist" : "codelist[size(codelist)-1]") + ") as `" + STUDYFIELD_CODE + "` " +
+                "order by `" + STRUCTURE_UAI + "` , `" + STUDYFIELD_CODE + "` ASC SKIP {skip} LIMIT {limit} ";
 
-        String queryStudentFos = "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s:Structure)" +
-                "where exists (u.fieldOfStudy) AND NOT(HAS(u.deleteDate)) AND HAS(s.exports) " +
-                "AND 'GAR' IN s.exports " +
-                "with s, u.fieldOfStudy as fos, u.fieldOfStudyLabels as fosl " +
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
+        paginator.neoStream(queryStructureFos, params, skip, handler);
+    }
+
+    /**
+     * Get structures fields of study from Neo4j
+     * - Students FOS codes and description are lists in two different fields and must be mapped
+     *
+     * @param handler results
+     */
+    private void getStudentFosFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
+
+        String queryStudentFos = "MATCH (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
+                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                "AND exists (u.fieldOfStudy) AND NOT(HAS(u.deleteDate)) " +
+                "with distinct s, u.fieldOfStudy as fos " +
                 "with s, " +
-                "reduce(x=[], idx in range(0,size(fos)-1) | x + {code:fos[idx],label:fosl[idx]}) as rows " +
+                "reduce(x=[], idx in range(0,size(fos)-1) | x + {code:fos[idx]}) as rows " +
                 "unwind rows as row " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
-                "toUpper(row.code) as `" + STUDYFIELD_CODE + "`, " +
-                "row.label as  `" + STUDYFIELD_DESC + "` " +
-                "order by `" + STRUCTURE_UAI + "` , `" + STUDYFIELD_CODE + "` ";
+                "toUpper(row.code) as `" + STUDYFIELD_CODE + "` " +
+                "order by `" + STRUCTURE_UAI + "` , `" + STUDYFIELD_CODE + "` ASC SKIP {skip} LIMIT {limit} ";
 
-        queryStructureFos += " ASC SKIP {skip} LIMIT {limit} ";
-        queryStudentFos += " ASC SKIP {skip} LIMIT {limit} ";
-
-        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT);
-
-        String finalQueryStudentFos = queryStudentFos;
-        paginator.neoStreamList(queryStructureFos, params, new JsonArray(), 0, result -> {
-            if (result.isRight()) {
-                paginator.neoStreamList(finalQueryStudentFos, params, result.right().getValue(), 0, handler);
-            } else {
-                log.error("[DataServiceStructureImpl@getStucturesFosFromNeo4j] Failed to process queryStructureFos");
-            }
-        });
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
+        paginator.neoStream(queryStudentFos, params, skip, handler);
     }
 
     /**

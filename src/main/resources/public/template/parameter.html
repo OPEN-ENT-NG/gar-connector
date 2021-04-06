@@ -79,6 +79,12 @@
                     <span ng-if="item.deployed">
                         <i class="validated-icon-large"></i>
                     </span>
+                    <span ng-if="item.source == 'AAF1D' && item.deployed">
+                        1D
+                    </span>
+                    <span ng-if="item.source == 'AAF' && item.deployed">
+                        2D
+                    </span>
                 </th>
                 <th>
                     <dots-menu style="text-align: left">
@@ -87,7 +93,7 @@
                             <span ng-if="item.deployed"><i18n>mediacentre.parameter.undeploy</i18n></span>
                         </opt>
                         <opt data-ng-if="item.deployed"
-                             ng-click="addUser(item.id, item.structureId)">
+                             ng-click="addUser(item.id, item.structureId, item.source)">
                             <i18n>mediacentre.parameter.add.user</i18n>
                         </opt>
                         <opt data-ng-if="item.deployed" ng-click="showRespAffecGarGroup(item)">

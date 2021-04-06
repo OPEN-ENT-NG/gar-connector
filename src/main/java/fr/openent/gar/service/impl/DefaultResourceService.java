@@ -27,34 +27,54 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 public class DefaultResourceService implements ResourceService {
 
     private final Vertx vertx;
     private final String garHost;
-    private final String idEnt;
-    private final String certPath;
-    private final String keyPath;
+    private final JsonObject idsEnt;
     private final Logger log = LoggerFactory.getLogger(DefaultResourceService.class);
-    private HttpClient httpClient;
+    private final Map<String, HttpClient> httpClientByDomain = new HashMap();
 
-    public DefaultResourceService(Vertx vertx, String garHost, String idEnt, String certPath, String keyPath) {
+    public DefaultResourceService(Vertx vertx, JsonObject garRessource, JsonObject idsEnt) {
         this.vertx = vertx;
-        this.garHost = garHost;
-        this.idEnt = idEnt;
-        this.certPath = certPath;
-        this.keyPath = keyPath;
+        this.garHost = garRessource.getString("host");
+        this.idsEnt = idsEnt;
 
-        try {
-            this.httpClient = generateHttpClient(new URI(garHost));
-        } catch (URISyntaxException e) {
-            log.error("[DefaultResourceService@constructor] An error occurred when creating the URI", e);
+        final JsonObject domains =  garRessource.getJsonObject("domains", new JsonObject());
+
+        for (String domain : domains.fieldNames()) {
+            final JsonObject res = domains.getJsonObject(domain);
+            if (res == null) continue;
+            try {
+                httpClientByDomain.put(domain, generateHttpClient(new URI(garHost), res.getString("cert"), res.getString("key")));
+            } catch (URISyntaxException e) {
+                log.error("[DefaultResourceService@constructor] An error occurred when creating the URI", e);
+            }
         }
     }
 
     @Override
     public void get(String userId, String structure, String hostname, Handler<Either<String, JsonArray>> handler) {
+        if(userId == null){
+            handler.handle(new Either.Left<>("[DefaultResourceService@get] No userid." ));
+            return;
+        }
+        if(structure == null){
+            handler.handle(new Either.Left<>("[DefaultResourceService@get] No structure." ));
+            return;
+        }
+        if(hostname == null){
+           handler.handle(new Either.Left<>("[DefaultResourceService@get] No hostname." ));
+           return;
+       }
+        if(!idsEnt.containsKey(hostname)){
+            handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in config key id-ent, or hostname isn't match real hostname : " + hostname ));
+            return;
+        }
         String uaiQuery = "MATCH (s:Structure {id: {structureId}}) return s.UAI as UAI, s.name as name";
         JsonObject params = new JsonObject().put("structureId", structure);
 
@@ -73,9 +93,15 @@ public class DefaultResourceService implements ResourceService {
                         return;
                     }
                     String resourcesUri = Gar.demo
-                            ? "/gar/public/ts/model/__mocks__/resources.json"
-                            : "/ressources/" + idEnt + "/" + uai + "/" + userId;
-                    final HttpClientRequest client = httpClient.get(garHost + resourcesUri, response -> {
+                            ? garHost + "/gar/public/ts/model/__mocks__/resources.json"
+                            : garHost + "/ressources/" + idsEnt.getString(hostname) + "/" + uai + "/" + userId;
+                    final HttpClient httpClient = httpClientByDomain.get(hostname);
+                    if (httpClient == null) {
+                        log.error("no gar ressources httpClient available for this host : " + hostname);
+                        handler.handle(new Either.Left<>("[DefaultResourceService@get] No gar ressources httpClient available for this host : " + hostname));
+                        return;
+                    }
+                    final HttpClientRequest clientRequest = httpClient.get(resourcesUri, response -> {
                         if (response.statusCode() != 200) {
                             log.error("try to call " + resourcesUri);
                             log.error(response.statusCode() + " " + response.statusMessage());
@@ -112,7 +138,7 @@ public class DefaultResourceService implements ResourceService {
                             .putHeader("Cache-Control", "no-cache")
                             .putHeader("Date", new Date().toString());
 
-                    client.end();
+                    clientRequest.end();
                 } else {
                     handler.handle(new Either.Right<>(new JsonArray()));
                 }
@@ -141,7 +167,7 @@ public class DefaultResourceService implements ResourceService {
         return output.toString();
     }
 
-    private HttpClient generateHttpClient(URI uri) {
+    private HttpClient generateHttpClient(final URI uri, final String certPath, final String keyPath) {
         HttpClientOptions options = new HttpClientOptions()
                 .setDefaultHost(uri.getHost())
                 .setDefaultPort("https".equals(uri.getScheme()) ? 443 : 80)

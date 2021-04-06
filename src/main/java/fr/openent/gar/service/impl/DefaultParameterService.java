@@ -1,5 +1,5 @@
 package fr.openent.gar.service.impl;
-
+import fr.openent.gar.Gar;
 import fr.openent.gar.service.ParameterService;
 import fr.wseduc.webutils.Either;
 import io.vertx.core.AsyncResult;
@@ -26,28 +26,31 @@ public class DefaultParameterService implements ParameterService {
     }
 
     @Override
-    public void undeployStructureGar(String structureId, Handler<Either<String, JsonObject>> handler) {
-        String query = "MATCH (s:Structure {id:{structureId}}) SET s.exports = FILTER(val IN s.exports WHERE val <> 'GAR') RETURN s.exports;";
+    public void undeployStructureGar(String structureId, String entId, Handler<Either<String, JsonObject>> handler) {
+        String query = "MATCH (s:Structure {id:{structureId}}) SET s.exports = FILTER(val IN s.exports WHERE val <> ('GAR-' + {entId})) RETURN s.exports;";
         JsonObject params = new JsonObject()
-                .put("structureId", structureId);
+                .put("structureId", structureId)
+                .put("entId", entId);
         Neo4j.getInstance().execute(query, params, Neo4jResult.validUniqueResultHandler(handler));
     }
 
     @Override
-    public void getStructureGar(Handler<Either<String, JsonArray>> handler) {
-        String query = "MATCH (s:Structure) WHERE HAS(s.UAI) OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} })" +
-                "RETURN DISTINCT s.UAI as uai, s.name as name, s.id as structureId, (HAS(s.exports) AND 'GAR' IN s.exports) as deployed, g.id as id";
+    public void getStructureGar(String entId, Handler<Either<String, JsonArray>> handler) {
+        String query = "MATCH (s:Structure) WHERE HAS(s.UAI) OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} }) " +
+                "WHERE s.source starts with '"+ Gar.AAF +"' " +
+                "RETURN DISTINCT s.UAI as uai, s.name as name, s.id as structureId, s.source as source, (HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports) as deployed, g.id as id";
 
-        JsonObject params = new JsonObject().put("groupName", GAR_GROUP_NAME);
+        JsonObject params = new JsonObject().put("groupName", GAR_GROUP_NAME).put("entId", entId);
         Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(handler));
     }
 
     @Override
     public void createGarGroupToStructure(JsonObject body, Handler<Either<String, JsonObject>> handler) {
         String query = "MATCH (s:Structure {id:{structureId}}) " +
-                "OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} }) SET s.exports = coalesce(s.exports, []) + 'GAR' RETURN g.id as groupId";
+                "OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} }) SET s.exports = coalesce(s.exports, []) + ('GAR-' + {entId}) RETURN g.id as groupId";
         JsonObject creationParams = new JsonObject()
                 .put("structureId", body.getString("structureId"))
+                .put("entId", body.getString("entId"))
                 .put("groupName", GAR_GROUP_NAME);
         Neo4j.getInstance().execute(query, creationParams, Neo4jResult.validUniqueResultHandler(either -> {
             if (either.isLeft()) {
@@ -89,7 +92,7 @@ public class DefaultParameterService implements ParameterService {
                             String roleId = linkResult.right().getValue().getString("id");
                             String queryLink = "MATCH (r:Role), (g:Group) " +
                                     "WHERE r.id = {roleId} and g.id = {groupId} " +
-                                    "CREATE UNIQUE (g)-[r:AUTHORIZED]->(r) ";
+                                    "CREATE UNIQUE (g)-[:AUTHORIZED]->(r) ";
                             JsonObject params = new JsonObject()
                                     .put("groupId", groupId)
                                     .put("roleId", roleId);
@@ -101,19 +104,25 @@ public class DefaultParameterService implements ParameterService {
 
     @Override
     public void addUserToGarGroup(JsonObject body, Handler<Either<String, JsonObject>> handler) {
-        String query = "match (g:ManualGroup{name: {groupName}, id: {groupId} }), " +
-                "(u:User{profiles:['Personnel']})--(Structure{id: {structureId} }) " +
-                "WHERE ANY(function IN u.functions WHERE function CONTAINS {direction} OR function CONTAINS {documentation}) " +
-                "create unique (u)-[r:IN{source:{source}}]->(g) ";
-
-        JsonObject params = new JsonObject()
+        final String query;
+        final JsonObject params = new JsonObject()
                 .put("groupName", GAR_GROUP_NAME)
                 .put("source", GAR_GROUP_SOURCE)
                 .put("groupId", body.getString("groupId"))
-                .put("structureId", body.getString("structureId"))
-                .put("direction", FUNCTION_DIRECTION_NAME)
-                .put("documentation", FUNCTION_DOCUMENTATION_NAME);
-
+                .put("structureId", body.getString("structureId"));
+        if (Gar.AAF.equals(body.getString("source"))) {
+            query = "match (g:ManualGroup{name: {groupName}, id: {groupId} }), " +
+                    "(u:User{profiles:['Personnel']})--(Structure{id: {structureId} }) " +
+                    "WHERE ANY(function IN u.functions WHERE function CONTAINS {direction} OR function CONTAINS {documentation}) " +
+                    "create unique (u)-[r:IN{source:{source}}]->(g) ";
+            params.put("direction", FUNCTION_DIRECTION_NAME);
+            params.put("documentation", FUNCTION_DOCUMENTATION_NAME);
+        } else {
+            query = "MATCH (g:ManualGroup{name: {groupName}, id: {groupId} }), " +
+                    "(s:Structure {id: {structureId}})-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[r:HAS_FUNCTION]-n " +
+                    "WHERE n.externalId='ADMIN_LOCAL' and s.id IN r.scope " +
+                    "create unique (u)-[:IN{source:{source}}]->(g) ";
+        }
         Neo4j.getInstance().execute(query, params, Neo4jResult.validUniqueResultHandler(handler));
     }
 }

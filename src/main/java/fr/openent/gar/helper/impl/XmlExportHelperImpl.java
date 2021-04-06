@@ -1,10 +1,12 @@
 package fr.openent.gar.helper.impl;
 
+import fr.openent.gar.Gar;
+import fr.openent.gar.constants.GarConstants;
 import fr.openent.gar.helper.XmlExportHelper;
+import fr.openent.gar.utils.FileUtils;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
-
 import io.vertx.core.logging.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,6 +35,7 @@ public class XmlExportHelperImpl implements XmlExportHelper {
     private final String exportDir;
     private final String FILE_PREFIX;
     private final JsonArray fileList;
+    private final String source;
 
     /**
      * Initialize helper and first xml
@@ -40,26 +43,52 @@ public class XmlExportHelperImpl implements XmlExportHelper {
      * @param root name of the root xml element
      * @param fileParamName param for the name of xml file
      */
-    public XmlExportHelperImpl(JsonObject config, String root, String fileParamName, String strDate) {
+    public XmlExportHelperImpl(final String entId, final String source, JsonObject config, String root, String fileParamName, String strDate) {
         ROOT = root;
+        this.source = source;
         initNewFile();
         MAX_NODES = config.getInteger("max-nodes", 10000);
-        exportDir = config.getString("export-path", "");
-        String idEnt = config.getString("id-ent", "");
-        FILE_PREFIX = idEnt + "_GAR-ENT_Complet_" + strDate + fileParamName + "_";
+        if (Gar.AAF.equals(source)) {
+            exportDir = FileUtils.appendPath(config.getString("export-path", ""), entId);
+        } else {
+            exportDir = FileUtils.appendPath(config.getString("export-path"), entId + GarConstants.EXPORT_1D_SUFFIX);
+        }
+        FILE_PREFIX = entId + "_GAR-ENT_Complet_" + strDate + getLevelBySource(source) + fileParamName + "_";
         fileList = new fr.wseduc.webutils.collections.JsonArray();
+    }
+
+    /**
+     * get level from source
+     * @param source AFF or AFF1D
+     * @return level
+     */
+    private String getLevelBySource(String source) {
+        String level = "2D_";
+        if (Gar.AAF1D.equals(source)) {
+            level = "1D_";
+        }
+        return level;
     }
 
     /**
      * Add static attributes to xml root node
      */
     private void addAttributesToRootNode() {
-        currentElement.setAttribute("xmlns:men", "http://data.education.fr/ns/gar");
+        if (Gar.AAF1D.equals(this.source)) {
+            currentElement.setAttribute("xmlns:men", "http://data.education.fr/ns/gar/1d");
+        } else {
+            currentElement.setAttribute("xmlns:men", "http://data.education.fr/ns/gar");
+        }
         currentElement.setAttribute("xmlns:xalan", "http://xml.apache.org/xalan");
         currentElement.setAttribute("xmlns:xslFormatting", "urn:xslFormatting");
         currentElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         currentElement.setAttribute("Version", "1.0");
-        currentElement.setAttribute("xsi:schemaLocation", "http://data.education.fr/ns/gar GAR-ENT.xsd");
+
+        if (Gar.AAF1D.equals(this.source)) {
+            currentElement.setAttribute("xsi:schemaLocation", "http://data.education.fr/ns/gar/1d GAR-ENT-1D.xsd");
+        } else {
+            currentElement.setAttribute("xsi:schemaLocation", "http://data.education.fr/ns/gar GAR-ENT.xsd");
+        }
     }
 
     /**
@@ -83,9 +112,10 @@ public class XmlExportHelperImpl implements XmlExportHelper {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             DOMSource source = new DOMSource(currentDoc);
             String filename = getExportFileName(fileIndex);
-            StreamResult result = new StreamResult(new File(exportDir + filename));
+            String pathFile = FileUtils.appendPath(exportDir, filename);
+            StreamResult result = new StreamResult(new File(pathFile));
             transformer.transform(source, result);
-            fileList.add(exportDir + filename);
+            fileList.add(pathFile);
             log.info(filename + " saved");
         } catch (TransformerException tfe) {
             log.error(tfe.getMessage());
@@ -171,7 +201,7 @@ public class XmlExportHelperImpl implements XmlExportHelper {
     /**
      * Init new xml
      */
-    private void initNewFile(){
+    private void initNewFile() {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
         try {

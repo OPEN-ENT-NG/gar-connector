@@ -108,7 +108,7 @@ publishing {
     maven(MavenPublication) {
       groupId "${modowner}"
       artifactId "${modname}"
-      artifact("build/libs/${modname}-$version-deployment.jar") { classifier "deployment" }
+      artifact("build/libs/${modname}-$version-deployment.jar") { classifier "deployment" } 
     }
     maven(MavenPublication) {
       groupId "${modowner}"

@@ -14,20 +14,22 @@ import static fr.openent.gar.constants.GarConstants.*;
 public class DataServiceRespImpl extends DataServiceBaseImpl implements DataService {
 
     private final PaginatorHelperImpl paginator;
+    private final String controlGroup;
+    private final String entId;
+    private final String source;
 
-    DataServiceRespImpl(JsonObject config, String strDate) {
-        super(config);
-        xmlExportHelper = new XmlExportHelperImpl(config, RESP_ROOT, RESP_FILE_PARAM, strDate);
+    DataServiceRespImpl(String entId, String source, JsonObject config, String strDate) {
+        this.entId = entId;
+        this.source =source;
+        xmlExportHelper = new XmlExportHelperImpl(entId, source, config, RESP_ROOT, RESP_FILE_PARAM, strDate);
         paginator = new PaginatorHelperImpl();
+        controlGroup = config.getString("control-group", DEFAULT_CONTROL_GROUP);
     }
 
     @Override
     public void exportData(final Handler<Either<String, JsonObject>> handler) {
-
-        getRespFromNeo4j(respResults -> {
-            if(validResponseNeo4j(respResults,  handler)) {
-
-                processStucturesFos(respResults.right().getValue());
+        getAndProcessRespFromNeo4j(0, respResults -> {
+            if (validResponse(respResults, handler)) {
                 xmlExportHelper.closeFile();
                 handler.handle(new Either.Right<>(
                         new JsonObject().put(
@@ -40,22 +42,35 @@ public class DataServiceRespImpl extends DataServiceBaseImpl implements DataServ
         });
     }
 
+    private void getAndProcessRespFromNeo4j(int skip, final Handler<Either<String, JsonObject>> handler) {
+        getRespFromNeo4j(skip, respResults -> {
+            if (validResponseNeo4j(respResults, handler)) {
+                Either<String, JsonObject> result = processResp(respResults.right().getValue());
+
+                if (respResults.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
+                    getAndProcessRespFromNeo4j(skip + PaginatorHelperImpl.LIMIT, handler);
+                } else {
+                    handler.handle(result);
+                }
+            } else {
+                log.error("[DataServiceGroupImpl@getAndProcessRespFromNeo4j] Failed to process");
+            }
+        });
+    }
 
     /**
      * Get person in charge of affectation from Neo4j
      * Get academic email when available, else get structure email, no personal email
      * @param handler results
      */
-    private void getRespFromNeo4j(Handler<Either<String, JsonArray>> handler) {
-
-        String query = "MATCH (us:User)-[:IN]->(n:ManualGroup{name:\"" + CONTROL_GROUP + "\"})-[:DEPENDS]->(s:Structure) " +
-                " WHERE (us.profiles = ['Teacher'] OR us.profiles = ['Personnel']) " +
+    private void getRespFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
+        String query = "MATCH (s:Structure {source:'" + this.source + "'})<-[:DEPENDS]-(n:ManualGroup{name:\"" + controlGroup + "\"})<-[:IN]-(us:User) " +
+                " WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports" +
+                " AND head(us.profiles) IN ['Teacher','Personnel'] " +
                 " AND NOT(HAS(us.deleteDate)) " +
-                " AND NOT(HAS(us.disappearanceDate))" +
-                " AND HAS(s.exports) AND 'GAR' IN s.exports" +
                 " AND (HAS(us.emailAcademy) OR HAS(us.emailInternal) OR HAS(us.email)) " +
-                " WITH s, us ORDER BY s.id , us.id "+
-                " WITH s, collect(us)[..15] as uc "+    // 15 first Teachers or Personnels in each Structures
+                " WITH s, us ORDER BY s.id , us.id " +
+                " WITH s, collect(us)[..15] as uc " +    // 15 first Teachers or Personnels in each Structures
                 " UNWIND uc as u ";
         // CAUTION Don't use sr.UAI in dataReturn cause this structure is perhaps not a GAR structure
         String dataReturn = "RETURN DISTINCT u.id as `" + PERSON_ID + "`, " +
@@ -64,20 +79,25 @@ public class DataServiceRespImpl extends DataServiceBaseImpl implements DataServ
                 // Priority = emailAcademy > emailInternal > email
                 "coalesce(u.emailAcademy, u.emailInternal, u.email) as `" + PERSON_MAIL + "`, " +
                 "collect(s.UAI) as `" + RESP_ETAB + "` " +
-                "order by `" + PERSON_ID + "` " ;
+                "order by `" + PERSON_ID + "` ";
 
         query = query + dataReturn;
         query += " ASC SKIP {skip} LIMIT {limit} ";
 
-        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT);
-        paginator.neoStreamList(query, params, new JsonArray(), 0, handler);
+        JsonObject params = new JsonObject().put("limit", PaginatorHelperImpl.LIMIT).put("entId", entId);
+        paginator.neoStream(query, params, skip, handler);
     }
 
     /**
      * Process person in charge
      * @param resps Array of respq from Neo4j
      */
-    private void processStucturesFos(JsonArray resps) {
-        processSimpleArray(resps, RESP_NODE, RESP_NODE_MANDATORY);
+    private Either<String, JsonObject> processResp(JsonArray resps) {
+        Either<String, JsonObject> event = processSimpleArray(resps, RESP_NODE, RESP_NODE_MANDATORY);
+        if (event.isLeft()) {
+            return new Either.Left<>("Error when processing resp : " + event.left().getValue());
+        } else {
+            return event;
+        }
     }
 }

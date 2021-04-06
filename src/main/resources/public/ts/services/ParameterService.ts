@@ -6,13 +6,14 @@ export interface StructureGar {
    name: string;
    structureId: string;
    id: string;
+   source: string;
 }
 
 export interface ParameterService {
     export(): void;
     getStructureGar(): Promise<StructureGar>;
     createGroupGarToStructure(name: string, structureId: string): Promise<any>;
-    addUsersToGarGroup(groupId: string, structureId: string): Promise<void>;
+    addUsersToGarGroup(groupId: string, structureId: string, source: string): Promise<void>;
 
     undeployStructure(id: string);
 }
@@ -40,9 +41,9 @@ export const ParameterService = ng.service('ParameterService', (): ParameterServ
         }
     },
 
-    addUsersToGarGroup: async (groupId: string, structureId: string) => {
+    addUsersToGarGroup: async (groupId: string, structureId: string, source: string) => {
         try {
-            const {data} = await http.post(`structure/gar/group/user`, {groupId: groupId, structureId: structureId});
+            const {data} = await http.post(`structure/gar/group/user`, {groupId: groupId, structureId: structureId, source: source});
             return data;
         } catch (err) {
             throw err;

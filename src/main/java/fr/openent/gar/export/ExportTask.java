@@ -10,8 +10,6 @@ import io.vertx.core.logging.LoggerFactory;
 import static fr.wseduc.webutils.Utils.handlerToAsyncHandler;
 
 public class ExportTask implements Handler<Long> {
-
-
     private final EventBus eb;
     private final Logger log = LoggerFactory.getLogger(ExportTask.class);
 

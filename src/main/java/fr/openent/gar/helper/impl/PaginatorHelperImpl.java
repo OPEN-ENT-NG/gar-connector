@@ -44,4 +44,12 @@ public class PaginatorHelperImpl implements PaginatorHelper  {
 
         });
     }
+
+    @Override
+    public void neoStream(String query, JsonObject params, int skip, Handler<Either<String, JsonArray>> handler) {
+        params.put("limit", LIMIT);
+        neo4j.execute(query, params.copy().put("skip", skip), res -> {
+            handler.handle(validResult(res));
+        });
+    }
 }

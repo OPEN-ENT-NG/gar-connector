@@ -13,15 +13,17 @@ public interface ParameterService {
      * need to save it for a future deployment.
      *
      * @param structureId Structure identifier
+     * @param entId Ent identifier
      * @param handler     Function handler returning data
      */
-    void undeployStructureGar(String structureId, Handler<Either<String, JsonObject>> handler);
+    void undeployStructureGar(String structureId, String entId, Handler<Either<String, JsonObject>> handler);
 
     /**
      * Get Structure with optional gar group
+     * @param entId Ent identifier
      * @param handler Function handler returning data
      */
-    void getStructureGar(Handler<Either<String, JsonArray>> handler);
+    void getStructureGar(String entId, Handler<Either<String, JsonArray>> handler);
 
     /**
      * Create new group gar to chosen structure

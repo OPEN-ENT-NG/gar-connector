@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+	targetNamespace="http://data.education.fr/ns/gar/1d"
+	elementFormDefault="qualified"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:men="http://data.education.fr/ns/gar/1d">
+
+	<annotation>
+		<documentation>Echange de données entre le GAR et un ENT premier degré. Version 1.4 valable à partir de la version du GAR 2.1 </documentation>
+	</annotation>
+	
+	<!-- types globaux -->
+	
+	<simpleType name="GARPersonIdentifiantType">
+		<restriction base="string">
+			<maxLength value="64"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARStructureUAIType">
+		<restriction base="string">
+			<maxLength value="45"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARMEFSTAT4CodeType">
+		<restriction base="string">
+			<maxLength value="4"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARGroupeCodeType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+	
+	<!-- types spécifiques -->
+	
+	<simpleType name="GARPersonIdSecondaireType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARPersonNomPatroType">
+		<restriction base="string">
+			<maxLength value="500"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARPersonNomType">
+		<restriction base="string">
+			<maxLength value="500"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARPersonPrenomType">
+		<restriction base="string">
+			<maxLength value="500"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARPersonAutresPrenomsType">
+		<restriction base="string">
+			<maxLength value="500"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARPersonCiviliteType">
+		<restriction base="string">
+			<maxLength value="30"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="GARPersonMailType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="GARPersonProfilType">
+		<restriction base="string">
+			<maxLength value="31"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GAREnsSpecialitePosteCodeType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARStructureNomCourantType">
+		<restriction base="string">
+			<maxLength value="500"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARStructureContratType">
+		<restriction base="string">
+			<maxLength value="45"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARStructureTelephoneType">
+		<restriction base="string">
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARStructureEmailType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARGroupeLibelleType">
+		<restriction base="string">
+			<maxLength value="255"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GARGroupeStatutType">
+		<restriction base="string">
+			<maxLength value="31"/>
+		</restriction>
+	</simpleType>
+	
+	<complexType
+		name="GARIdentite">
+		<sequence>
+			<element
+				name="GARPersonIdentifiant"
+				type="men:GARPersonIdentifiantType"
+				minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>Identifiant interne à l'ENT de l'utilisateur</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonProfils"
+				type="men:GARPersonProfils"
+				maxOccurs="unbounded"
+				minOccurs="1">
+				<annotation>
+					<documentation>Profils d'accédant tels que définis dans le SDET par établissement</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonIdSecondaire"
+				type="men:GARPersonIdSecondaireType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Identifiant secondaire (non fourni dans cette version)</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonNomPatro"
+				type="men:GARPersonNomPatroType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Nom de famille (de naissance)</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonNom"
+				type="men:GARPersonNomType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Nom d'usage pour les personnes physiques, à défaut nom de famille, nom de l'organisme pour les personnes morales</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonPrenom"
+				type="men:GARPersonPrenomType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Prénom usuel</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonAutresPrenoms"
+				type="men:GARPersonAutresPrenomsType"
+				maxOccurs="unbounded"
+				minOccurs="1">
+				<annotation>
+					<documentation>Tous les prénoms y compris le prénom usuel, à défaut le prénom usuel seul</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonCivilite"
+				type="men:GARPersonCiviliteType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>M. ou Mme</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonStructRattach"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Structure de rattachement administratif (UAI)</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType
+		name="GAREleve">
+		<complexContent>
+			<extension
+				base="men:GARIdentite">
+				<sequence>
+					<element
+						name="GARPersonEtab"
+						type="men:GARStructureUAIType"
+						maxOccurs="unbounded"
+						minOccurs="1">
+						<annotation>
+							<documentation>Liste de(s) établissement(s) fréquenté(s) par l'élève (UAI) </documentation>
+						</annotation>
+					</element>
+					<element
+						name="GARPersonDateNaissance"
+						type="date"
+						maxOccurs="1"
+						minOccurs="0">
+						<annotation>
+							<documentation>Date de naissance de l'élève, champ technique utilisé pour dédoublonner les comptes</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType
+		name="GAREnseignant">
+		<complexContent>
+			<extension
+				base="men:GARIdentite">
+				<sequence>
+					<element 
+						name="GARPersonEtab" 
+						type="men:GARStructureUAIType"
+						maxOccurs="unbounded" 
+						minOccurs="1">
+						<annotation>
+							<documentation>Liste de(s) établissement(s) d'exercice de l'enseignant, enseignant-documentaliste compris (UAI)</documentation>
+						</annotation>
+					</element>
+					<element 
+						name="GARPersonDateNaissance" 
+						type="date"
+						maxOccurs="1" 
+						minOccurs="0">
+						<annotation>
+							<documentation>Date de naissance de l'enseignant, champ technique utilisé pour dédoublonner les comptes</documentation>
+						</annotation>
+					</element>
+					<element 
+						name="GAREnsSpecialitesPostes"
+						type="men:GAREnsSpecialitesPostes" 
+						maxOccurs="unbounded"
+						minOccurs="0">
+						<annotation>
+							<documentation>Discipline(s) de poste de l'enseignant dans le(s) établissement(s) d'exercice</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType
+		name="GARRespAff">
+		<sequence>
+			<element
+				name="GARPersonIdentifiant"
+				type="men:GARPersonIdentifiantType"
+				minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>Identifiant interne à l'ENT de l'utilisateur</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonNom"
+				type="men:GARPersonNomType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Nom d'usage pour les personnes physiques, à défaut nom de famille, nom de l'organisme pour les personnes morales</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonPrenom"
+				type="men:GARPersonPrenomType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Prénom usuel</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonCivilite"
+				type="men:GARPersonCiviliteType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>M. ou Mme</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonMail"
+				type="men:GARPersonMailType"
+				maxOccurs="unbounded"
+				minOccurs="1">
+				<annotation>
+					<documentation>Adresse(s) mail issue(s) du SI, non modifiable(s) dans l'ENT</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARRespAffEtab"
+				type="men:GARStructureUAIType"
+				maxOccurs="unbounded"
+				minOccurs="1">
+				<annotation>
+					<documentation>Liste de(s) établissement(s) dans lesquels le responsable affectation ou le délégué affectation réalise les affectations (UAI)</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType
+		name="GARPersonMEFSTAT4">
+		<sequence>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE"</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonIdentifiant"
+				type="men:GARPersonIdentifiantType"
+				minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>Identifiant interne à l'ENT de l'utilisateur</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARMEFSTAT4Code"
+				type="men:GARMEFSTAT4CodeType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Code du niveau suivi par l'élève dans l'établissement ou code du ou des niveaux enseignés dans les divisions ou groupes par l’enseignant dans l'établissement, tel qu'il est dans les référentiels sources (4 caractères).</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="GARPersonProfils">
+		<sequence>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE"
+    				</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonProfil"
+				type="men:GARPersonProfilType"
+				minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>Profil d'accédant de la personne tel que défini dans le SDET dans l'établissement (National_elv ou National_ens ou National_doc)</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="GAREnsSpecialitesPostes">
+    		<sequence>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE"
+    				</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GAREnsSpecialitePosteCode"
+				type="men:GAREnsSpecialitePosteCodeType"
+				maxOccurs="unbounded"
+				minOccurs="1">
+				<annotation>
+					<documentation>Liste de(s) code(s) de(s) spécialité(s) de poste de l'enseignant dans le(s) établissement(s) d'exercice</documentation>
+				</annotation>
+			</element>			
+		</sequence>
+	</complexType>
+  
+	<complexType
+		name="GAREtab">
+		<sequence>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE"</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARStructureNomCourant"
+				type="men:GARStructureNomCourantType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Nom courant / raison sociale / libellé de l'établissement</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARStructureContrat"
+				type="men:GARStructureContratType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Type de contrat avec l’état (public, privé sous contrat…), tel qu'il est dans les référentiels sources</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARStructureTelephone"
+				type="men:GARStructureTelephoneType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Téléphone</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARStructureEmail"
+				type="men:GARStructureEmailType"
+				maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>Adresse mail</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+
+	<complexType
+		name="GARGroupe">
+		<sequence>
+			<element
+				name="GARGroupeCode"
+				type="men:GARGroupeCodeType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Code du groupe tel qu'il est dans les référentiels sources</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE" auquel ce groupe appartient</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARGroupeLibelle"
+				type="men:GARGroupeLibelleType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Libellé du groupe tel qu'il est dans les référentiels sources</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARGroupeStatut"
+				type="men:GARGroupeStatutType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Statut du groupe (DIVISION pour une division ou GROUPE pour un groupe autre que division)</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARGroupeDivAppartenance"
+				type="men:GARGroupeCodeType"
+				maxOccurs="unbounded"
+				minOccurs="0">
+				<annotation>
+					<documentation>Code de la division d'appartenance du groupe, tel qu'il est dans les référentiels sources (uniquement pour les groupes autres que divisions)</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType
+		name="GARPersonGroupe">
+		<sequence>
+			<element
+				name="GARStructureUAI"
+				type="men:GARStructureUAIType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>N°UAI anciennement "code RNE"</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARPersonIdentifiant"
+				type="men:GARPersonIdentifiantType"
+				minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>Identifiant interne à l'ENT</documentation>
+				</annotation>
+			</element>
+			<element
+				name="GARGroupeCode"
+				type="men:GARGroupeCodeType"
+				maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Code des groupes auxquels appartient l'utilisateur dans l'établissement, tel qu'il est dans les référentiels sources</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType
+		name="GAR-ENT-Eleve">
+		<sequence>
+			<element
+				name="GAREleve"
+				type="men:GAREleve"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element
+				name="GARPersonMEFSTAT4"
+				type="men:GARPersonMEFSTAT4"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="Version"
+			type="string"
+			use="required"></attribute>
+	</complexType>
+	
+	<complexType
+		name="GAR-ENT-Enseignant">
+		<sequence>
+			<element
+				name="GAREnseignant"
+				type="men:GAREnseignant"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element
+				name="GARPersonMEFSTAT4"
+				type="men:GARPersonMEFSTAT4"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="Version"
+			type="string"
+			use="required">
+		</attribute>
+	</complexType>
+	
+	<complexType
+		name="GAR-ENT-RespAff">
+		<sequence>
+			<element
+				name="GARRespAff"
+				type="men:GARRespAff"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="Version"
+			type="string"
+			use="required">
+		</attribute>
+	</complexType>
+	
+	<complexType
+		name="GAR-ENT-Etab">
+		<sequence>
+			<element
+				name="GAREtab"
+				type="men:GAREtab"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="Version"
+			type="string"
+			use="required">
+		</attribute>
+	</complexType>
+	
+	<complexType
+		name="GAR-ENT-Groupe">
+		<sequence>
+			<element
+				name="GARGroupe"
+				type="men:GARGroupe"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element
+				name="GARPersonGroupe"
+				type="men:GARPersonGroupe"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="Version"
+			type="string"
+			use="required">
+		</attribute>
+	</complexType>
+	
+	<element
+		name="GAR-ENT-Eleve"
+		type="men:GAR-ENT-Eleve">
+		<key name="GAR-ENT-Cle-Fonctionnelle-GAREleve">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité de l'élément GARPersonIdentifiant, assurant qu'un élément GAREleve est unique parmi l'ensemble des GAREleve présent dans le fichier des élèves</documentation>
+			</annotation>
+			<selector xpath="men:GAREleve"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+		</key>
+		<key name="GAR-ENT-Cle-Fonctionnelle-GARPersonMEFSTAT4-Eleve">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité du triplet d'éléments GARStructureUAI, GARPersonIdentifiant et GARMEFSTAT4Code, assurant qu'un élément GARPersonMEFSTAT4 est unique parmi l'ensemble des GARPersonMEFSTAT4 présent dans le fichier des élèves</documentation>
+			</annotation>
+			<selector xpath="men:GARPersonMEFSTAT4"/>
+			<field xpath="men:GARStructureUAI"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+			<field xpath="men:GARMEFSTAT4Code"/>
+		</key>
+	</element>
+
+	<element
+		name="GAR-ENT-Enseignant"
+		type="men:GAR-ENT-Enseignant">
+		<key name="GAR-ENT-Cle-Fonctionnelle-GAREnseignant">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité de l'élément GARPersonIdentifiant, assurant qu'un élément GAREnseignant est unique parmi l'ensemble des GAREnseignant présent dans le fichier des enseignants</documentation>
+			</annotation>
+			<selector xpath="men:GAREnseignant"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+		</key>
+		<key name="GAR-ENT-Cle-Fonctionnelle-GARPersonMEFSTAT4-Enseignant">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité du triplet d'éléments GARStructureUAI, GARPersonIdentifiant et GARMEFSTAT4Code, assurant qu'un élément GARPersonMEFSTAT4 est unique parmi l'ensemble des GARPersonMEFSTAT4 présent dans le fichier des enseignants</documentation>
+			</annotation>
+			<selector xpath="men:GARPersonMEFSTAT4"/>
+			<field xpath="men:GARStructureUAI"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+			<field xpath="men:GARMEFSTAT4Code"/>
+		</key>
+	</element>
+
+	<element
+		name="GAR-ENT-RespAff"
+		type="men:GAR-ENT-RespAff">
+		<key name="GAR-ENT-Cle-Fonctionnelle-GARRespAff">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité de l'élément GARPersonIdentifiant, assurant qu'un élément GARRespAff est unique parmi l'ensemble des GARRespAff présent dans le fichier des responsables affectation</documentation>
+			</annotation>
+			<selector xpath="men:GARRespAff"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+		</key>
+	</element>
+
+	<element
+		name="GAR-ENT-Etab"
+		type="men:GAR-ENT-Etab">
+		<key name="GAR-ENT-Cle-Fonctionnelle-GAREtab">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité de l'élément GARStructureUAI, assurant qu'un élément GAREtab est unique parmi l'ensemble des GAREtab présent dans le fichier des établissements</documentation>
+			</annotation>
+			<selector xpath="men:GAREtab"/>
+			<field xpath="men:GARStructureUAI"/>
+		</key>
+	</element>
+
+	<element
+		name="GAR-ENT-Groupe"
+		type="men:GAR-ENT-Groupe">
+		<key name="GAR-ENT-Cle-Fonctionnelle-GARGroupe">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité du couple d'éléments GARGroupeCode et GARStructureUAI, assurant qu'un élément GARGroupe est unique parmi l'ensemble des GARGroupe présent dans le fichier des groupes</documentation>
+			</annotation>
+			<selector xpath="men:GARGroupe"/>
+			<field xpath="men:GARGroupeCode"/>
+			<field xpath="men:GARStructureUAI"/>
+		</key>
+		<key name="GAR-ENT-Cle-Fonctionnelle-GARPersonGroupe">
+			<annotation>
+				<documentation>Clé fonctionnelle basée sur l'unicité du triplet d'éléments GARStructureUAI, GARPersonIdentifiant et GARGroupeCode, assurant qu'un élément GARPersonGroupe est unique parmi l'ensemble des GARPersonGroupe présent dans le fichier des groupes</documentation>
+			</annotation>
+			<selector xpath="men:GARPersonGroupe"/>
+			<field xpath="men:GARStructureUAI"/>
+			<field xpath="men:GARPersonIdentifiant"/>
+			<field xpath="men:GARGroupeCode"/>
+		</key>
+	</element>
+
+</schema>
