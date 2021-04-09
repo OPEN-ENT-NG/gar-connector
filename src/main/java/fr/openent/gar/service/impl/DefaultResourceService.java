@@ -36,6 +36,7 @@ public class DefaultResourceService implements ResourceService {
     private final Vertx vertx;
     private final String garHost;
     private final JsonObject idsEnt;
+    private final JsonObject hostById;
     private final Logger log = LoggerFactory.getLogger(DefaultResourceService.class);
     private final Map<String, HttpClient> httpClientByDomain = new HashMap();
 
@@ -43,6 +44,12 @@ public class DefaultResourceService implements ResourceService {
         this.vertx = vertx;
         this.garHost = garRessource.getString("host");
         this.idsEnt = idsEnt;
+
+        final JsonObject hostById = new JsonObject();
+        for (String hostName : idsEnt.fieldNames()) {
+            hostById.put(idsEnt.getString(hostName), hostName);
+        }
+        this.hostById = hostById;
 
         final JsonObject domains =  garRessource.getJsonObject("domains", new JsonObject());
 
@@ -67,15 +74,8 @@ public class DefaultResourceService implements ResourceService {
             handler.handle(new Either.Left<>("[DefaultResourceService@get] No structure." ));
             return;
         }
-        if(hostname == null){
-           handler.handle(new Either.Left<>("[DefaultResourceService@get] No hostname." ));
-           return;
-       }
-        if(!idsEnt.containsKey(hostname)){
-            handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in config key id-ent, or hostname isn't match real hostname : " + hostname ));
-            return;
-        }
-        String uaiQuery = "MATCH (s:Structure {id: {structureId}}) return s.UAI as UAI, s.name as name";
+
+        String uaiQuery = "MATCH (s:Structure {id: {structureId}}) return s.UAI as UAI, s.name as name, s.exports as exports";
         JsonObject params = new JsonObject().put("structureId", structure);
 
         Neo4j.getInstance().execute(uaiQuery, params, Neo4jResult.validResultHandler(event -> {
@@ -84,6 +84,29 @@ public class DefaultResourceService implements ResourceService {
                 if (results.size() > 0) {
                     String uai = results.getJsonObject(0).getString("UAI");
                     String structureName = results.getJsonObject(0).getString("name");
+                    String host = "";
+                    if (hostname == null) {
+                        JsonArray exports = results.getJsonObject(0).getJsonArray("exports");
+                        if (exports != null && !exports.isEmpty()) {
+                            for (Object export : exports.getList()) {
+                                if (!(export instanceof String)) continue;
+                                String exp = (String) export;
+                                if (exp != null && exp.contains("GAR-")) {
+                                    String idEnt = exp.split("-")[1];
+                                    host = hostById.getString(idEnt);
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        host = hostname;
+                    }
+
+                    if(!idsEnt.containsKey(host)){
+                        handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in config key id-ent, or hostname isn't match real hostname : " + host ));
+                        return;
+                    }
+
                     String garHostNoProtocol;
                     try {
                         URL url = new URL(garHost);
@@ -94,11 +117,11 @@ public class DefaultResourceService implements ResourceService {
                     }
                     String resourcesUri = Gar.demo
                             ? garHost + "/gar/public/ts/model/__mocks__/resources.json"
-                            : garHost + "/ressources/" + idsEnt.getString(hostname) + "/" + uai + "/" + userId;
-                    final HttpClient httpClient = httpClientByDomain.get(hostname);
+                            : garHost + "/ressources/" + idsEnt.getString(host) + "/" + uai + "/" + userId;
+                    final HttpClient httpClient = httpClientByDomain.get(host);
                     if (httpClient == null) {
-                        log.error("no gar ressources httpClient available for this host : " + hostname);
-                        handler.handle(new Either.Left<>("[DefaultResourceService@get] No gar ressources httpClient available for this host : " + hostname));
+                        log.error("no gar ressources httpClient available for this host : " + host);
+                        handler.handle(new Either.Left<>("[DefaultResourceService@get] No gar ressources httpClient available for this host : " + host));
                         return;
                     }
                     final HttpClientRequest clientRequest = httpClient.get(resourcesUri, response -> {
