@@ -10,7 +10,9 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static fr.openent.gar.constants.GarConstants.*;
 
@@ -21,6 +23,8 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
     private final String source;
     private final PaginatorHelperImpl paginator;
     private final JsonObject config;
+    private final Set<String> checkUniqueMefs;
+    private final Set<String> checkUniqueFos;
 
     DataServiceStructureImpl(String entId, String source, JsonObject config, String strDate) {
         this.entId = entId;
@@ -29,6 +33,8 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
         xmlExportHelper = new XmlExportHelperImpl(entId, source, config, STRUCTURE_ROOT, STRUCTURE_FILE_PARAM, strDate);
         paginator = new PaginatorHelperImpl();
         hasAcademyPrefix = this.config.containsKey("academy-prefix") && !"".equals(this.config.getString("academy-prefix").trim());
+        this.checkUniqueMefs = new HashSet<>();
+        this.checkUniqueFos = new HashSet<>();
     }
 
     /**
@@ -405,8 +411,23 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      * @param mefs Array of mefs from Neo4j
      */
     private Either<String, JsonObject> processStucturesMefs(JsonArray mefs) {
-
-        Either<String, JsonObject> event = processSimpleArray(mefs, MEF_NODE, MEF_NODE_MANDATORY);
+        final JsonArray safeMefs = new JsonArray();
+        //check unique Mef
+        for(Object o : mefs) {
+            if (!(o instanceof JsonObject)) continue;
+            JsonObject obj = (JsonObject) o;
+            if (!isMandatoryFieldsAbsent(obj, MEF_NODE_MANDATORY)) {
+                final String key = obj.getString(STRUCTURE_UAI) + obj.getString(MEF_CODE) + obj.getString(MEF_DESCRIPTION);
+                if (!checkUniqueMefs.contains(key)) {
+                    checkUniqueMefs.add(key);
+                    safeMefs.add(obj);
+                }
+            } else {
+                //check and log by processSimpleArray
+                safeMefs.add(obj);
+            }
+        }
+        Either<String, JsonObject> event = processSimpleArray(safeMefs, MEF_NODE, MEF_NODE_MANDATORY);
         if (event.isLeft()) {
             return new Either.Left<>("Error when processing structures mefs : " + event.left().getValue());
         } else {
@@ -471,7 +492,23 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      * @param fos Array of fis from Neo4j
      */
     private Either<String, JsonObject> processStucturesFos(JsonArray fos) {
-        Either<String, JsonObject> event = processSimpleArray(fos, STUDYFIELD_NODE, STUDYFIELD_NODE_MANDATORY);
+        final JsonArray safeFos = new JsonArray();
+        //check unique fos
+        for(Object o : fos) {
+            if (!(o instanceof JsonObject)) continue;
+            JsonObject obj = (JsonObject) o;
+            if (!isMandatoryFieldsAbsent(obj, STUDYFIELD_NODE_MANDATORY)) {
+                final String key = obj.getString(STRUCTURE_UAI) + obj.getString(STUDYFIELD_CODE) + obj.getString(STUDYFIELD_DESC);
+                if (!checkUniqueFos.contains(key)) {
+                    checkUniqueFos.add(key);
+                    safeFos.add(obj);
+                }
+            } else {
+                //check and log by processSimpleArray
+                safeFos.add(obj);
+            }
+        }
+        Either<String, JsonObject> event = processSimpleArray(safeFos, STUDYFIELD_NODE, STUDYFIELD_NODE_MANDATORY);
         if (event.isLeft()) {
             return new Either.Left<>("Error when processing structures fos : " + event.left().getValue());
         } else {
