@@ -1,5 +1,6 @@
 import {appPrefix, ng, template} from "entcore";
 import {ParameterService} from "../services";
+import {Utils} from "../utils/Utils";
 
 declare const window: any;
 
@@ -9,7 +10,7 @@ declare const window: any;
  **/
 export const parameterController = ng.controller("ParameterController", [
     "$scope", "ParameterService", async ($scope, ParameterService: ParameterService) => {
-        template.open("main", "parameter");
+        await template.open("main", "parameter");
         $scope.counter = {
             value: 0
         };
@@ -22,11 +23,14 @@ export const parameterController = ng.controller("ParameterController", [
 
         const GROUP_GAR_NAME = "RESP-AFFECT-GAR";
         $scope.structureGarLists = [];
-        ParameterService.getStructureGar().then(structures => {
+        ParameterService.getStructureGar().then(async (structures) => {
             $scope.structureGarLists = structures;
             $scope.structureGarLists.map((structure) => structure.number_deployed = structure.deployed ? 1 : 0);
-            $scope.$apply();
+            await Utils.safeApply($scope);
         });
+        /* button handler */
+        $scope.createButton = false;
+        $scope.$watch(() => $scope.structureGarLists, getDeployedCounter);
 
         $scope.match = function () {
             return function (item) {
@@ -35,11 +39,6 @@ export const parameterController = ng.controller("ParameterController", [
                     || item.uai.toLowerCase().includes($scope.filter.value.toLowerCase());
             }
         };
-
-        /* button handler */
-        $scope.createButton = false;
-        $scope.addButton = false;
-        $scope.$apply();
 
         $scope.export = () => {
             ParameterService.export();
@@ -51,12 +50,10 @@ export const parameterController = ng.controller("ParameterController", [
             $scope.counter.value = counter;
         }
 
-        $scope.$watch(() => $scope.structureGarLists, getDeployedCounter);
-
         $scope.createGarGroup = async ({structureId, deployed}) => {
             let response;
             $scope.createButton = true;
-            $scope.$apply();
+            await Utils.safeApply($scope);
             if (!deployed) {
                 response = await ParameterService.createGroupGarToStructure(GROUP_GAR_NAME, structureId);
             } else {
@@ -67,7 +64,7 @@ export const parameterController = ng.controller("ParameterController", [
                 $scope.structureGarLists.map((structure) => structure.number_deployed = structure.deployed ? 1 : 0);
             }
             $scope.createButton = false;
-            $scope.$apply();
+            await Utils.safeApply($scope);
         };
 
         $scope.showRespAffecGarGroup = function ({structureId, id}) {
@@ -75,11 +72,11 @@ export const parameterController = ng.controller("ParameterController", [
         };
 
         $scope.addUser = async (groupId, structureId, source) => {
-            $scope.addButton = true;
-            $scope.$apply();
+            $scope.createButton = true;
+            await Utils.safeApply($scope);
             await ParameterService.addUsersToGarGroup(groupId, structureId, source);
-            $scope.addButton = false;
-            $scope.$apply();
+            $scope.createButton = false;
+            await Utils.safeApply($scope);
         };
 
         $scope.testMail = () => window.open(`/${appPrefix}/mail/test`);
