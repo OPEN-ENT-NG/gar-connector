@@ -103,7 +103,8 @@ public class DefaultResourceService implements ResourceService {
                     }
 
                     if(!idsEnt.containsKey(host)){
-                        handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in config key id-ent, or hostname isn't match real hostname : " + host ));
+                        handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in " +
+                                "config key id-ent, or hostname isn't match real hostname : " + host ));
                         return;
                     }
 
@@ -116,7 +117,7 @@ public class DefaultResourceService implements ResourceService {
                         return;
                     }
                     String resourcesUri = Gar.demo
-                            ? garHost + "/gar/public/ts/model/__mocks__/resources.json"
+                            ? Gar.CONFIG.getString("host") + "/gar/public/ts/model/__mocks__/resources.json"
                             : garHost + "/ressources/" + idsEnt.getString(host) + "/" + uai + "/" + userId;
                     final HttpClient httpClient = httpClientByDomain.get(host);
                     if (httpClient == null) {
