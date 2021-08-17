@@ -1,5 +1,6 @@
 package fr.openent.gar.export.impl;
 
+import fr.openent.gar.Gar;
 import fr.openent.gar.export.DataService;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
@@ -258,8 +259,8 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
     }
 
     private void getSubjectLabelsFromNeo4j(final Map<String, Map<String, String>> subjectLabelsByCodeUai, Handler<Either<String, Boolean>> handler) {
-        String query = "MATCH (s:Structure {source:'" + this.source + "'})<-[:SUBJECT]-(sub:Subject) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+        String query = "MATCH (s:Structure)<-[:SUBJECT]-(sub:Subject) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                 "RETURN s.UAI as UAI, sub.code as code, sub.label as label";
         neo4j.execute(query, new JsonObject().put("entId", entId), res -> {
             if (res.body() != null && res.body().containsKey("result")) {
@@ -298,8 +299,14 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      */
     static void getStucturesInfoFromNeo4j(int skip, String source, String entId, PaginatorHelperImpl paginator,
                                           Handler<Either<String, JsonArray>> handler) {
-        String query = "MATCH (s:Structure {source:'" + source + "'}) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports ";
+        String query;
+        if(source.equals(Gar.AAF1D)){
+            query = "MATCH (s:Structure {source:'" + source + "'}) " +
+                    "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports ";
+        }else{
+            query = "MATCH (s:Structure) " +
+                    "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+        }
 // Don't export optional attachment structure attribute
 //                "OPTIONAL MATCH (g2:ManualGroup{name:\\\"\" + CONTROL_GROUP + \"\\\"})-[:DEPENDS]->(s2:Structure)<-[:HAS_ATTACHMENT]-(s:Structure) ";
         String dataReturn = "RETURN distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
@@ -366,9 +373,12 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      * @param handler results
      */
     private void getStucturesStudentsMefsFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        String queryStudentsMefs = "MATCH (n:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                " AND exists(n.module) AND  NOT(has(n.deleteDate)) " +
+        String queryStudentsMefs = "MATCH (n:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->";
+
+        queryStudentsMefs += "(s:Structure) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+
+        queryStudentsMefs += " AND exists(n.module) AND  NOT(has(n.deleteDate)) " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
                 "n.module as `" + MEF_CODE + "`, " +
                 "n.moduleName as `" + MEF_DESCRIPTION + "` " +
@@ -388,9 +398,12 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      * @param handler results
      */
     private void getStucturesTeachersMefsFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        String queryTeachersMefs = "MATCH (n:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup {filter:'Teacher'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
-                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND exists(n.modules) and not has(n.deleteDate) " +
+        String queryTeachersMefs = "MATCH (n:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup {filter:'Teacher'})-[:DEPENDS]->";
+
+        queryTeachersMefs += "(s:Structure) " +
+                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+
+        queryTeachersMefs += "AND exists(n.modules) and not has(n.deleteDate) " +
                 "with distinct s,n " +
                 "unwind n.modules as rows " +
                 "with s, split(rows,\"$\") as modules " +
@@ -452,8 +465,12 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
             condition = "split(sub.code,\"-\") as codelist";
         }
 
-        String queryStructureFos = "MATCH (sub:Subject)-[:SUBJECT]->(s:Structure {source:'" + this.source + "'}) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND sub.code =~ '^(.*-)?([0-9]{2})([A-Z0-9]{4})$' " +
+        String queryStructureFos = "MATCH (sub:Subject)-[:SUBJECT]->";
+
+        queryStructureFos += "(s:Structure) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+
+        queryStructureFos += "AND sub.code =~ '^(.*-)?([0-9]{2})([A-Z0-9]{4})$' " +
                 "with s, sub.label as label, " + condition +
                 " return distinct s.UAI as `" + STRUCTURE_UAI + "`, toUpper(" +
                 (hasAcademyPrefix ? "codelist" : "codelist[size(codelist)-1]") + ") as `" + STUDYFIELD_CODE + "` " +
@@ -471,9 +488,12 @@ public class DataServiceStructureImpl extends DataServiceBaseImpl implements Dat
      */
     private void getStudentFosFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
 
-        String queryStudentFos = "MATCH (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
-                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND exists (u.fieldOfStudy) AND NOT(HAS(u.deleteDate)) " +
+        String queryStudentFos = "MATCH (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->";
+
+        queryStudentFos += "(s:Structure) " +
+                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+
+        queryStudentFos += "AND exists (u.fieldOfStudy) AND NOT(HAS(u.deleteDate)) " +
                 "with distinct s, u.fieldOfStudy as fos " +
                 "with s, " +
                 "reduce(x=[], idx in range(0,size(fos)-1) | x + {code:fos[idx]}) as rows " +

@@ -27,7 +27,8 @@ public class DefaultParameterService implements ParameterService {
 
     @Override
     public void undeployStructureGar(String structureId, String entId, Handler<Either<String, JsonObject>> handler) {
-        String query = "MATCH (s:Structure {id:{structureId}}) SET s.exports = FILTER(val IN s.exports WHERE val <> ('GAR-' + {entId})) RETURN s.exports;";
+        String query = "MATCH (s:Structure {id:{structureId}}) SET s.exports = FILTER(val IN s.exports " +
+                "WHERE val <> ('GAR-' + {entId})) RETURN s.exports;";
         JsonObject params = new JsonObject()
                 .put("structureId", structureId)
                 .put("entId", entId);
@@ -48,8 +49,8 @@ public class DefaultParameterService implements ParameterService {
     @Override
     public void createGarGroupToStructure(JsonObject body, Handler<Either<String, JsonObject>> handler) {
         String query = "MATCH (s:Structure {id:{structureId}}) " +
-                "OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} }) SET " +
-                "s.exports = coalesce(s.exports, []) + ('GAR-' + {entId}) RETURN g.id as groupId";
+                "OPTIONAL MATCH (s)<-[:DEPENDS]-(g:ManualGroup{name: {groupName} }) " +
+                "SET s.exports = coalesce(s.exports, []) + ('GAR-' + {entId}) RETURN g.id as groupId";
         JsonObject creationParams = new JsonObject()
                 .put("structureId", body.getString("structureId"))
                 .put("entId", body.getString("entId"))

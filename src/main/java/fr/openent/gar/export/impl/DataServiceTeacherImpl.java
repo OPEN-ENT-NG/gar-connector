@@ -1,5 +1,6 @@
 package fr.openent.gar.export.impl;
 
+import fr.openent.gar.Gar;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
 import fr.openent.gar.export.DataService;
@@ -59,7 +60,7 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
             if (validResponseNeo4j(teacherInfos, handler)) {
                 final JsonArray teachers = teacherInfos.right().getValue();
                 populateModules(modules, teachers,false);
-                Either<String, JsonObject> result = processTeachersInfo(teachers,false);
+                Either<String, JsonObject> result = processTeachersInfo(teachers);
 
                 if (teacherInfos.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
                     getAndProcessTeachersInfoFromNeo4j(skip + PaginatorHelperImpl.LIMIT, modules, handler);
@@ -109,9 +110,16 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
 
     protected static void getTeachersInfoFromNeo4j(int skip, String source, String entId, PaginatorHelperImpl paginator,
                                                 Handler<Either<String, JsonArray>> handler) {
-        String query = "match (u:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup)-[:DEPENDS]->(s:Structure {source:'" + source + "'}) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND NOT(HAS(u.deleteDate)) AND pg.filter IN ['Personnel','Teacher'] " +
+        String query = "MATCH (u:User)-[:IN|DEPENDS*1..2]->(pg:ProfileGroup)-[:DEPENDS]->";
+
+        if(source.equals(Gar.AAF1D)){
+            query += "(s:Structure {source:'" + source + "'}) " +
+                    "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports ";
+        }else{
+            query += "(s:Structure) WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+        }
+
+        query += "AND NOT(HAS(u.deleteDate)) AND pg.filter IN ['Personnel','Teacher'] " +
                 // ADMINISTRATIVE ATTACHMENT can reference non GAR exported structure
                 "OPTIONAL MATCH (u:User)-[:ADMINISTRATIVE_ATTACHMENT]->(sr:Structure) ";
         String dataReturn = "return distinct u.id  as `" + PERSON_ID + "`, " +
@@ -139,7 +147,7 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
      * Add structures in arrays to match xsd
      * @param teachers Array of teachers from Neo4j
      */
-    private Either<String, JsonObject> processTeachersInfo(JsonArray teachers, boolean firstDegree) {
+    private Either<String, JsonObject> processTeachersInfo(JsonArray teachers) {
         try {
             for(Object o : teachers) {
                 if(!(o instanceof JsonObject)) continue;
@@ -154,7 +162,7 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
 
                 Map<String,String> userStructProfiles = new HashMap<>();
 
-                processFunctions(teacher, userStructProfiles, firstDegree);
+                processFunctions(teacher, userStructProfiles, false);
                 processTeacherProfiles(teacher, userStructProfiles);
 
                 if(isMandatoryFieldsAbsent(teacher, TEACHER_NODE_MANDATORY)) {

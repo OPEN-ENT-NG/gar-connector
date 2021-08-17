@@ -85,6 +85,9 @@
                     <span ng-if="item.source == 'AAF' && item.deployed">
                         2D
                     </span>
+                    <span ng-if="item.source !== 'AAF' && item.source !== 'AAF1D' && item.deployed">
+                        [[item.source]]
+                    </span>
                 </th>
                 <th>
                     <dots-menu style="text-align: left">

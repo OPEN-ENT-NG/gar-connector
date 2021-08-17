@@ -61,7 +61,7 @@ public class DataServiceTeacherImpl1d extends DataServiceBaseImpl implements Dat
             if (validResponseNeo4j(teacherInfos, handler)) {
                 final JsonArray teachers = teacherInfos.right().getValue();
                 populateModules(modules, teachers, true);
-                Either<String, JsonObject> result = processTeachersInfo(teachers, true);
+                Either<String, JsonObject> result = processTeachersInfo(teachers);
 
                 if (teacherInfos.right().getValue().size() == PaginatorHelperImpl.LIMIT) {
                     getAndProcessTeachersInfoFromNeo4j(skip + PaginatorHelperImpl.LIMIT, modules, handler);
@@ -79,7 +79,7 @@ public class DataServiceTeacherImpl1d extends DataServiceBaseImpl implements Dat
      * Add structures in arrays to match xsd
      * @param teachers Array of teachers from Neo4j
      */
-    private Either<String, JsonObject> processTeachersInfo(JsonArray teachers, boolean firstDegree) {
+    private Either<String, JsonObject> processTeachersInfo(JsonArray teachers) {
         try {
             for(Object o : teachers) {
                 if(!(o instanceof JsonObject)) continue;
@@ -94,7 +94,7 @@ public class DataServiceTeacherImpl1d extends DataServiceBaseImpl implements Dat
 
                 Map<String,String> userStructProfiles = new HashMap<>();
 
-                processFunctions(teacher, userStructProfiles, firstDegree);
+                processFunctions(teacher, userStructProfiles, true);
                 processTeacherProfiles(teacher, userStructProfiles);
 
                 if(isMandatoryFieldsAbsent(teacher, TEACHER_NODE_MANDATORY)) {

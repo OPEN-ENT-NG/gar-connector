@@ -1,5 +1,6 @@
 package fr.openent.gar.export.impl;
 
+import fr.openent.gar.Gar;
 import fr.openent.gar.export.DataService;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
@@ -211,8 +212,17 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
     static void getGroupsStructureInfoFromNeo4j(Map<String, Map<String, List<String>>> mapStructGroupClasses, String source,
                                                  String entId, Handler<Either<String, Boolean>> handler) {
         //in AAF1D s.groups is null for the moment
-        final String divisionQuery = "MATCH (s:Structure {source:'" + source + "'}) WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "RETURN distinct s.UAI as uai, s.groups as groups";
+        final String divisionQuery;
+        if(source.equals(Gar.AAF1D)){
+            divisionQuery = "MATCH (s:Structure {source:'" + source + "'}) " +
+                    "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                    "RETURN distinct s.UAI as uai, s.groups as groups";
+        }else{
+            divisionQuery = "MATCH (s:Structure) " +
+                    "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
+                    "RETURN distinct s.UAI as uai, s.groups as groups";
+        }
+
         JsonObject params = new JsonObject().put("entId", entId);
 
         neo4j.execute(divisionQuery, params, res -> {
@@ -265,8 +275,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
      * @param handler results
      */
     private void getOtherGroupsInfoFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        final String groupsQuery = "MATCH (s:Structure {source:'" + this.source + "'})<-[:BELONGS]-(c:Class) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+        final String groupsQuery = "MATCH (s:Structure)<-[:BELONGS]-(c:Class) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                 "WITH collect(c.name) as classes, s " +
                 "MATCH (u:User)-[:IN]->(fg:FunctionalGroup)-[d2:DEPENDS]->(s:Structure) " +
                 "WHERE NOT (fg.name IN classes) " +
@@ -296,8 +306,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
      * @param handler results
      */
     private void getDivisionGroupsInfoFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        final String classQuery = "MATCH (c:Class)-[:BELONGS]->(s:Structure {source:'" + this.source + "'})" +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+        final String classQuery = "MATCH (c:Class)-[:BELONGS]->(s:Structure)" +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                 "RETURN distinct " +
                 "split(c.externalId,\"$\")[1] as `" + GROUPS_CODE + "`, " +
                 "s.UAI as `" + STRUCTURE_UAI + "`, " +
@@ -333,8 +343,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
      * @param handler results
      */
     private void getDivisionGroupsPersonFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        final String classQuery = "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure {source:'" + this.source + "'})" +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+        final String classQuery = "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure)" +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                 "AND pg.filter IN ['Student', 'Teacher'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
@@ -355,8 +365,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
      * @param handler results
      */
     private void getOtherGroupsPersonFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        final String groupsQuery = "MATCH (s:Structure {source:'" + this.source + "'})<-[:BELONGS]-(c:Class) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+        final String groupsQuery = "MATCH (s:Structure)<-[:BELONGS]-(c:Class) " +
+                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                 "WITH collect(c.name) as classes, s " +
                 "MATCH (u:User)-[:IN]->(fg:FunctionalGroup)-[:DEPENDS]->(s:Structure) " +
                 "WHERE NOT (fg.name IN classes) " +
@@ -405,8 +415,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
             condition = "CASE WHEN sub.code =~'.*-.*' THEN split(sub.code,\"-\")[1] ELSE sub.code END as code";
         }
         String query =
-                "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure {source:'" + this.source + "'}) " +
-                        "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure) " +
+                        "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                         "AND pg.filter IN ['Student', 'Teacher'] " +
                         "AND NOT(HAS(u.deleteDate)) " +
                         "WITH distinct u,s " +
@@ -460,8 +470,8 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
             condition = "CASE WHEN sub.code =~'.*-.*' THEN split(sub.code,\"-\")[1] ELSE sub.code END as code";
         }
         String query =
-                "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure {source:'" + this.source + "'}) " +
-                        "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
+                "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure) " +
+                        "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
                         "AND pg.filter IN ['Student', 'Teacher'] " +
                         "AND NOT(HAS(u.deleteDate)) " +
                         "WITH distinct u,s " +

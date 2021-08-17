@@ -1,5 +1,6 @@
 package fr.openent.gar.export.impl;
 
+import fr.openent.gar.Gar;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
 import fr.openent.gar.export.DataService;
@@ -64,9 +65,19 @@ public class DataServiceRespImpl extends DataServiceBaseImpl implements DataServ
      * @param handler results
      */
     private void getRespFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
-        String query = "MATCH (s:Structure {source:'" + this.source + "'})<-[:DEPENDS]-(n:ManualGroup{name:\"" + controlGroup + "\"})<-[:IN]-(us:User) " +
-                " WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports" +
-                " AND head(us.profiles) IN ['Teacher','Personnel'] " +
+        String query;
+
+        if(source.equals(Gar.AAF1D)){
+            query = "MATCH (s:Structure {source:'" + this.source + "'})" +
+                    "<-[:DEPENDS]-(n:ManualGroup{name:\"" + controlGroup + "\"})<-[:IN]-(us:User) " +
+                    " WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports";
+        }else{
+            query = "MATCH (s:Structure)" +
+                    "<-[:DEPENDS]-(n:ManualGroup{name:\"" + controlGroup + "\"})<-[:IN]-(us:User) " +
+                    " WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' ";
+        }
+
+        query += " AND head(us.profiles) IN ['Teacher','Personnel'] " +
                 " AND NOT(HAS(us.deleteDate)) " +
                 " AND (HAS(us.emailAcademy) OR HAS(us.emailInternal) OR HAS(us.email)) " +
                 " WITH s, us ORDER BY s.id , us.id " +

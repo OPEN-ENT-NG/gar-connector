@@ -1,5 +1,6 @@
 package fr.openent.gar.export.impl;
 
+import fr.openent.gar.Gar;
 import fr.openent.gar.export.DataService;
 import fr.openent.gar.helper.impl.PaginatorHelperImpl;
 import fr.openent.gar.helper.impl.XmlExportHelperImpl;
@@ -138,12 +139,23 @@ public class DataServiceStudentImpl extends DataServiceBaseImpl implements DataS
         }
     }
 
-    static void getStudentsInfoFromNeo4j(int skip, String entId, String source, PaginatorHelperImpl paginator, Handler<Either<String, JsonArray>> handler) {
-        String query = "match (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + source + "'}) " +
-                "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND NOT(HAS(u.deleteDate)) " +
-                "OPTIONAL MATCH (u:User)-[:ADMINISTRATIVE_ATTACHMENT]->(sr:Structure {source:'" + source + "'}) " +
-                "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND NOT(HAS(u.deleteDate)) ";
+    static void getStudentsInfoFromNeo4j(int skip, String entId, String source, PaginatorHelperImpl paginator,
+                                         Handler<Either<String, JsonArray>> handler) {
+        String query;
+        if(source.equals(Gar.AAF1D)){
+            query = "MATCH (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure {source:'" + source + "'}) " +
+                    "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND NOT(HAS(u.deleteDate)) " +
+                    "OPTIONAL MATCH (u:User)-[:ADMINISTRATIVE_ATTACHMENT]->(sr:Structure {source:'" + source + "'}) " +
+                    "WHERE HAS(sr.exports) AND ('GAR-' + {entId}) IN sr.exports " +
+                    "AND NOT(HAS(u.deleteDate)) ";
+        }else{
+            query  = "MATCH (u:User)-[:IN]->(pg:ProfileGroup {filter:'Student'})-[:DEPENDS]->(s:Structure) " +
+                    "where HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
+                    "AND NOT(HAS(u.deleteDate)) " +
+                    "OPTIONAL MATCH (u:User)-[:ADMINISTRATIVE_ATTACHMENT]->(sr:Structure) " +
+                    "WHERE HAS(sr.exports) AND ('GAR-' + {entId}) IN sr.exports AND sr.source <> '" + Gar.AAF1D + "' " +
+                    "AND NOT(HAS(u.deleteDate)) ";
+        }
         String dataReturn = "return distinct " +
                 "u.id  as `" + PERSON_ID + "`, " +
                 "u.lastName as `" + PERSON_PATRO_NAME + "`, " +
