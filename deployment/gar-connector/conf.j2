@@ -1,0 +1,75 @@
+{
+    "name": "{{ garConnectorVersion }}",
+    {% if (item == 'jobs') %}
+    "worker" : true,
+    {% endif %}
+    "config": {
+        "main" : "fr.openent.gar.Gar",
+        "port" : 8164,
+        "app-name" : "Mediacentre",
+        "app-address" : "/mediacentre",
+        "app-icon" : "Mediacentre-large",
+        "host": "https://{{ host }}",
+        "ssl" : true,
+        "event-collection": "gar-events",
+        "auto-redeploy": false,
+        "userbook-host": "https://{{ host }}",
+        "integration-mode" : "HTTP",
+        "app-registry.port" : 8012,
+        {% if garDemoMode is defined %}
+        "demo" : {{ garDemoMode }},
+        {% endif %}
+        "mode": "prod",
+        "entcore.port" : 8009,
+        "max-nodes": 10000,
+        "export-path": "{{ garExportPath }}/data/",
+        "export-archive-path": "{{ garExportPath }}/data-compress/",
+        {% if garIdEnt is defined %}
+        "id-ent" : "{{ garIdEnt }}",
+        {% else %}
+        "id-ent" : {{ garIdsEnt }},
+        {% endif %}
+        "control-group" : "RESP-AFFECT-GAR",
+        {% if garExportCron is defined %}
+        "export-cron": "{{ garExportCron }}",
+        {% else %}
+        "export-cron": "0 0 21 * * ? 2099",
+        {% endif %}
+        {% if xsdRecipientList is defined %}"xsd-recipient-list": {{ xsdRecipientList }},{% endif %}
+        {% if garAcademyPrefix is defined %}"academy-prefix": "{{ garAcademyPrefix }}",{% endif %}
+        {% if garEntIdSources is defined %}"entid-sources": {{ garEntIdSources }},{% endif %}
+        "pagination-limit": {{ paginationLimit|default('25000') }},
+        {% if garRessourcesHost is defined %}
+        "gar-ressources" : {
+            "host": "{{ garRessourcesHost }}",
+            "cert": "{{ garRessourcesCert }}",
+            "key": "{{ garRessourcesKey }}"
+        },
+        {% else %}
+        "gar-ressources" : {{ garRessources }},
+        {% endif %}
+        {% if garSftpHost is defined %}
+        "gar-sftp" : {
+            "host": "{{ garSftpHost }}",
+            "port": {{ garSftpPort }},
+            "username": "{{ garSftpUsername }}",
+            "passphrase": "{{ garSftpPassphrase }}",
+            "sshkey": "{{ garSftpSshkey }}",
+            "dir-dest": "{{ garSftpDirDest }}",
+            "known-hosts": "{{ garSftpKnownHost }}"
+        },
+        {% else %}
+        "gar-sftp" : {{ garSftp }},
+        {% endif %}
+        "publicConf": {
+            "xiti": {
+                "ID_SERVICE": {
+                    "default": 13
+                },
+                "LIBELLE_SERVICE": {
+                    "default": "PAGE_ENT"
+                }
+            }
+        }
+    }
+}
