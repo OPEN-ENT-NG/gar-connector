@@ -16,14 +16,12 @@
         "userbook-host": "https://{{ host }}",
         "integration-mode" : "HTTP",
         "app-registry.port" : 8012,
-        {% if garDemoMode is defined %}
-        "demo" : {{ garDemoMode }},
-        {% endif %}
+        "demo" : {{ garDemoMode | default('false') }},
         "mode": "prod",
         "entcore.port" : 8009,
         "max-nodes": 10000,
-        "export-path": "{{ garExportPath }}/data/",
-        "export-archive-path": "{{ garExportPath }}/data-compress/",
+        "export-path": "{{ garExportPath | default('') }}/data/",
+        "export-archive-path": "{{ garExportPath | default('') }}/data-compress/",
         {% if garIdEnt is defined %}
         "id-ent" : "{{ garIdEnt }}",
         {% else %}
@@ -42,24 +40,24 @@
         {% if garRessourcesHost is defined %}
         "gar-ressources" : {
             "host": "{{ garRessourcesHost }}",
-            "cert": "{{ garRessourcesCert }}",
-            "key": "{{ garRessourcesKey }}"
+            "cert": "{{ garRessourcesCert | default('') }}",
+            "key": "{{ garRessourcesKey | default('') }}"
         },
         {% else %}
-        "gar-ressources" : {{ garRessources }},
+        "gar-ressources" : {{ garRessources | default('{ }') }},
         {% endif %}
         {% if garSftpHost is defined %}
         "gar-sftp" : {
             "host": "{{ garSftpHost }}",
-            "port": {{ garSftpPort }},
-            "username": "{{ garSftpUsername }}",
-            "passphrase": "{{ garSftpPassphrase }}",
-            "sshkey": "{{ garSftpSshkey }}",
-            "dir-dest": "{{ garSftpDirDest }}",
-            "known-hosts": "{{ garSftpKnownHost }}"
+            "port": {{ garSftpPort | default('22') }},
+            "username": "{{ garSftpUsername | default('') }}",
+            "passphrase": "{{ garSftpPassphrase | default('') }}",
+            "sshkey": "{{ garSftpSshkey | default('') }}",
+            "dir-dest": "{{ garSftpDirDest | default('') }}",
+            "known-hosts": "{{ garSftpKnownHost | default('') }}"
         },
         {% else %}
-        "gar-sftp" : {{ garSftp }},
+        "gar-sftp" : {{ garSftp | default('{ }') }},
         {% endif %}
         "publicConf": {
             "xiti": {
