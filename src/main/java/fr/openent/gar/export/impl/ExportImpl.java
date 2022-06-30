@@ -1,6 +1,7 @@
 package fr.openent.gar.export.impl;
 
 import fr.openent.gar.Gar;
+import static fr.openent.gar.Gar.config;
 import fr.openent.gar.constants.GarConstants;
 import fr.openent.gar.export.ExportService;
 import fr.openent.gar.export.XMLValidationHandler;
@@ -35,7 +36,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static fr.openent.gar.Gar.CONFIG;
 import static fr.wseduc.webutils.Utils.handlerToAsyncHandler;
 
 public class ExportImpl {
@@ -45,18 +45,16 @@ public class ExportImpl {
     private TarService tarService;
     private JsonObject sftpGarConfig;
     private EventBus eb;
-    private final JsonObject config;
     private Vertx vertx;
     private final EmailSender emailSender;
 
     public ExportImpl(Vertx vertx, String entId, String source, Handler<String> handler) {
         this.vertx = vertx;
-        this.config = CONFIG;
         this.eb = vertx.eventBus();
         this.exportService = new ExportServiceImpl(config);
         this.tarService = new DefaultTarService();
         this.sftpGarConfig = config.getJsonObject("gar-sftp");
-        this.emailSender = new EmailFactory(vertx,this.config).getSender();
+        this.emailSender = new EmailFactory(vertx, config).getSender();
         if (Gar.AAF1D.equals(source)) {
             this.exportAndSend1d(entId, source, handler);
         } else {
@@ -65,8 +63,7 @@ public class ExportImpl {
     }
 
     public ExportImpl(Vertx vertx) {
-        this.config = CONFIG;
-        this.emailSender = new EmailFactory(vertx,this.config).getSender();
+        this.emailSender = new EmailFactory(vertx, config).getSender();
     }
 
     private void exportAndSend1d(final String entId, final String source, final Handler<String> handler) {

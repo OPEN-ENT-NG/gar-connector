@@ -26,9 +26,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 
 public class DefaultResourceService implements ResourceService {
@@ -53,13 +52,15 @@ public class DefaultResourceService implements ResourceService {
 
         final JsonObject domains =  garRessource.getJsonObject("domains", new JsonObject());
 
-        for (String domain : domains.fieldNames()) {
-            final JsonObject res = domains.getJsonObject(domain);
-            if (res == null) continue;
-            try {
-                httpClientByDomain.put(domain, generateHttpClient(new URI(garHost), res.getString("cert"), res.getString("key")));
-            } catch (URISyntaxException e) {
-                log.error("[DefaultResourceService@constructor] An error occurred when creating the URI", e);
+        if (!Gar.demo) {
+            List<String> fieldNames = domains.fieldNames().stream().filter(Objects::nonNull).collect(Collectors.toList());
+            for (String fieldName : fieldNames) {
+                final JsonObject domain = domains.getJsonObject(fieldName);
+                try {
+                    httpClientByDomain.put(fieldName, generateHttpClient(new URI(garHost), domain.getString("cert"), domain.getString("key")));
+                } catch (URISyntaxException e) {
+                    log.error("[DefaultResourceService@constructor] An error occurred when creating the URI : " + e);
+                }
             }
         }
     }

@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.entcore.common.neo4j.Neo4j;
 
-import static fr.openent.gar.Gar.CONFIG;
+import static fr.openent.gar.Gar.config;
 import static org.entcore.common.neo4j.Neo4jResult.validResult;
 
 public class PaginatorHelperImpl implements PaginatorHelper  {
@@ -17,8 +17,8 @@ public class PaginatorHelperImpl implements PaginatorHelper  {
 
     public PaginatorHelperImpl() {
         LIMIT = 25000;
-        if(CONFIG.containsKey("pagination-limit")){
-            LIMIT = CONFIG.getInteger("pagination-limit");
+        if(config.containsKey("pagination-limit")){
+            LIMIT = config.getInteger("pagination-limit");
         }
     }
 
