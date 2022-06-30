@@ -17,7 +17,7 @@ public class Gar extends BaseServer {
 
 	public static final String GAR_ADDRESS = "openent.mediacentre";
 	public static boolean demo;
-	public static JsonObject CONFIG;
+	public static JsonObject config;
 	public final static String AAF = "AAF";
 	public final static String AAF1D = "AAF1D";
 
@@ -25,6 +25,8 @@ public class Gar extends BaseServer {
 	public void start() throws Exception {
 		super.start();
 		final EventBus eb = getEventBus(vertx);
+
+		demo = config.getBoolean("demo", false);
 
 		final String host = config.getString("host").split("//")[1];
 
@@ -44,7 +46,8 @@ public class Gar extends BaseServer {
 		}
 
 		final JsonObject garRessources = config.getJsonObject("gar-ressources", new JsonObject());
-		if (garRessources.containsKey("cert") || garRessources.containsKey("key")) {
+		if ((garRessources.containsKey("cert") && !garRessources.getString("cert").isEmpty()) ||
+				(garRessources.containsKey("key") && !garRessources.getString("key").isEmpty())) {
 			garRessources.put("domains", new JsonObject().put(host,
 					new JsonObject().put("cert", garRessources.getString("cert")).put("key", garRessources.getString("key"))));
 			garRessources.remove("cert");
@@ -69,8 +72,6 @@ public class Gar extends BaseServer {
 		addController(new SettingController(eb));
 
 		final String exportCron = config.getString("export-cron", "");
-		demo = config.getBoolean("demo", false);
-		CONFIG = config;
 
 		vertx.deployVerticle("fr.openent.gar.export.impl.ExportWorker", new DeploymentOptions().setConfig(config)
 				.setIsolationGroup("mediacentre_worker_group")
