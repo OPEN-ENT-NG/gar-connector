@@ -17,7 +17,8 @@ public class Gar extends BaseServer {
 
 	public static final String GAR_ADDRESS = "openent.mediacentre";
 	public static boolean demo;
-	public static JsonObject config;
+	public static JsonObject CONFIG;
+
 	public final static String AAF = "AAF";
 	public final static String AAF1D = "AAF1D";
 
@@ -27,6 +28,7 @@ public class Gar extends BaseServer {
 		final EventBus eb = getEventBus(vertx);
 
 		demo = config.getBoolean("demo", false);
+		CONFIG = config;
 
 		final String host = config.getString("host").split("//")[1];
 

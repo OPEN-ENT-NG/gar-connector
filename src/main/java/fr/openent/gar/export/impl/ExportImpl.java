@@ -1,7 +1,7 @@
 package fr.openent.gar.export.impl;
 
 import fr.openent.gar.Gar;
-import static fr.openent.gar.Gar.config;
+import static fr.openent.gar.Gar.CONFIG;
 import fr.openent.gar.constants.GarConstants;
 import fr.openent.gar.export.ExportService;
 import fr.openent.gar.export.XMLValidationHandler;
@@ -51,10 +51,10 @@ public class ExportImpl {
     public ExportImpl(Vertx vertx, String entId, String source, Handler<String> handler) {
         this.vertx = vertx;
         this.eb = vertx.eventBus();
-        this.exportService = new ExportServiceImpl(config);
+        this.exportService = new ExportServiceImpl(CONFIG);
         this.tarService = new DefaultTarService();
-        this.sftpGarConfig = config.getJsonObject("gar-sftp");
-        this.emailSender = new EmailFactory(vertx, config).getSender();
+        this.sftpGarConfig = CONFIG.getJsonObject("gar-sftp");
+        this.emailSender = new EmailFactory(vertx, CONFIG).getSender();
         if (Gar.AAF1D.equals(source)) {
             this.exportAndSend1d(entId, source, handler);
         } else {
@@ -63,18 +63,18 @@ public class ExportImpl {
     }
 
     public ExportImpl(Vertx vertx) {
-        this.emailSender = new EmailFactory(vertx, config).getSender();
+        this.emailSender = new EmailFactory(vertx, CONFIG).getSender();
     }
 
     private void exportAndSend1d(final String entId, final String source, final Handler<String> handler) {
-        final String exportPath = FileUtils.appendPath(config.getString("export-path"), entId + GarConstants.EXPORT_1D_SUFFIX);
-        final String exportArchivePath = FileUtils.appendPath(config.getString("export-archive-path"), entId + GarConstants.EXPORT_1D_SUFFIX);
+        final String exportPath = FileUtils.appendPath(CONFIG.getString("export-path"), entId + GarConstants.EXPORT_1D_SUFFIX);
+        final String exportArchivePath = FileUtils.appendPath(CONFIG.getString("export-archive-path"), entId + GarConstants.EXPORT_1D_SUFFIX);
         exportAndSend(entId, source, handler, exportPath, exportArchivePath);
     }
 
     private void exportAndSend2d(final String entId, final String source, final Handler<String> handler) {
-        final String exportPath = FileUtils.appendPath(config.getString("export-path"), entId);
-        final String exportArchivePath = FileUtils.appendPath(config.getString("export-archive-path"), entId);
+        final String exportPath = FileUtils.appendPath(CONFIG.getString("export-path"), entId);
+        final String exportArchivePath = FileUtils.appendPath(CONFIG.getString("export-archive-path"), entId);
         exportAndSend(entId, source, handler, exportPath, exportArchivePath);
     }
 
@@ -163,8 +163,8 @@ public class ExportImpl {
     }
 
     public void sendReport(String report) {
-        JsonArray recipients = config.getJsonArray("xsd-recipient-list", new JsonArray());
-        String subject = "[GAR][" + config.getString("host") + "] XSD Validation error";
+        JsonArray recipients = CONFIG.getJsonArray("xsd-recipient-list", new JsonArray());
+        String subject = "[GAR][" + CONFIG.getString("host") + "] XSD Validation error";
         for (int i = 0; i < recipients.size(); i++) {
             try{
                 final HttpServerRequest request = new JsonHttpServerRequest(new JsonObject());
