@@ -23,6 +23,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import org.entcore.common.controller.ControllerHelper;
+import org.entcore.common.http.filter.AdminFilter;
+import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.user.UserUtils;
 
 import static fr.wseduc.webutils.Utils.handlerToAsyncHandler;
@@ -52,6 +54,20 @@ public class GarController extends ControllerHelper {
     @SecuredAction("gar.view")
     public void render(HttpServerRequest request) {
         renderView(request, new JsonObject().put("demo", Gar.demo));
+    }
+
+    @Get("/config")
+    @SecuredAction(value = "", type = ActionType.RESOURCE)
+    @ResourceFilter(AdminFilter.class)
+    public void getConfig(final HttpServerRequest request) {
+        JsonObject safeConfig = config.copy();
+
+        JsonObject garSftp = safeConfig.getJsonObject("gar-sftp", null);
+        if (garSftp != null) {
+            if (garSftp.getString("passphrase", null) != null) garSftp.put("passphrase", "**********");
+        }
+
+        renderJson(request, safeConfig);
     }
 
     @Get("/resources")
