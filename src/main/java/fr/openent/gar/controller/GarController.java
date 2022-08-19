@@ -23,9 +23,12 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import org.entcore.common.controller.ControllerHelper;
-import org.entcore.common.http.filter.AdminFilter;
 import org.entcore.common.http.filter.ResourceFilter;
+import org.entcore.common.http.filter.SuperAdminFilter;
 import org.entcore.common.user.UserUtils;
+
+import java.util.Iterator;
+import java.util.Map;
 
 import static fr.wseduc.webutils.Utils.handlerToAsyncHandler;
 import static fr.wseduc.webutils.http.response.DefaultResponseHandler.defaultResponseHandler;
@@ -58,13 +61,19 @@ public class GarController extends ControllerHelper {
 
     @Get("/config")
     @SecuredAction(value = "", type = ActionType.RESOURCE)
-    @ResourceFilter(AdminFilter.class)
+    @ResourceFilter(SuperAdminFilter.class)
     public void getConfig(final HttpServerRequest request) {
         JsonObject safeConfig = config.copy();
 
         JsonObject garSftp = safeConfig.getJsonObject("gar-sftp", null);
         if (garSftp != null) {
-            if (garSftp.getString("passphrase", null) != null) garSftp.put("passphrase", "**********");
+            JsonObject tenants = garSftp.getJsonObject("tenants", null);
+            if(tenants != null) {
+                for (Iterator<Map.Entry<String, Object>> it = tenants.stream().iterator(); it.hasNext(); ) {
+                    JsonObject tenant = (JsonObject) it.next().getValue();
+                    if (tenant.getString("passphrase", null) != null) tenant.put("passphrase", "**********");
+                }
+            }
         }
 
         renderJson(request, safeConfig);
