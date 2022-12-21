@@ -1,11 +1,14 @@
 package fr.openent.gar.controller;
 
 import fr.openent.gar.Gar;
+import fr.openent.gar.constants.Field;
 import fr.openent.gar.export.impl.ExportWorker;
 import fr.openent.gar.security.WorkflowUtils;
 import fr.openent.gar.service.EventService;
+import fr.openent.gar.service.ParameterService;
 import fr.openent.gar.service.ResourceService;
 import fr.openent.gar.service.impl.DefaultEventService;
+import fr.openent.gar.service.impl.DefaultParameterService;
 import fr.openent.gar.service.impl.DefaultResourceService;
 import fr.wseduc.bus.BusAddress;
 import fr.wseduc.rs.Get;
@@ -28,7 +31,9 @@ import org.entcore.common.http.filter.SuperAdminFilter;
 import org.entcore.common.user.UserUtils;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static fr.wseduc.webutils.Utils.handlerToAsyncHandler;
 import static fr.wseduc.webutils.http.response.DefaultResponseHandler.defaultResponseHandler;
@@ -37,6 +42,7 @@ public class GarController extends ControllerHelper {
 
     private final ResourceService resourceService;
     private final EventService eventService;
+    private final ParameterService parameterService;
     private final Logger log = LoggerFactory.getLogger(GarController.class);
     private final EventBus eb;
     private final JsonObject config;
@@ -51,6 +57,7 @@ public class GarController extends ControllerHelper {
                 config.getJsonObject("gar-ressources"),
                 config.getJsonObject("id-ent")
         );
+        this.parameterService = new DefaultParameterService(eb);
     }
 
     @Get("")
@@ -137,6 +144,28 @@ public class GarController extends ControllerHelper {
                         .put("status", "ok")
                         .put("message", config);
                 message.reply(data);
+                break;
+            case "isInGarGroup":
+                JsonArray structureIds = message.body().getJsonArray(Field.STRUCTURE_IDS);
+                JsonObject params = new JsonObject()
+                        .put(Field.STRUCTURE_IDS, structureIds)
+                        .put(Field.USER_ID, message.body().getString(Field.USER_ID));
+
+                this.parameterService.userHasGarGroup(params)
+                        .onSuccess(result -> {
+                            List<String> list = result.stream().map(e -> ((JsonObject) e).getString(Field.STRUCTURE_ID)).collect(Collectors.toList());
+                            JsonObject res = new JsonObject();
+                            structureIds.forEach(structureId -> res.put((String) structureId, list.contains(structureId)));
+                            JsonObject response = new JsonObject()
+                                    .put(Field.STATUS, Field.OK)
+                                    .put(Field.MESSAGE, res);
+                            message.reply(response);
+                        }).onFailure(err -> {
+                            JsonObject response = new JsonObject()
+                                    .put(Field.STATUS, Field.KO)
+                                    .put(Field.MESSAGE, err.getMessage());
+                            message.reply(response);
+                        });
                 break;
             case "getResources":
                 JsonObject body = message.body();

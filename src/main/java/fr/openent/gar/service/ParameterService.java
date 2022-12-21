@@ -1,6 +1,7 @@
 package fr.openent.gar.service;
 
 import fr.wseduc.webutils.Either;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -38,4 +39,6 @@ public interface ParameterService {
      * @param result        Function handler returning data
      */
     void addUserToGarGroup(JsonObject body, Handler<Either<String, JsonObject>> result);
+
+    Future<JsonArray> userHasGarGroup(JsonObject body);
 }
