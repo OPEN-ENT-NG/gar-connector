@@ -1,9 +1,13 @@
 package fr.openent.gar.service.impl;
+
 import fr.openent.gar.Gar;
+import fr.openent.gar.constants.Field;
 import fr.openent.gar.service.ParameterService;
 import fr.wseduc.webutils.Either;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonArray;
@@ -127,5 +131,31 @@ public class DefaultParameterService implements ParameterService {
                     "create unique (u)-[:IN{source:{source}}]->(g) ";
         }
         Neo4j.getInstance().execute(query, params, Neo4jResult.validUniqueResultHandler(handler));
+    }
+
+    @Override
+    public Future<JsonArray> userHasGarGroup(JsonObject body) {
+        Promise<JsonArray> promise = Promise.promise();
+
+        final String query = "MATCH (g:ManualGroup{name: {groupName} })<-[:IN]-(u:User{profiles:['Personnel']})--(s:Structure) " +
+                "WHERE s.id in {structureIds} " +
+                "RETURN s.id AS structureId " +
+                "UNION " +
+                "MATCH (s:Structure)-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[:IN]->(g:ManualGroup{name: {groupName} }) " +
+                "WHERE s.id IN {structureIds} " +
+                "RETURN s.id AS structureId";
+        final JsonObject params = new JsonObject()
+                .put(Field.USER_ID, body.getString(Field.USER_ID))
+                .put(Field.STRUCTURE_IDS, body.getJsonArray(Field.STRUCTURE_IDS))
+                .put(Field.GROUP_NAME, GAR_GROUP_NAME)
+                .put("direction", FUNCTION_DIRECTION_NAME)
+                .put("documentation", FUNCTION_DOCUMENTATION_NAME);
+
+        Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(either -> {
+            if (either.isLeft()) promise.fail(either.left().getValue());
+            else promise.complete(either.right().getValue());
+        }));
+
+        return promise.future();
     }
 }
