@@ -32,16 +32,6 @@ buildNode () {
   esac
 }
 
-runTests () {
-case `uname -s` in
-    MINGW*)
-      docker-compose run --rm -u "$USER_UID:$GROUP_GID" node sh -c "npm install --no-bin-links && npm test"
-      ;;
-    *)
-      docker-compose run --rm -u "$USER_UID:$GROUP_GID" node sh -c "npm install && npm test"
-  esac
-}
-
 buildGradle () {
   docker-compose run --rm -u "$USER_UID:$GROUP_GID" gradle gradle shadowJar install publishToMavenLocal
 }
@@ -57,6 +47,22 @@ publish () {
   docker-compose run --rm -u "$USER_UID:$GROUP_GID" gradle gradle publish
 }
 
+testNode () {
+  rm -rf coverage
+  rm -rf */build
+  case `uname -s` in
+    MINGW*)
+      docker-compose run --rm -u "$USER_UID:$GROUP_GID" node sh -c "npm install --no-bin-links && node_modules/gulp/bin/gulp.js drop-cache && npm test"
+      ;;
+    *)
+      docker-compose run --rm -u "$USER_UID:$GROUP_GID" node sh -c "npm install && node_modules/gulp/bin/gulp.js drop-cache && npm test"
+  esac
+}
+
+testGradle() {
+  docker-compose run --rm -u "$USER_UID:$GROUP_GID" gradle gradle test --no-build-cache --rerun-tasks
+}
+
 for param in "$@"
 do
   case $param in
@@ -66,9 +72,6 @@ do
     buildNode)
       buildNode
       ;;
-    runTests)
-      runTests
-      ;;
     buildGradle)
       buildGradle
       ;;
@@ -77,6 +80,15 @@ do
       ;;
     publish)
       publish
+      ;;
+    test)
+      testNode ; testGradle
+      ;;
+    testNode)
+      testNode
+      ;;
+    testGradle)
+      testGradle
       ;;
     *)
       echo "Invalid argument : $param"
