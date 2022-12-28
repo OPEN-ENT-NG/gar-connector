@@ -12,12 +12,15 @@ import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import org.entcore.common.neo4j.Neo4j;
 import org.entcore.common.neo4j.Neo4jResult;
 
 public class DefaultParameterService implements ParameterService {
 
     private final EventBus eb;
+    private final Logger log = LoggerFactory.getLogger(DefaultParameterService.class);
     private static final String GAR_GROUP_NAME = "RESP-AFFECT-GAR";
     private static final String GAR_GROUP_SOURCE = "MANUAL";
     private static final String GAR_LINK_NAME = "GAR_AFFECTATION_IHM_CONNECTEUR";
@@ -152,8 +155,12 @@ public class DefaultParameterService implements ParameterService {
                 .put("documentation", FUNCTION_DOCUMENTATION_NAME);
 
         Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(either -> {
-            if (either.isLeft()) promise.fail(either.left().getValue());
-            else promise.complete(either.right().getValue());
+            if (either.isLeft()) {
+                promise.fail(either.left().getValue());
+                log.error(String.format("[DefaultParameterService@%s::userHasGarGroup] Error during request neo4j check %s.", this.getClass().getSimpleName(), either.left().getValue()));
+            } else {
+                promise.complete(either.right().getValue());
+            }
         }));
 
         return promise.future();
