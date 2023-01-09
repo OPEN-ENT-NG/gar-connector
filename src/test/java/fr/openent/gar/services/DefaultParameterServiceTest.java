@@ -41,11 +41,11 @@ public class DefaultParameterServiceTest {
         Async async = ctx.async();
 
         String expectedQuery = "MATCH (g:ManualGroup{name: {groupName} })<-[:IN]-(u:User{profiles:['Personnel']})--(s:Structure) " +
-                "WHERE s.id in {structureIds} " +
+                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
                 "RETURN s.id AS structureId " +
                 "UNION " +
                 "MATCH (s:Structure)-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[:IN]->(g:ManualGroup{name: {groupName} }) " +
-                "WHERE s.id IN {structureIds} " +
+                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
                 "RETURN s.id AS structureId";
         JsonObject expectedParams = new JsonObject()
                 .put("userId", "a25cd679-b30b-4701-8c60-231cdc30cdf2")

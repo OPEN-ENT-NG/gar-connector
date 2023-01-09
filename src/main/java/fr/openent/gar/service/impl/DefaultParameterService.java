@@ -141,11 +141,11 @@ public class DefaultParameterService implements ParameterService {
         Promise<JsonArray> promise = Promise.promise();
 
         final String query = "MATCH (g:ManualGroup{name: {groupName} })<-[:IN]-(u:User{profiles:['Personnel']})--(s:Structure) " +
-                "WHERE s.id in {structureIds} " +
+                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
                 "RETURN s.id AS structureId " +
                 "UNION " +
                 "MATCH (s:Structure)-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[:IN]->(g:ManualGroup{name: {groupName} }) " +
-                "WHERE s.id IN {structureIds} " +
+                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
                 "RETURN s.id AS structureId";
         final JsonObject params = new JsonObject()
                 .put(Field.USER_ID, body.getString(Field.USER_ID))
