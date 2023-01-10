@@ -139,20 +139,14 @@ public class DefaultParameterService implements ParameterService {
     @Override
     public Future<JsonArray> userHasGarGroup(JsonObject body) {
         Promise<JsonArray> promise = Promise.promise();
-
-        final String query = "MATCH (g:ManualGroup{name: {groupName} })<-[:IN]-(u:User{profiles:['Personnel']})--(s:Structure) " +
+        final String query =
+                "MATCH (u:User)-[:IN]->(g:ManualGroup{name: {groupName} })-[:DEPENDS]->(s:Structure) " +
                 "WHERE s.id IN {structureIds} AND u.id = {userId} " +
-                "RETURN s.id AS structureId " +
-                "UNION " +
-                "MATCH (s:Structure)-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[:IN]->(g:ManualGroup{name: {groupName} }) " +
-                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
-                "RETURN s.id AS structureId";
+                "RETURN DISTINCT s.id AS structureId";
         final JsonObject params = new JsonObject()
                 .put(Field.USER_ID, body.getString(Field.USER_ID))
                 .put(Field.STRUCTURE_IDS, body.getJsonArray(Field.STRUCTURE_IDS))
-                .put(Field.GROUP_NAME, GAR_GROUP_NAME)
-                .put("direction", FUNCTION_DIRECTION_NAME)
-                .put("documentation", FUNCTION_DOCUMENTATION_NAME);
+                .put(Field.GROUP_NAME, GAR_GROUP_NAME);
 
         Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(either -> {
             if (either.isLeft()) {
