@@ -40,19 +40,14 @@ public class DefaultParameterServiceTest {
     public void testUserHasGarGroup(TestContext ctx) {
         Async async = ctx.async();
 
-        String expectedQuery = "MATCH (g:ManualGroup{name: {groupName} })<-[:IN]-(u:User{profiles:['Personnel']})--(s:Structure) " +
+        String expectedQuery =
+                "MATCH (u:User)-[:IN]->(g:ManualGroup{name: {groupName} })-[:DEPENDS]->(s:Structure) " +
                 "WHERE s.id IN {structureIds} AND u.id = {userId} " +
-                "RETURN s.id AS structureId " +
-                "UNION " +
-                "MATCH (s:Structure)-[:DEPENDS]-(pg:ProfileGroup)-[:IN]-(u:User)-[:IN]->(g:ManualGroup{name: {groupName} }) " +
-                "WHERE s.id IN {structureIds} AND u.id = {userId} " +
-                "RETURN s.id AS structureId";
+                "RETURN DISTINCT s.id AS structureId";
         JsonObject expectedParams = new JsonObject()
                 .put("userId", "a25cd679-b30b-4701-8c60-231cdc30cdf2")
                 .put("structureIds", new JsonArray().add("5c04e497-cb43-4589-8332-16cc8a873920"))
-                .put("groupName", "RESP-AFFECT-GAR")
-                .put("direction", "DIR")
-                .put("documentation", "DOC");
+                .put("groupName", "RESP-AFFECT-GAR");
 
         JsonObject mockParams = new JsonObject()
                 .put("userId", "a25cd679-b30b-4701-8c60-231cdc30cdf2")
