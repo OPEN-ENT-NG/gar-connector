@@ -217,7 +217,7 @@ public class DataServiceGroupImpl1d extends DataServiceBaseImpl implements DataS
                 "WHERE NOT (fg.name IN classes) " +
                 "WITH u,s,fg MATCH (u)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s) " +
                 "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND head(u.profiles) IN ['Student', 'Teacher'] " +
+                "AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "with distinct s.UAI as uai, fg, " + condition +
                 " return distinct coalesce(" + (hasAcademyPrefix ? "fgcode" : "fgcode[size(fgcode)-1]") + ", fg.id) as `" + GROUPS_CODE + "`, " +
@@ -286,7 +286,7 @@ public class DataServiceGroupImpl1d extends DataServiceBaseImpl implements DataS
         }
         final String classQuery = "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure {source:'" + this.source + "'})" +
                 "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND pg.filter IN ['Student', 'Teacher'] " +
+                "AND pg.filter IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "WITH distinct s.UAI as uai, u.id as uid, c, " + condition +
                 " return distinct uai as `" + STRUCTURE_UAI + "`, " +
@@ -321,7 +321,7 @@ public class DataServiceGroupImpl1d extends DataServiceBaseImpl implements DataS
                 "WHERE NOT (fg.name IN classes) " +
                 "WITH u,s,fg MATCH (u)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s) " +
                 "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND head(u.profiles) IN ['Student', 'Teacher'] " +
+                "AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "with distinct s.UAI as uai, u.id as uid, fg, " + condition +
                 " return distinct uai as `" + STRUCTURE_UAI + "`, " +

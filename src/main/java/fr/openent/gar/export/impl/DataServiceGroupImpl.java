@@ -280,7 +280,7 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
                 "WITH collect(c.name) as classes, s " +
                 "MATCH (u:User)-[:IN]->(fg:FunctionalGroup)-[d2:DEPENDS]->(s:Structure) " +
                 "WHERE NOT (fg.name IN classes) " +
-                "AND head(u.profiles) IN ['Student', 'Teacher'] " +
+                "AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "WITH u,s,fg MATCH (u)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s) " +
                 "with s.UAI as uai, fg " +
@@ -345,7 +345,7 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
     private void getDivisionGroupsPersonFromNeo4j(int skip, Handler<Either<String, JsonArray>> handler) {
         final String classQuery = "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure)" +
                 "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
-                "AND pg.filter IN ['Student', 'Teacher'] " +
+                "AND pg.filter IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
                 "u.id as `" + PERSON_ID + "`, " +
@@ -370,7 +370,7 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
                 "WITH collect(c.name) as classes, s " +
                 "MATCH (u:User)-[:IN]->(fg:FunctionalGroup)-[:DEPENDS]->(s:Structure) " +
                 "WHERE NOT (fg.name IN classes) " +
-                "AND head(u.profiles) IN ['Student', 'Teacher'] " +
+                "AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "WITH u,s,fg MATCH (u)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s) " +
                 "return distinct s.UAI as `" + STRUCTURE_UAI + "`, " +
@@ -417,7 +417,7 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
         String query =
                 "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure) " +
                         "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
-                        "AND pg.filter IN ['Student', 'Teacher'] " +
+                        "AND pg.filter IN ['Student', 'Teacher', 'Personnel'] " +
                         "AND NOT(HAS(u.deleteDate)) " +
                         "WITH distinct u,s " +
                         "MATCH (u)-[t:TEACHES]->(sub:Subject)-[:SUBJECT]->(s) " +
@@ -472,7 +472,7 @@ public class DataServiceGroupImpl extends DataServiceBaseImpl implements DataSer
         String query =
                 "MATCH (u:User)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(c:Class)-[:BELONGS]->(s:Structure) " +
                         "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports AND s.source <> '" + Gar.AAF1D + "' " +
-                        "AND pg.filter IN ['Student', 'Teacher'] " +
+                        "AND pg.filter IN ['Student', 'Teacher', 'Personnel'] " +
                         "AND NOT(HAS(u.deleteDate)) " +
                         "WITH distinct u,s " +
                         "MATCH (u)-[t:TEACHES]->(sub:Subject)-[:SUBJECT]->(s) " +
