@@ -128,6 +128,8 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
                 "u.firstName as `" + PERSON_FIRST_NAME + "`, " +
                 "coalesce(u.otherNames, [u.firstName]) as `" + PERSON_OTHER_NAMES + "`, " +
                 //TODO GARPersonCivilitep
+                // Priority = emailAcademy > emailInternal > email
+                "coalesce(u.emailAcademy, u.emailInternal, u.email) as `" + PERSON_MAIL + "`, " +
                 "collect(distinct sr.UAI)[0] as `" + PERSON_STRUCT_ATTACH + "`, " +
                 "u.birthDate as `" + PERSON_BIRTH_DATE + "`, " +
                 "u.functions as functions, u.modules as modules, " +
@@ -242,6 +244,9 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
             teacher.put(PERSON_BIRTH_DATE, personCopy.getValue(PERSON_BIRTH_DATE));
         }
         teacher.put(TEACHER_POSITION, personCopy.getValue(TEACHER_POSITION));
+        if (personCopy.getValue(PERSON_MAIL) != null && !"".equals(personCopy.getValue(PERSON_MAIL))) {
+            teacher.put(PERSON_MAIL, personCopy.getValue(PERSON_MAIL));
+        }
     }
 
     /**

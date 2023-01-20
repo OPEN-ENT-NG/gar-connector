@@ -101,6 +101,8 @@ public class DataServiceTeacherImpl1d extends DataServiceBaseImpl implements Dat
                     log.warn("Gar : mandatory attribut for Teacher : " + teacher);
                     continue;
                 }
+                //invalid xsd with men:GARPersonMail for 1D
+                teacher.remove(PERSON_MAIL);
 
                 reorganizeNodes(teacher);
 
