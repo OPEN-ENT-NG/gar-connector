@@ -1,5 +1,5 @@
 {
-  "name": "fr.openent~gar-connector~2.1.4",
+  "name": "fr.openent~gar-connector~2.1-SNAPSHOT",
   "config": {
     "main" : "fr.openent.gar.Gar",
     "port" : 8102,
