@@ -11,8 +11,7 @@ public interface ResourceService {
      *
      * @param userId    User id
      * @param structure User structure
-     * @param hostname  User host name
      * @param handler   Function handler returning data
      */
-    void get(String userId, String structure, String hostname, Handler<Either<String, JsonArray>> handler);
+    void get(String userId, String structure, Handler<Either<String, JsonArray>> handler);
 }

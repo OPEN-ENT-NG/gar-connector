@@ -34,30 +34,21 @@ public class DefaultResourceService implements ResourceService {
 
     private final Vertx vertx;
     private final String garHost;
-    private final JsonObject idsEnt;
-    private final JsonObject hostById;
     private final Logger log = LoggerFactory.getLogger(DefaultResourceService.class);
-    private final Map<String, HttpClient> httpClientByDomain = new HashMap();
+    private final Map<String, HttpClient> httpClientByIdENT = new HashMap();
 
-    public DefaultResourceService(Vertx vertx, JsonObject garRessource, JsonObject idsEnt) {
+    public DefaultResourceService(Vertx vertx, JsonObject garRessource) {
         this.vertx = vertx;
         this.garHost = garRessource.getString("host");
-        this.idsEnt = idsEnt;
 
-        final JsonObject hostById = new JsonObject();
-        for (String hostName : idsEnt.fieldNames()) {
-            hostById.put(idsEnt.getString(hostName), hostName);
-        }
-        this.hostById = hostById;
-
-        final JsonObject domains =  garRessource.getJsonObject("domains", new JsonObject());
+        final JsonObject tenants = garRessource.getJsonObject("tenants", new JsonObject());
 
         if (!Gar.demo) {
-            List<String> fieldNames = domains.fieldNames().stream().filter(Objects::nonNull).collect(Collectors.toList());
-            for (String fieldName : fieldNames) {
-                final JsonObject domain = domains.getJsonObject(fieldName);
+            List<String> idsENT = tenants.fieldNames().stream().filter(Objects::nonNull).collect(Collectors.toList());
+            for (String idENT : idsENT) {
+                final JsonObject tenant = tenants.getJsonObject(idENT);
                 try {
-                    httpClientByDomain.put(fieldName, generateHttpClient(new URI(garHost), domain.getString("cert"), domain.getString("key")));
+                    httpClientByIdENT.put(idENT, generateHttpClient(new URI(garHost), tenant.getString("cert"), tenant.getString("key")));
                 } catch (URISyntaxException e) {
                     log.error("[DefaultResourceService@constructor] An error occurred when creating the URI : " + e);
                 }
@@ -66,7 +57,7 @@ public class DefaultResourceService implements ResourceService {
     }
 
     @Override
-    public void get(String userId, String structure, String hostname, Handler<Either<String, JsonArray>> handler) {
+    public void get(String userId, String structure, Handler<Either<String, JsonArray>> handler) {
         if(userId == null){
             handler.handle(new Either.Left<>("[DefaultResourceService@get] No userid." ));
             return;
@@ -85,31 +76,26 @@ public class DefaultResourceService implements ResourceService {
                 if (results.size() > 0) {
                     String uai = results.getJsonObject(0).getString("UAI");
                     String structureName = results.getJsonObject(0).getString("name");
-                    String host = "";
                     if (Gar.demo) {
                         JsonObject resources = new JsonObject("{ \"listeRessources\": { \"ressource\": [ { \"idRessource\": \"http://n2t.net/ark:/99999/r14xxxxxxxx\", \"idType\": \"ARK\", \"nomRessource\": \"R14_ELEVE_RIEN - Manuel numérique élève (100% numérique) - Multisupports (tablettes + PC/Mac)\", \"idEditeur\": \"378901946_0000000000000000\", \"nomEditeur\": \"Worldline\", \"urlVignette\": \"https://vignette.validation.test-gar.education.fr/VAtest1/gar/152.png\", \"typePresentation\": { \"code\": \"MAN\", \"nom\": \"manuels numériques\" }, \"typePedagogique\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-006\", \"nom\": \"étude de cas\" }], \"typologieDocument\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024\", \"nom\": \"livre numérique\" }], \"niveauEducatif\": [], \"domaineEnseignement\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-2550\", \"nom\": \"des chrétiens dans l\\u0027Empire (histoire 6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-2551\", \"nom\": \"les relations de l\\u0027Empire romain avec la Chine des Han (histoire 6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-993\", \"nom\": \"l\\u0027Empire romain dans le monde antique (histoire 6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-2544\", \"nom\": \"la « révolution » néolithique (histoire 6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-2549\", \"nom\": \"conquêtes, paix romaine et romanisation (histoire 6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-990\", \"nom\": \"histoire (6e)\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-991\", \"nom\": \"la longue histoire de l\\u0027humanité et des migrations (histoire 6e)\" }], \"urlAccesRessource\": \"https://sp-auth.validation.test-gar.education.fr/domaineGar?idENT\\u003dRU5UVEVTVDE\\u003d\\u0026idEtab\\u003dMDY1MDQ5OVAtRVQ2\\u0026idSrc\\u003daHR0cDovL24ydC5uZXQvYXJrOi85OTk5OS9yMTR4eHh4eHh4eA\\u003d\\u003d\", \"nomSourceEtiquetteGar\": \"Accessible via le Gestionnaire d’accès aux ressources (GAR)\", \"distributeurTech\": \"378901946_0000000000000000\", \"validateurTech\": \"378901946_0000000000000000\" }, { \"idRessource\": \"http://n2t.net/ark:/99999/r20xxxxxxxx\", \"idType\": \"ARK\", \"nomRessource\": \"R20_ELEVE_1SEUL - Manuel numérique élève (100% numérique) - Multisupports (tablettes + PC/Mac)\", \"idEditeur\": \"378901946_0000000000000000\", \"nomEditeur\": \"Worldline\", \"urlVignette\": \"https://vignette.validation.test-gar.education.fr/VAtest1/gar/114.png\", \"typePresentation\": { \"code\": \"MAN\", \"nom\": \"manuels numériques\" }, \"typePedagogique\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027\", \"nom\": \"activité pédagogique\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/lecture\", \"nom\": \"cours / présentation\" }], \"typologieDocument\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024\", \"nom\": \"livre numérique\" }], \"niveauEducatif\": [], \"domaineEnseignement\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1357\", \"nom\": \"français (cycle 3)\" }], \"urlAccesRessource\": \"https://sp-auth.validation.test-gar.education.fr/domaineGar?idENT\\u003dRU5UVEVTVDE\\u003d\\u0026idEtab\\u003dMDY1MDQ5OVAtRVQ2\\u0026idSrc\\u003daHR0cDovL24ydC5uZXQvYXJrOi85OTk5OS9yMjB4eHh4eHh4eA\\u003d\\u003d\", \"nomSourceEtiquetteGar\": \"Accessible via le Gestionnaire d’accès aux ressources (GAR)\", \"distributeurTech\": \"378901946_0000000000000000\", \"validateurTech\": \"378901946_0000000000000000\" } , { \"idRessource\": \"http://n2t.net/ark:/99999/r14xxxxxxx2\", \"idType\": \"ARK\", \"nomRessource\": \"Physique Chimie\", \"idEditeur\": \"378901946_0000000000000000\", \"nomEditeur\": \"Micoroméga - Hatier\", \"urlVignette\": \"https://vignette.validation.test-gar.education.fr/VAtest1/gar/113.png\", \"typePresentation\": { \"code\": \"MAN\", \"nom\": \"manuels numériques\" }, \"typePedagogique\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-006\", \"nom\": \"simulation\" }], \"typologieDocument\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024\", \"nom\": \"livre numérique\" }], \"niveauEducatif\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023\", \"nom\": \"5e\" }], \"domaineEnseignement\": [ { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-991\", \"nom\": \"Physique Chimie \" }], \"urlAccesRessource\": \"https://sp-auth.validation.test-gar.education.fr/domaineGar?idENT\\u003dRU5UVEVTVDE\\u003d\\u0026idEtab\\u003dMDY1MDQ5OVAtRVQ2\\u0026idSrc\\u003daHR0cDovL24ydC5uZXQvYXJrOi85OTk5OS9yMTR4eHh4eHh4eA\\u003d\\u003d\", \"nomSourceEtiquetteGar\": \"Accessible via le Gestionnaire d’accès aux ressources (GAR)\", \"distributeurTech\": \"378901946_0000000000000000\", \"validateurTech\": \"378901946_0000000000000000\" }, { \"idRessource\": \"http://n2t.net/ark:/99999/r20xxxxxxx2\", \"idType\": \"ARK\", \"nomRessource\": \"Arts Plastisque\", \"idEditeur\": \"378901946_0000000000000000\", \"nomEditeur\": \"C'est à voir\", \"urlVignette\": \"https://vignette.validation.test-gar.education.fr/VAtest1/gar/115.png\", \"typePresentation\": { \"code\": \"MAN\", \"nom\": \"manuels numériques\" }, \"typePedagogique\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027\", \"nom\": \"activité pédagogique\" }, { \"uri\": \"http://data.education.fr/voc/scolomfr/concept/lecture\", \"nom\": \"matériel de référence\" }], \"typologieDocument\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024\", \"nom\": \"livre numérique\" }], \"niveauEducatif\": [], \"domaineEnseignement\": [{ \"uri\": \"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1357\", \"nom\": \"français (cycle 3)\" }], \"urlAccesRessource\": \"https://sp-auth.validation.test-gar.education.fr/domaineGar?idENT\\u003dRU5UVEVTVDE\\u003d\\u0026idEtab\\u003dMDY1MDQ5OVAtRVQ2\\u0026idSrc\\u003daHR0cDovL24ydC5uZXQvYXJrOi85OTk5OS9yMjB4eHh4eHh4eA\\u003d\\u003d\", \"nomSourceEtiquetteGar\": \"Accessible via le Gestionnaire d’accès aux ressources (GAR)\", \"distributeurTech\": \"378901946_0000000000000000\", \"validateurTech\": \"378901946_0000000000000000\" } ] } }");
                         beautifyRessourcesResult(handler, uai, structureName, resources);
                     } else {
-                        if (hostname == null) {
-                            JsonArray exports = results.getJsonObject(0).getJsonArray("exports");
-                            if (exports != null && !exports.isEmpty()) {
-                                for (Object export : exports.getList()) {
-                                    if (!(export instanceof String)) continue;
-                                    String exp = (String) export;
-                                    if (exp.contains("GAR-")) {
-                                        String idEnt = exp.split("-")[1];
-                                        host = hostById.getString(idEnt);
-                                        break;
-                                    }
+                        JsonArray exports = results.getJsonObject(0).getJsonArray("exports");
+                        String idEnt = null;
+                        if (exports != null && !exports.isEmpty()) {
+                            for (Object export : exports.getList()) {
+                                if (!(export instanceof String)) continue;
+                                String exp = (String) export;
+                                if (exp.contains("GAR-")) {
+                                    idEnt = exp.split("-")[1];
+                                    break;
                                 }
                             }
-                        } else {
-                            host = hostname;
                         }
 
-                        if(!idsEnt.containsKey(host)){
-                            handler.handle(new Either.Left<>("[DefaultResourceService@get] This hostname is undefined in " +
-                                    "config key id-ent, or hostname isn't match real hostname : " + host ));
+                        if(idEnt == null){
+                            handler.handle(new Either.Left<>("[DefaultResourceService@get] This structure has undefined " +
+                                    "gar id project in exports field : " + structure ));
                             return;
                         }
 
@@ -121,12 +107,12 @@ public class DefaultResourceService implements ResourceService {
                             handler.handle(new Either.Left<>("[DefaultResourceService@get] Bad gar host url : " + garHost));
                             return;
                         }
-                        String resourcesUri = garHost + "/ressources/" + idsEnt.getString(host) + "/" + uai + "/" + userId;
-                        final HttpClient httpClient = httpClientByDomain.get(host);
+                        String resourcesUri = garHost + "/ressources/" + idEnt + "/" + uai + "/" + userId;
+                        final HttpClient httpClient = httpClientByIdENT.get(idEnt);
                         if (httpClient == null) {
-                            log.error("no gar ressources httpClient available for this host : " + host);
+                            log.error("no gar ressources httpClient available for this entId : " + idEnt);
                             handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
-                                    "No gar ressources httpClient available for this host : " + host));
+                                    "No gar ressources httpClient available for this entId : " + idEnt));
                             return;
                         }
                         final HttpClientRequest clientRequest = httpClient.get(resourcesUri, response -> {

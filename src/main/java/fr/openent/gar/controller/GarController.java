@@ -54,8 +54,7 @@ public class GarController extends ControllerHelper {
         this.eventService = new DefaultEventService(config.getString("event-collection", "gar-events"));
         this.resourceService = new DefaultResourceService(
                 vertx,
-                config.getJsonObject("gar-ressources"),
-                config.getJsonObject("id-ent")
+                config.getJsonObject("gar-ressources")
         );
         this.parameterService = new DefaultParameterService(eb);
     }
@@ -92,7 +91,7 @@ public class GarController extends ControllerHelper {
         UserUtils.getUserInfos(eb, request, user -> {
             String structureId = request.params().contains("structure") ? request.getParam("structure") : user.getStructures().get(0);
             String userId = user.getUserId();
-            this.resourceService.get(userId, structureId, Renders.getHost(request), result -> {
+            this.resourceService.get(userId, structureId, result -> {
                             if (result.isRight()) {
                                 Renders.renderJson(request, result.right().getValue());
                             } else {
@@ -172,7 +171,7 @@ public class GarController extends ControllerHelper {
                 String structureId = body.getString("structure");
                 String userId = body.getString("user");
 
-                this.resourceService.get(userId, structureId, null, result -> {
+                this.resourceService.get(userId, structureId, result -> {
                             if (result.isRight()) {
                                 JsonObject response = new JsonObject()
                                         .put("status", "ok")

@@ -50,7 +50,7 @@ public class Gar extends BaseServer {
 		final JsonObject garRessources = config.getJsonObject("gar-ressources", new JsonObject());
 		if ((garRessources.containsKey("cert") && !garRessources.getString("cert").isEmpty()) ||
 				(garRessources.containsKey("key") && !garRessources.getString("key").isEmpty())) {
-			garRessources.put("domains", new JsonObject().put(host,
+			garRessources.put("tenants", new JsonObject().put(config.getJsonObject("id-ent").getString(host),
 					new JsonObject().put("cert", garRessources.getString("cert")).put("key", garRessources.getString("key"))));
 			garRessources.remove("cert");
 			garRessources.remove("key");
