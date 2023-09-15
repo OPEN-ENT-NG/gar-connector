@@ -316,12 +316,13 @@ public class DataServiceGroupImpl1d extends DataServiceBaseImpl implements DataS
         } else {
             condition = "split(fg.externalId,\"-\") as fgcode";
         }
-        final String groupsQuery = "MATCH (s:Structure)<-[:BELONGS]-(c:Class) WITH collect(c.name) as classes " +
-                "MATCH (u:User)-[:IN]->(fg:FunctionalGroup)-[:DEPENDS]->(s:Structure {source:'" + this.source + "'}) " +
-                "WHERE NOT (fg.name IN classes) " +
-                "WITH u,s,fg MATCH (u)-[:IN]->(pg:ProfileGroup)-[:DEPENDS]->(s) " +
+        final String groupsQuery =
+                "MATCH (s:Structure {source:'" + this.source + "'}) " +
                 "WHERE HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports " +
-                "AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
+                "OPTIONAL MATCH (s)<-[:BELONGS]-(c:Class) " +
+                "WITH collect(c.name) as classes, s " +
+                "MATCH (s)<-[:DEPENDS]-(fg:FunctionalGroup)<-[:IN]-(u:User) " +
+                "WHERE NOT (fg.name IN classes) AND head(u.profiles) IN ['Student', 'Teacher', 'Personnel'] " +
                 "AND NOT(HAS(u.deleteDate)) " +
                 "with distinct s.UAI as uai, u.id as uid, fg, " + condition +
                 " return distinct uai as `" + STRUCTURE_UAI + "`, " +
