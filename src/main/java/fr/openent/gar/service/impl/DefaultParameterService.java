@@ -2,6 +2,8 @@ package fr.openent.gar.service.impl;
 
 import fr.openent.gar.Gar;
 import fr.openent.gar.constants.Field;
+import fr.openent.gar.helper.IModelHelper;
+import fr.openent.gar.model.Neo4jStructure;
 import fr.openent.gar.service.ParameterService;
 import fr.wseduc.webutils.Either;
 import io.vertx.core.AsyncResult;
@@ -16,6 +18,8 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import org.entcore.common.neo4j.Neo4j;
 import org.entcore.common.neo4j.Neo4jResult;
+
+import java.util.List;
 
 public class DefaultParameterService implements ParameterService {
 
@@ -51,6 +55,20 @@ public class DefaultParameterService implements ParameterService {
 
         JsonObject params = new JsonObject().put("groupName", GAR_GROUP_NAME).put("entId", entId);
         Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(handler));
+    }
+
+    @Override
+    public Future<List<Neo4jStructure>> getDeployedStructureGar(String entId) {
+        Promise<List<Neo4jStructure>> promise = Promise.promise();
+
+        String query = "MATCH (s:Structure) WHERE HAS(s.UAI) AND " +
+                "s.source starts with '"+ Gar.AAF +"' AND (HAS(s.exports) AND ('GAR-' + {entId}) IN s.exports) " +
+                "RETURN s.UAI as uai";
+        JsonObject params = new JsonObject().put("entId", entId);
+
+        String error = String.format("[DefaultParameterService@%s::getDeployedStructureGar] Fail to get deployed structure", this.getClass().getSimpleName());
+        Neo4j.getInstance().execute(query, params, Neo4jResult.validResultHandler(IModelHelper.sqlResultToIModel(promise, Neo4jStructure.class, error)));
+        return promise.future();
     }
 
     @Override
