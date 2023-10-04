@@ -62,7 +62,7 @@ public class GarController extends ControllerHelper {
     @Get("")
     @SecuredAction("gar.view")
     public void render(HttpServerRequest request) {
-        renderView(request, new JsonObject().put("demo", Gar.demo));
+        renderView(request, new JsonObject());
     }
 
     @Get("/config")

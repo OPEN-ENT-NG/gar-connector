@@ -1,5 +1,6 @@
 package fr.openent.gar;
 
+import fr.openent.gar.controller.DevController;
 import fr.openent.gar.controller.GarController;
 import fr.openent.gar.controller.SettingController;
 import fr.openent.gar.export.ExportTask;
@@ -9,6 +10,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.eventbus.EventBus;
 import org.entcore.common.http.BaseServer;
+import fr.openent.gar.constants.Field;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -16,7 +18,6 @@ import java.util.Arrays;
 public class Gar extends BaseServer {
 
 	public static final String GAR_ADDRESS = "openent.mediacentre";
-	public static boolean demo;
 	public static JsonObject CONFIG;
 
 	public final static String AAF = "AAF";
@@ -27,7 +28,6 @@ public class Gar extends BaseServer {
 		super.start();
 		final EventBus eb = getEventBus(vertx);
 
-		demo = config.getBoolean("demo", false);
 		CONFIG = config;
 
 		final String host = config.getString("host").split("//")[1];
@@ -80,6 +80,10 @@ public class Gar extends BaseServer {
 				.setIsolatedClasses(Arrays.asList("fr.openent.mediacentre.export.impl.*",
 						"fr.openent.mediacentre.helper.impl.*", "com.sun.org.apache.xalan.internal.xsltc.trax.*"))
 				.setWorker(true));
+
+		if (config.getBoolean(Field.DEV_DASH_MODE, false)) {
+			addController(new DevController(vertx, config));
+		}
 
 		try{
 			new CronTrigger(vertx, exportCron).schedule(new ExportTask(vertx.eventBus()));
