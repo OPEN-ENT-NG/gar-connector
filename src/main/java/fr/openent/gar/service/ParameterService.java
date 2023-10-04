@@ -1,10 +1,13 @@
 package fr.openent.gar.service;
 
+import fr.openent.gar.model.Neo4jStructure;
 import fr.wseduc.webutils.Either;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+
+import java.util.List;
 
 public interface ParameterService {
 
@@ -25,6 +28,12 @@ public interface ParameterService {
      * @param handler Function handler returning data
      */
     void getStructureGar(String entId, Handler<Either<String, JsonArray>> handler);
+
+    /**
+     * Get deployed Structure
+     * @param entId Ent identifier
+     */
+    Future<List<Neo4jStructure>> getDeployedStructureGar(String entId);
 
     /**
      * Create new group gar to chosen structure
