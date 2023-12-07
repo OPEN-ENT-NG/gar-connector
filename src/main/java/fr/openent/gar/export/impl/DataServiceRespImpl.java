@@ -81,7 +81,7 @@ public class DataServiceRespImpl extends DataServiceBaseImpl implements DataServ
                 " AND NOT(HAS(us.deleteDate)) " +
                 " AND (HAS(us.emailAcademy) OR HAS(us.emailInternal) OR HAS(us.email)) " +
                 " WITH s, us ORDER BY s.id , us.id " +
-                " WITH s, collect(us)[..15] as uc " +    // 15 first Teachers or Personnels in each Structures
+                " WITH s, collect(us)[..50] as uc " +    // 50 first Teachers or Personnels in each Structures
                 " UNWIND uc as u ";
         // CAUTION Don't use sr.UAI in dataReturn cause this structure is perhaps not a GAR structure
         String dataReturn = "RETURN DISTINCT u.id as `" + PERSON_ID + "`, " +
