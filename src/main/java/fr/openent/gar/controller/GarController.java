@@ -3,6 +3,7 @@ package fr.openent.gar.controller;
 import fr.openent.gar.Gar;
 import fr.openent.gar.constants.Field;
 import fr.openent.gar.export.impl.ExportWorker;
+import fr.openent.gar.constants.ResourceExamples;
 import fr.openent.gar.security.WorkflowUtils;
 import fr.openent.gar.service.EventService;
 import fr.openent.gar.service.ParameterService;
@@ -172,18 +173,29 @@ public class GarController extends ControllerHelper {
                 String userId = body.getString("user");
 
                 this.resourceService.get(userId, structureId, result -> {
-                            if (result.isRight()) {
-                                JsonObject response = new JsonObject()
-                                        .put("status", "ok")
-                                        .put("message", result.right().getValue());
-                                message.reply(response);
-                            } else {
-                                JsonObject response = new JsonObject()
-                                        .put("status", "ko")
-                                        .put("message", result.left().getValue());
-                                message.reply(response);
-                            }
-                        }
+                    if (config.getBoolean(Field.DEV_DASH_MODE, false)) {
+                        JsonArray garResources = new JsonArray();
+                        if (result.isRight()) garResources.addAll(result.right().getValue());
+                        garResources.addAll(new JsonArray(ResourceExamples.GAR_RESOURCE_EXAMPLE));
+
+                        JsonObject response = new JsonObject()
+                                .put("status", "ok")
+                                .put("message", garResources);
+                        message.reply(response);
+                    }
+                    else if (result.isRight()) {
+                        JsonObject response = new JsonObject()
+                                .put("status", "ok")
+                                .put("message", result.right().getValue());
+                        message.reply(response);
+                    }
+                    else {
+                        JsonObject response = new JsonObject()
+                                .put("status", "ko")
+                                .put("message", result.left().getValue());
+                        message.reply(response);
+                    }
+                }
                 );
                 break;
             default:
