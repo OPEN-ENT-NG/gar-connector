@@ -1,0 +1,2092 @@
+[
+  {
+    "idRessource":"ark:/32151/LA.FLE",
+    "idType":"ARK",
+    "nomRessource":"Lingua Attack - FLE",
+    "idEditeur":"514843077_0000000000000000",
+    "nomEditeur":"ENTERTAINMENT LEARNING",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/10200.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-025",
+        "nom":"méthode de langues"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-041",
+        "nom":"web média"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-157",
+        "nom":"français langue étrangère"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F32151%2FLA.FLE",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"514843077_0000000000000000",
+    "validateurTech":"514843077_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/12313/CI3977251568689",
+    "idType":"ARK",
+    "nomRessource":"Courrier international",
+    "idEditeur":"344761861_0000000121093312",
+    "nomEditeur":"COURRIER INTERNATIONAL",
+    "urlVignette":"https://vignette.gar.education.fr/kiosque-edu-com/gar/6665.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-014",
+        "nom":"manuel d'enseignement"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024",
+        "nom":"livre numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-036",
+        "nom":"géographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-070",
+        "nom":"sciences économiques et sociales (enseignement commun)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-040",
+        "nom":"histoire"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F12313%2FCI3977251568689",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"602060147_0000000000000000",
+    "validateurTech":"602060147_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/12313/HA9782218998317",
+    "idType":"ARK",
+    "nomRessource":"Annabac.com",
+    "idEditeur":"352585624_0000000122653115",
+    "nomEditeur":"HATIER",
+    "urlVignette":"https://vignette.gar.education.fr/kiosque-edu-com/gar/462.png",
+    "typePresentation":{
+      "code":"ACC",
+      "nom":"ressources d'entrąînement et d'accompagnement scolaire"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-014",
+        "nom":"manuel d'enseignement"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024",
+        "nom":"livre numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-165",
+        "nom":"lycée professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-036",
+        "nom":"géographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-040",
+        "nom":"histoire"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F12313%2FHA9782218998317",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"602060147_0000000000000000",
+    "validateurTech":"602060147_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/32151/LA.Allemand",
+    "idType":"ARK",
+    "nomRessource":"Lingua Attack - Allemand",
+    "idEditeur":"514843077_0000000000000000",
+    "nomEditeur":"ENTERTAINMENT LEARNING",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/10199.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-025",
+        "nom":"méthode de langues"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-041",
+        "nom":"web média"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-13710",
+        "nom":"allemand (enseignement commun, optionnel)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F32151%2FLA.Allemand",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"514843077_0000000000000000",
+    "validateurTech":"514843077_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/57800/europresse-cision",
+    "idType":"ARK",
+    "nomRessource":"Europresse",
+    "idEditeur":"582062824_0000000000000000",
+    "nomEditeur":"CISION",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/13902.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-015",
+        "nom":"matériel de référence"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-018",
+        "nom":"production d'élève"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-006",
+        "nom":"étude de cas"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/lecture",
+        "nom":"cours / présentation"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-002",
+        "nom":"archives"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-039",
+        "nom":"site Web"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-008",
+        "nom":"base de données"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-031",
+        "nom":"périodique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-010",
+        "nom":"biographie"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-021-num-0010",
+        "nom":"enseignant documentaliste"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-903",
+        "nom":"éducation aux médias et à l'information (cycle 4)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F57800%2Feuropresse-cision",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"582062824_0000000000000000",
+    "validateurTech":"582062824_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/20863/002/000",
+    "idType":"ARK",
+    "nomRessource":"Educ'ARTE",
+    "idEditeur":"388249146_0000000000000000",
+    "nomEditeur":"ARTE France Développement",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/8602.png",
+    "typePresentation":{
+      "code":"DOC",
+      "nom":"ressources documentaires et de presse"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-020",
+        "nom":"scénario pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-002",
+        "nom":"école maternelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1845",
+        "nom":"sciences de la vie et de la Terre (enseignement commun)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F20863%2F002%2F000",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"388249146_0000000000000000",
+    "validateurTech":"388249146_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/32151/LA.Italien",
+    "idType":"ARK",
+    "nomRessource":"Lingua Attack - Italien",
+    "idEditeur":"514843077_0000000000000000",
+    "nomEditeur":"ENTERTAINMENT LEARNING",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/17852.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-025",
+        "nom":"méthode de langues"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-041",
+        "nom":"web média"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-13716",
+        "nom":"italien (enseignement commun, optionnel)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F32151%2FLA.Italien",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"514843077_0000000000000000",
+    "validateurTech":"514843077_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/32151/LA.Anglais",
+    "idType":"ARK",
+    "nomRessource":"Lingua Attack - Anglais",
+    "idEditeur":"514843077_0000000000000000",
+    "nomEditeur":"ENTERTAINMENT LEARNING",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/10198.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-025",
+        "nom":"méthode de langues"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-041",
+        "nom":"web média"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-13711",
+        "nom":"anglais (enseignement commun, optionnel)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F32151%2FLA.Anglais",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"514843077_0000000000000000",
+    "validateurTech":"514843077_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/60878/eMs",
+    "idType":"ARK",
+    "nomRessource":"eduMedia Sciences - Secondaire",
+    "idEditeur":"448552851_0000000000000000",
+    "nomEditeur":"eduMedia",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/766.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/self_assessment",
+        "nom":"autoévaluation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-004",
+        "nom":"démonstration"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-001",
+        "nom":"animation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-028",
+        "nom":"fiche pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-020",
+        "nom":"scénario pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/exercise",
+        "nom":"exercice"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/simulation",
+        "nom":"simulation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/lecture",
+        "nom":"cours / présentation"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-038",
+        "nom":"schéma / graphique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-039",
+        "nom":"site Web"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-018",
+        "nom":"dossier documentaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-044",
+        "nom":"image interactive"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-045",
+        "nom":"image, animation 3D"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-034",
+        "nom":"présentation multimédia"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-056",
+        "nom":"vidéo interactive"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-239",
+        "nom":"11-15 ans"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-234",
+        "nom":"voies générale, technologique, professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-165",
+        "nom":"lycée professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-141",
+        "nom":"collège professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-284",
+        "nom":"formation professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-240",
+        "nom":"15-18 ans"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-140",
+        "nom":"adaptation scolaire et scolarisation des élèves handicapés"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-162",
+        "nom":"enseignement supérieur en lycée"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1831",
+        "nom":"physique-chimie (discipline)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1832",
+        "nom":"sciences de la vie et de la Terre (discipline)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1833",
+        "nom":"sciences et technologie (discipline)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-919",
+        "nom":"mathématiques (discipline)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F60878%2FeMs",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"448552851_0000000000000000",
+    "validateurTech":"448552851_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/32151/LA.Espagnol",
+    "idType":"ARK",
+    "nomRessource":"Lingua Attack - Espagnol",
+    "idEditeur":"514843077_0000000000000000",
+    "nomEditeur":"ENTERTAINMENT LEARNING",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/10197.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-025",
+        "nom":"méthode de langues"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-041",
+        "nom":"web média"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-13714",
+        "nom":"espagnol (enseignement commun, optionnel)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F32151%2FLA.Espagnol",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"514843077_0000000000000000",
+    "validateurTech":"514843077_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/19496/UVdpWxn8N78r24",
+    "idType":"ARK",
+    "nomRessource":"Edumalin : faire les devoirs ça s'apprend",
+    "idEditeur":"821637816_0000000000000000",
+    "nomEditeur":"Edumalin",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/10038.png",
+    "typePresentation":{
+      "code":"ACC",
+      "nom":"ressources d'entrąînement et d'accompagnement scolaire"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-012",
+        "nom":"guide"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-028",
+        "nom":"fiche pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-016",
+        "nom":"méthodologie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/exercise",
+        "nom":"exercice"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006",
+        "nom":"banque de vidéos"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-039",
+        "nom":"site Web"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1273",
+        "nom":"enseignements du collège"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1837",
+        "nom":"enseignements du lycée"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F19496%2FUVdpWxn8N78r24",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"821637816_0000000000000000",
+    "validateurTech":"821637816_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/47882/CABRILOG_0100-cabri-com",
+    "idType":"ARK",
+    "nomRessource":"cabri.com",
+    "idEditeur":"429695513_0000000000000000",
+    "nomEditeur":"Cabrilog SAS",
+    "urlVignette":"https://vignette.gar.education.fr/Cabri-OAI-PMH-Repository/gar/16030.png",
+    "typePresentation":{
+      "code":"ACC",
+      "nom":"ressources d'entrąînement et d'accompagnement scolaire"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/self_assessment",
+        "nom":"autoévaluation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-007",
+        "nom":"évaluation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/exercise",
+        "nom":"exercice"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-017",
+        "nom":"outil"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-136",
+        "nom":"application"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-138",
+        "nom":"3e professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015",
+        "nom":"CM2"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013",
+        "nom":"CE2"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014",
+        "nom":"CM1"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-006",
+        "nom":"moyenne section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-007",
+        "nom":"grande section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-004",
+        "nom":"toute petite section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-103",
+        "nom":"CAP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-005",
+        "nom":"petite section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-104",
+        "nom":"CAP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011",
+        "nom":"CE1"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-097",
+        "nom":"BP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010",
+        "nom":"CP"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-098",
+        "nom":"BP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-095",
+        "nom":"BMA - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-096",
+        "nom":"BMA - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-919",
+        "nom":"mathématiques (discipline)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F47882%2FCABRILOG_0100-cabri-com",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"429695513_0000000000000000",
+    "validateurTech":"429695513_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/48566/pt180001",
+    "idType":"ARK",
+    "nomRessource":"Pearltrees",
+    "idEditeur":"504599267_0000000000000000",
+    "nomEditeur":"BROCELIAND",
+    "urlVignette":"https://vignette.gar.education.fr/pearltrees.com/gar/mere/6208.png",
+    "typePresentation":{
+      "code":"PRO",
+      "nom":"ressources de production pédagogique"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      }
+    ],
+    "typologieDocument":[
+
+    ],
+    "niveauEducatif":[
+
+    ],
+    "domaineEnseignement":[
+
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F48566%2Fpt180001",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"504599267_0000000000000000",
+    "validateurTech":"504599267_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/12313/LM2438948708166",
+    "idType":"ARK",
+    "nomRessource":"Le Monde pour tous les élèves via le site internet lemonde.fr",
+    "idEditeur":"433891850_0000000118579995",
+    "nomEditeur":"LE MONDE",
+    "urlVignette":"https://vignette.gar.education.fr/kiosque-edu-com/gar/9976.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-014",
+        "nom":"manuel d'enseignement"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024",
+        "nom":"livre numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-165",
+        "nom":"lycée professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-016",
+        "nom":"collège"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-059",
+        "nom":"philosophie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-036",
+        "nom":"géographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-070",
+        "nom":"sciences économiques et sociales (enseignement commun)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-040",
+        "nom":"histoire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-150",
+        "nom":"microbiologie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-060",
+        "nom":"physique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-012",
+        "nom":"chimie"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F12313%2FLM2438948708166",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"602060147_0000000000000000",
+    "validateurTech":"602060147_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/34885/wr0000001",
+    "idType":"ARK",
+    "nomRessource":"Universalis Education",
+    "idEditeur":"672048915_000000012242542X",
+    "nomEditeur":"ENCYCLOPAEDIA UNIVERSALIS FRANCE",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/137.png",
+    "typePresentation":{
+      "code":"DIC",
+      "nom":"ressources de référence, dictionnaires et encyclopédies"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-001",
+        "nom":"animation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/lecture",
+        "nom":"cours / présentation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-015",
+        "nom":"matériel de référence"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-011",
+        "nom":"glossaire"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-013",
+        "nom":"chronologie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-017",
+        "nom":"diaporama"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-010",
+        "nom":"biographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-011",
+        "nom":"carte"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-012",
+        "nom":"carte heuristique et conceptuelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-004",
+        "nom":"atlas"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-008",
+        "nom":"base de données"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-009",
+        "nom":"bibliographie / sitographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-045",
+        "nom":"image, animation 3D"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-038",
+        "nom":"schéma / graphique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-039",
+        "nom":"site Web"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-023",
+        "nom":"image numérique"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-198",
+        "nom":"section DUT"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-195",
+        "nom":"section BTS"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-211",
+        "nom":"terminale technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-109",
+        "nom":"CPGE - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-101",
+        "nom":"BTS - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-102",
+        "nom":"BTS - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-146",
+        "nom":"1re générale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-110",
+        "nom":"CPGE - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-111",
+        "nom":"DUT - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-237",
+        "nom":"1re technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-112",
+        "nom":"DUT - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-201",
+        "nom":"terminale générale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-234",
+        "nom":"voies générale, technologique, professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-162",
+        "nom":"enseignement supérieur en lycée"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-615",
+        "nom":"cycles de l'enseignement scolaire (2016)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-626",
+        "nom":"Niveau éducatif détaillé (2015-)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-226",
+        "nom":"voie CPGE"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-121",
+        "nom":"tranches d'âge de l'enseignement scolaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-240",
+        "nom":"15-18 ans"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-085",
+        "nom":"cycle terminal"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      }
+    ],
+    "domaineEnseignement":[
+
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F34885%2Fwr0000001",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"672048915_000000012242542X",
+    "validateurTech":"672048915_000000012242542X",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/35570/chateau-de-versailles",
+    "idType":"ARK",
+    "nomRessource":"Château de Versailles",
+    "idEditeur":"180046260_0000000000000000",
+    "nomEditeur":"Etablissement public du château, du musée et du domaine national de Versailles",
+    "urlVignette":"https://vignette.gar.education.fr/OAI_GarNinja_prod/gar/18390.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/self_assessment",
+        "nom":"autoévaluation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-004",
+        "nom":"démonstration"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-001",
+        "nom":"animation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-007",
+        "nom":"évaluation"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-006",
+        "nom":"étude de cas"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/experiment",
+        "nom":"expérience"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-028",
+        "nom":"fiche pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-022",
+        "nom":"tutoriel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-020",
+        "nom":"scénario pédagogique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/exercise",
+        "nom":"exercice"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-0082",
+        "nom":"préparation à l'examen"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/questionnaire",
+        "nom":"questionnaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-013",
+        "nom":"jeu éducatif"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-012",
+        "nom":"guide"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-016",
+        "nom":"méthodologie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-011",
+        "nom":"glossaire"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-013",
+        "nom":"chronologie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-016",
+        "nom":"conférence"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-017",
+        "nom":"diaporama"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-018",
+        "nom":"dossier documentaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-019",
+        "nom":"dossier technique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-010",
+        "nom":"biographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-012",
+        "nom":"carte heuristique et conceptuelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-056",
+        "nom":"vidéo interactive"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-002",
+        "nom":"archives"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-047",
+        "nom":"œuvre picturale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-009",
+        "nom":"bibliographie / sitographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-040",
+        "nom":"tableau (art)"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-043",
+        "nom":"conte"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-044",
+        "nom":"image interactive"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-045",
+        "nom":"image, animation 3D"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-035",
+        "nom":"programme scolaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-039",
+        "nom":"site Web"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-032",
+        "nom":"photographie"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-033",
+        "nom":"podcast"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-034",
+        "nom":"présentation multimédia"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-024",
+        "nom":"livre numérique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-020",
+        "nom":"exposition"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-138",
+        "nom":"3e professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015",
+        "nom":"CM2"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013",
+        "nom":"CE2"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014",
+        "nom":"CM1"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-103",
+        "nom":"CAP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-104",
+        "nom":"CAP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-006",
+        "nom":"moyenne section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-007",
+        "nom":"grande section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-004",
+        "nom":"toute petite section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-005",
+        "nom":"petite section"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011",
+        "nom":"CE1"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-097",
+        "nom":"BP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010",
+        "nom":"CP"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-098",
+        "nom":"BP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-095",
+        "nom":"BMA - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-096",
+        "nom":"BMA - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-7751",
+        "nom":"accompagnement de l'élève (discipline)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F35570%2Fchateau-de-versailles",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"180046260_0000000000000000",
+    "validateurTech":"180046260_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/86527/299755644039996150114581301844952993201",
+    "idType":"ARK",
+    "nomRessource":"Tactileo - MASKOTT (mère de famille)",
+    "idEditeur":"479875718_0000000000000000",
+    "nomEditeur":"Maskott SAS",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/mere/8655.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015",
+        "nom":"CM2"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1273",
+        "nom":"enseignements du collège"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1822",
+        "nom":"enseignements de l'école élémentaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1837",
+        "nom":"enseignements du lycée"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F86527%2F299755644039996150114581301844952993201",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"479875718_0000000000000000",
+    "validateurTech":"479875718_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/23258/1537944382",
+    "idType":"ARK",
+    "nomRessource":"Offre edutheque de l'AFP",
+    "idEditeur":"775658354_0000000000000000",
+    "nomEditeur":"AFP",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/9089.png",
+    "typePresentation":{
+      "code":"DOC",
+      "nom":"ressources documentaires et de presse"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/questionnaire",
+        "nom":"questionnaire"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-006",
+        "nom":"étude de cas"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003",
+        "nom":"article"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-226",
+        "nom":"voie CPGE"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-198",
+        "nom":"section DUT"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-185",
+        "nom":"licence professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-162",
+        "nom":"enseignement supérieur en lycée"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-195",
+        "nom":"section BTS"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1273",
+        "nom":"enseignements du collège"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1837",
+        "nom":"enseignements du lycée"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F23258%2F1537944382",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"538684903_0000000000000000",
+    "validateurTech":"538684903_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/19153/sdcf9pk5f",
+    "idType":"ARK",
+    "nomRessource":"e-sidoc : le portail documentaire du CDI",
+    "idEditeur":"180043010_0000000121167676",
+    "nomEditeur":"Réseau Canopé",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/14575.png",
+    "typePresentation":{
+      "code":"DOC",
+      "nom":"ressources documentaires et de presse"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-024",
+        "nom":"cyberquête"
+      }
+    ],
+    "typologieDocument":[
+
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-138",
+        "nom":"3e professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-215",
+        "nom":"voie BP"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018",
+        "nom":"6e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-139",
+        "nom":"4e professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-213",
+        "nom":"voie BEP"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-214",
+        "nom":"voie BMA"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-211",
+        "nom":"terminale technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023",
+        "nom":"3e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-221",
+        "nom":"voie BT"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-100",
+        "nom":"BTM - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020",
+        "nom":"5e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021",
+        "nom":"4e"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-142",
+        "nom":"lycée général et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-109",
+        "nom":"CPGE - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-226",
+        "nom":"voie CPGE"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-227",
+        "nom":"voie FC"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-103",
+        "nom":"CAP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027",
+        "nom":"2de professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-104",
+        "nom":"CAP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-101",
+        "nom":"BTS - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-222",
+        "nom":"voie BTM"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-102",
+        "nom":"BTS - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-146",
+        "nom":"1re générale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-223",
+        "nom":"voie CAP"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-198",
+        "nom":"section DUT"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-110",
+        "nom":"CPGE - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-154",
+        "nom":"BT - terminale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-231",
+        "nom":"voie MC"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-111",
+        "nom":"DUT - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-153",
+        "nom":"BT - première"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-195",
+        "nom":"section BTS"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-237",
+        "nom":"1re technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-112",
+        "nom":"DUT - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-165",
+        "nom":"lycée professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-089",
+        "nom":"terminale pro domaine de la production"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-284",
+        "nom":"formation professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-163",
+        "nom":"formation des personnels de l'éducation nationale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-164",
+        "nom":"formation professionnelle continue des adultes"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127",
+        "nom":"1re professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-125",
+        "nom":"1re pro domaine de la production"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-126",
+        "nom":"1re pro domaine des services"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-288",
+        "nom":"FC post niveau IV"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-201",
+        "nom":"terminale générale"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-099",
+        "nom":"BTM - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-298",
+        "nom":"FC post niveau V"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-097",
+        "nom":"BP - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-098",
+        "nom":"BP - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-095",
+        "nom":"BMA - 1re année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-096",
+        "nom":"BMA - 2e année"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050",
+        "nom":"terminale professionnelle"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-090",
+        "nom":"terminale pro domaine des services"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-099",
+        "nom":"domaines d'enseignement général du domaine professionnel"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1273",
+        "nom":"enseignements du collège"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-6357",
+        "nom":"enseignements de BTS"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-100",
+        "nom":"domaines d'enseignement professionnel par familles de matières"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1837",
+        "nom":"enseignements du lycée"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-7961",
+        "nom":"enseignements du supérieur en lycée professionnel"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F19153%2Fsdcf9pk5f",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"180043010_0000000121825990",
+    "validateurTech":"180043010_0000000121825990",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  },
+  {
+    "idRessource":"ark:/68404/sx154dn78",
+    "idType":"ARK",
+    "nomRessource":"Ressources - Histoire-Géographie - Lycée",
+    "idEditeur":"899173579_0000000000000000",
+    "nomEditeur":"ALEPH99",
+    "urlVignette":"https://vignette.gar.education.fr/VAprod/gar/14453.png",
+    "typePresentation":{
+      "code":"MUL",
+      "nom":"ressources d'enseignement multimédias"
+    },
+    "typePedagogique":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-017",
+        "nom":"outil"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027",
+        "nom":"activité pédagogique"
+      }
+    ],
+    "typologieDocument":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014",
+        "nom":"collection de documents"
+      }
+    ],
+    "niveauEducatif":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088",
+        "nom":"terminale générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136",
+        "nom":"2de générale et technologique"
+      },
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123",
+        "nom":"1re générale et technologique"
+      }
+    ],
+    "domaineEnseignement":[
+      {
+        "uri":"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-980",
+        "nom":"histoire et géographie (discipline)"
+      }
+    ],
+    "urlAccesRessource":"https://idp-auth.gar.education.fr/domaineGar?idENT=QjA=&idEtab=OTk5OTk5MUY=&idRessource=ark%3A%2F68404%2Fsx154dn78",
+    "nomSourceEtiquetteGar":"Accessible via le Gestionnaire d’accès aux ressources (GAR)",
+    "distributeurTech":"899173579_0000000000000000",
+    "validateurTech":"899173579_0000000000000000",
+    "structure_name":"Région Nouvelle-Aquitaine",
+    "structure_uai":"9999991F"
+  }
+]

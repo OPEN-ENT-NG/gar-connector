@@ -26,11 +26,19 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import org.bson.json.JsonReader;
 import org.entcore.common.controller.ControllerHelper;
 import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.http.filter.SuperAdminFilter;
 import org.entcore.common.user.UserUtils;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -173,10 +181,33 @@ public class GarController extends ControllerHelper {
                 String userId = body.getString("user");
 
                 if (config.getBoolean(Field.DEV_DASH_MODE, false)) {
-                    JsonObject response = new JsonObject()
-                            .put("status", "ok")
-                            .put("message", new JsonArray(ResourceExamples.GAR_RESOURCE_EXAMPLE));
-                    message.reply(response);
+//                    JsonObject response = new JsonObject()
+//                            .put("status", "ok")
+//                            .put("message", new JsonArray(ResourceExamples.GAR_RESOURCE_EXAMPLE));
+//                    message.reply(response);
+
+                    try {
+                        String strExampleResourcesGAR = readFileAsString("ExampleResourcesGAR.json");
+                        if (!strExampleResourcesGAR.trim().startsWith("[")) strExampleResourcesGAR = "[" + strExampleResourcesGAR + "]";
+
+                        JsonObject response = new JsonObject()
+                                .put("status", "ok")
+                                .put("message", new JsonArray(strExampleResourcesGAR));
+                        message.reply(response);
+                    } catch (IOException | URISyntaxException e) {
+                        log.error("Failed to read json file example");
+                        e.printStackTrace();
+                    }
+
+//                    try {
+//                        File file1 = new File("src/main/java/fr/openent/gar/constants/resources/ExampleResourcesGAR.json");
+//                        File file2 = new File("fr/openent/gar/constants/resources/ExampleResourcesGAR.json");
+//                        File file3 = new File("java/fr/openent/gar/constants/resources/ExampleResourcesGAR.json");
+//                        File file4 = new File("../constants/resources/ExampleResourcesGAR.json");
+//                    } catch (Exception e) {
+//                        log.error(e);
+//                        e.printStackTrace();
+//                    }
                 }
                 else {
                     this.resourceService.get(userId, structureId, result -> {
@@ -202,5 +233,11 @@ public class GarController extends ControllerHelper {
                         .put("message", "invalid.action");
                 message.reply(json);
         }
+    }
+
+    public static String readFileAsString(String filePath) throws IOException, URISyntaxException {
+        URL resource = GarController.class.getClassLoader().getResource(filePath);
+        if (resource == null) throw new IOException("File not found: " + filePath);
+        return new String(Files.readAllBytes(Paths.get(resource.toURI())), StandardCharsets.UTF_8);
     }
 }
