@@ -19,3 +19,7 @@ src/main/resources/view
 out
 build
 coverage
+.env
+target
+dependency-reduced-pom.xml
+package-lock.json
