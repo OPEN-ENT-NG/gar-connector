@@ -128,7 +128,7 @@ public class GarController extends ControllerHelper {
 
     private void exportAndSend(final String entId, final String source) {
         final JsonObject param = new JsonObject().put("action", "exportAndSend").put("entId", entId).put("source", source);
-        eb.send(ExportWorker.EXPORTWORKER_ADDRESS, param,
+        eb.request(ExportWorker.EXPORTWORKER_ADDRESS, param,
                 handlerToAsyncHandler(event -> log.info("Export Gar Launched")));
     }
 

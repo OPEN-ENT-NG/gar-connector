@@ -20,7 +20,7 @@ public class ExportTask implements Handler<Long> {
     @Override
     public void handle(Long event) {
         log.info("export launched");
-        eb.send(Gar.GAR_ADDRESS,
+        eb.request(Gar.GAR_ADDRESS,
                 new JsonObject().put("action", "export"),
                 handlerToAsyncHandler(event1 -> {
                     if ("ok".equals(event1.body().getString("status"))) {
