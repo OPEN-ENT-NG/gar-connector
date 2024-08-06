@@ -6,6 +6,7 @@ import fr.openent.gar.controller.SettingController;
 import fr.openent.gar.export.ExportTask;
 import fr.wseduc.cron.CronTrigger;
 import io.vertx.core.DeploymentOptions;
+import io.vertx.core.Promise;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.eventbus.EventBus;
@@ -24,8 +25,8 @@ public class Gar extends BaseServer {
 	public final static String AAF1D = "AAF1D";
 
 	@Override
-	public void start() throws Exception {
-		super.start();
+	public void start(Promise<Void> startPromise) throws Exception {
+		super.start(startPromise);
 		final EventBus eb = getEventBus(vertx);
 
 		CONFIG = config;
@@ -89,6 +90,9 @@ public class Gar extends BaseServer {
 			new CronTrigger(vertx, exportCron).schedule(new ExportTask(vertx.eventBus()));
 		}catch (ParseException e) {
 			log.fatal(e.getMessage(), e);
+		}finally {
+			startPromise.tryComplete();
+			startPromise.tryFail("[Gar@Gar::start] Fail to start GAR");
 		}
 	}
 

@@ -120,7 +120,7 @@ public class ExportImpl {
                         String n = (String) vertx.sharedData().getLocalMap("server").get("node");
                         String node = (n != null) ? n : "";
 
-                        eb.send(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
+                        eb.request(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
                                 handlerToAsyncHandler((Message<JsonObject> messageResponse) -> {
                             if (messageResponse.body().containsKey("status") && messageResponse.body().getString("status").equals("error")) {
                                 String e = "Send to GAR tar GZ by sftp but received an error : " +
@@ -133,7 +133,7 @@ public class ExportImpl {
                                 sendTOGar
                                         .put("local-file", FileUtils.appendPath(exportArchivePath, md5File))
                                         .put("dist-file", FileUtils.appendPath(tenant.getString("dir-dest"), md5File));
-                                eb.send(node + "sftp", sendTOGar, handlerToAsyncHandler(message1 -> {
+                                eb.request(node + "sftp", sendTOGar, handlerToAsyncHandler(message1 -> {
                                     if (message1.body().containsKey("status") && message1.body().getString("status").equals("error")) {
                                         String e = "FAILED Send to Md5 by sftp : " +
                                                 messageResponse.body().getString("message");
