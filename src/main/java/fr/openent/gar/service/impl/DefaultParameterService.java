@@ -98,7 +98,7 @@ public class DefaultParameterService implements ParameterService {
                     .put("structureId", body.getString("structureId"))
                     .put("classId", body.getString("classId"))
                     .put("group", body);
-            eb.send("entcore.feeder", action, (Handler<AsyncResult<Message<JsonObject>>>) createGarResult -> {
+            eb.request("entcore.feeder", action, (Handler<AsyncResult<Message<JsonObject>>>) createGarResult -> {
                 if (createGarResult.failed()) {
                     handler.handle(new Either.Left<>("Failed to create gar group"));
                     return;

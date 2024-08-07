@@ -120,25 +120,21 @@ public class ExportImpl {
                         String n = (String) vertx.sharedData().getLocalMap("server").get("node");
                         String node = (n != null) ? n : "";
 
-                        eb.send(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
+                        eb.request(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
                                 handlerToAsyncHandler((Message<JsonObject> messageResponse) -> {
                             if (messageResponse.body().containsKey("status") && messageResponse.body().getString("status").equals("error")) {
-                                String e = "Send to GAR tar GZ by sftp but received an error : " +
-                                        messageResponse.body().getString("message");
-                                log.error(e);
-                                handler.handle(e);
+                                log.error("[GAR@ExportImpl::exportAndSend] Send to GAR tar GZ by sftp but received an error : " + messageResponse.body().getString("message"));
+                                handler.handle(messageResponse.body().getString("message"));
                             } else {
                                 String md5File = event2.right().getValue().getString("md5File");
                                 log.info("Send to GAR md5 by sftp: " + md5File);
                                 sendTOGar
                                         .put("local-file", FileUtils.appendPath(exportArchivePath, md5File))
                                         .put("dist-file", FileUtils.appendPath(tenant.getString("dir-dest"), md5File));
-                                eb.send(node + "sftp", sendTOGar, handlerToAsyncHandler(message1 -> {
+                                eb.request(node + "sftp", sendTOGar, handlerToAsyncHandler(message1 -> {
                                     if (message1.body().containsKey("status") && message1.body().getString("status").equals("error")) {
-                                        String e = "FAILED Send to Md5 by sftp : " +
-                                                messageResponse.body().getString("message");
-                                        log.error(e);
-                                        handler.handle(e);
+                                        log.error("[GAR@ExportImpl::exportAndSend] FAILED Send to Md5 by sftp : " + messageResponse.body().getString("message"));
+                                        handler.handle(messageResponse.body().getString("message"));
                                     } else {
                                         log.info("SUCCESS Export and Send to GAR");
                                         handler.handle("SUCCESS");
@@ -147,17 +143,13 @@ public class ExportImpl {
                             }
                         }));
                     } else {
-                        String e = "Failed Export and Send to GAR, tar service : failure in compressing the files => " +
-                                event2.left().getValue();
-                        log.error(e);
-                        handler.handle(e);
+                        log.error("[GAR@ExportImpl::exportAndSend] Failed Export and Send to GAR, tar service : failure in compressing the files : " + event2.left().getValue());
+                        handler.handle(event2.left().getValue());
                     }
                 });
             } else {
-                String e = "Failed Export and Send to GAR export service : failure during exporting the data => " +
-                        event1.left().getValue();
-                log.error(e);
-                handler.handle(e);
+                log.error("[GAR@ExportImpl::exportAndSend] Failed Export and Send to GAR export service : failure during exporting the data : " + event1.left().getValue());
+                handler.handle(event1.left().getValue());
             }
         });
     }
@@ -171,14 +163,14 @@ public class ExportImpl {
                 String recipient = recipients.getString(i);
                 emailSender.sendEmail(request, recipient, null, null, subject, report, null, false, null);
             }catch(Exception e){
-                log.error("Failed to send report: ", e);
+                log.error("[GAR@ExportImpl::sendReport] Failed to send report: ", e);
             }
         }
     }
 
     private void saveXsdValidation(String report, final String filePath) {
         vertx.fileSystem().writeFile(filePath, new BufferImpl().setBytes(0, report.getBytes()), event -> {
-            if (event.failed()) log.error("Failed to write xsd errors");
+            if (event.failed()) log.error("[GAR@ExportImpl::saveXsdValidation] Failed to write xsd errors");
         });
     }
 
@@ -207,7 +199,7 @@ public class ExportImpl {
                 validator.validate(new StreamSource(currentFile));
             }
         } catch (SAXException | IOException e) {
-            log.error("Error while validating xml", e);
+            log.error("[GAR@ExportImpl::validateXml] Error while validating xml : ", e);
             result.put("valid", false);
         } finally {
             result.put("valid", errorHandler.isValid());

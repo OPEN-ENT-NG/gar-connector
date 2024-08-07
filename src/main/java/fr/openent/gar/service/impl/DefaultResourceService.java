@@ -3,13 +3,17 @@ package fr.openent.gar.service.impl;
 import fr.openent.gar.Gar;
 import fr.openent.gar.service.ResourceService;
 import fr.wseduc.webutils.Either;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.buffer.impl.BufferImpl;
 import io.vertx.core.http.HttpClient;
 import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.http.HttpClientRequest;
+import io.vertx.core.http.RequestOptions;
+import io.vertx.core.http.impl.headers.HeadersMultiMap;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -49,7 +53,7 @@ public class DefaultResourceService implements ResourceService {
             try {
                 httpClientByIdENT.put(idENT, generateHttpClient(new URI(garHost), tenant.getString("cert"), tenant.getString("key")));
             } catch (URISyntaxException e) {
-                log.error("[DefaultResourceService@constructor] An error occurred when creating the URI : " + e);
+                log.error("[GAR@DefaultResourceService::DefaultResourceService] An error occurred when creating the URI : " + e);
             }
         }
     }
@@ -57,11 +61,11 @@ public class DefaultResourceService implements ResourceService {
     @Override
     public void get(String userId, String structure, Handler<Either<String, JsonArray>> handler) {
         if(userId == null){
-            handler.handle(new Either.Left<>("[DefaultResourceService@get] No userid." ));
+            handler.handle(new Either.Left<>("[GAR@DefaultResourceService::get] No userid." ));
             return;
         }
         if(structure == null){
-            handler.handle(new Either.Left<>("[DefaultResourceService@get] No structure." ));
+            handler.handle(new Either.Left<>("[GAR@DefaultResourceService::get] No structure." ));
             return;
         }
 
@@ -76,7 +80,6 @@ public class DefaultResourceService implements ResourceService {
                     String structureName = results.getJsonObject(0).getString("name");
                     JsonArray exports = results.getJsonObject(0).getJsonArray("exports");
                     String idEnt = null;
-
                     if (exports != null && !exports.isEmpty()) {
                         for (Object export : exports.getList()) {
                             if (!(export instanceof String)) continue;
@@ -89,8 +92,7 @@ public class DefaultResourceService implements ResourceService {
                     }
 
                     if(idEnt == null){
-                        handler.handle(new Either.Left<>("[DefaultResourceService@get] This structure has undefined " +
-                                "gar id project in exports field : " + structure ));
+                        handler.handle(new Either.Left<>("[GAR@DefaultResourceService::get] This structure has undefined gar id project in exports field : " + structure ));
                         return;
                     }
 
@@ -99,68 +101,86 @@ public class DefaultResourceService implements ResourceService {
                         URL url = new URL(garHost);
                         garHostNoProtocol = url.getHost();
                     } catch (Exception e) {
-                        handler.handle(new Either.Left<>("[DefaultResourceService@get] Bad gar host url : " + garHost));
+                        handler.handle(new Either.Left<>("[GAR@DefaultResourceService::get] Bad gar host url : " + garHost));
                         return;
                     }
                     String resourcesUri = garHost + "/ressources/" + idEnt + "/" + uai + "/" + userId;
                     final HttpClient httpClient = httpClientByIdENT.get(idEnt);
                     if (httpClient == null) {
-                        log.error("no gar ressources httpClient available for this entId : " + idEnt);
-                        handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
-                                "No gar ressources httpClient available for this entId : " + idEnt));
+                        log.error("[GAR@DefaultResourceService::get] no gar ressources httpClient available for this entId : " + idEnt);
+                        handler.handle(new Either.Left<>("[GAR@DefaultResourceService::get] No gar ressources httpClient available for this entId : " + idEnt));
                         return;
                     }
-                    final HttpClientRequest clientRequest = httpClient.get(resourcesUri, response -> {
-                                if (response.statusCode() != 200) {
-                                    log.error("try to call " + resourcesUri);
-                                    log.error(response.statusCode() + " " + response.statusMessage());
 
-                                    response.bodyHandler(errBuff -> {
-                                        try {
-                                            JsonObject error = new JsonObject(new String(errBuff.getBytes()));
-                                            if (error.containsKey("Erreur")) {
-                                                handler.handle(new Either.Left<>(
-                                                        error.getJsonObject("Erreur").getString("Message")));
-                                            } else {
-                                                handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
-                                                        "failed to connect to GAR servers: " + response.statusMessage()));
-                                            }
-                                        } catch (Exception e) {
-                                            handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
-                                                    "failed to connect to GAR servers: " + response.statusMessage()));
-                                        }
-                                    });
-                                } else {
-                                    Buffer responseBuffer = new BufferImpl();
-                                    response.handler(responseBuffer::appendBuffer);
-                                    response.endHandler(aVoid -> {
-                                        JsonObject resources = new JsonObject(decompress(responseBuffer));
-                                        beautifyRessourcesResult(handler, uai, structureName, resources);
-                                    });
-                                    response.exceptionHandler(throwable ->
-                                            handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
-                                                    "failed to get GAR response: " + throwable.getMessage())));
-                                }
-                            }).putHeader("Accept", "application/json")
-                            .putHeader("Accept-Encoding", "gzip, deflate")
-                            .putHeader("Host", garHostNoProtocol)
-                            .putHeader("Cache-Control", "no-cache")
-                            .putHeader("Date", new Date().toString());
-
-                    clientRequest.end();
-                } else{
+                    garRequest(httpClient, resourcesUri, garHostNoProtocol, uai, structureName)
+                        .onSuccess(result -> handler.handle(new Either.Right<>(result)))
+                        .onFailure(err -> {
+                            log.error("[GAR@DefaultResourceService::get] An error occurred when fetching structure UAI : " + err.getMessage());
+                            handler.handle(new Either.Left<>(err.getMessage()));
+                        });
+                } else {
                     handler.handle(new Either.Right<>(new JsonArray()));
                 }
             } else {
-                String message = "[DefaultResourceService@get] An error occurred when fetching structure UAI " +
-                        "for structure " + structure;
+                String message = "[GAR@DefaultResourceService::get] An error occurred when fetching structure UAI for structure " + structure;
                 log.error(message);
                 handler.handle(new Either.Left<>(message));
             }
         }));
     }
 
-    private void beautifyRessourcesResult(Handler<Either<String, JsonArray>> handler, String uai, String structureName,
+    public Future<JsonArray> garRequest(HttpClient httpClient, String resourcesUri, String garHostNoProtocol, String uai, String structureName) {
+        Promise<JsonArray> promise = Promise.promise();
+        RequestOptions requestOptions = new RequestOptions()
+                .setAbsoluteURI(resourcesUri)
+                .setHeaders(new HeadersMultiMap()
+                        .add("Accept", "application/json")
+                        .add("Accept-Encoding", "gzip, deflate")
+                        .add("Host", garHostNoProtocol)
+                        .add("Cache-Control", "no-cache")
+                        .add("Date", new Date().toString())
+                );
+
+         httpClient.request(requestOptions)
+         .flatMap(HttpClientRequest::send)
+         .onSuccess(response -> {
+             if (response.statusCode() != 200) {
+                 log.error("[GAR@DefaultResourceService::garRequest] Error when try to call : " + resourcesUri );
+                 log.error("ERROR : " + response.statusCode() + " " + response.statusMessage());
+
+                 response.bodyHandler(errBuff -> {
+                     try {
+                         JsonObject error = new JsonObject(new String(errBuff.getBytes()));
+                         if (error.containsKey("Erreur")) {
+                             promise.fail(error.getJsonObject("Erreur").getString("Message"));
+                         } else {
+                             promise.fail(response.statusMessage());
+                         }
+                     } catch (Exception e) {
+                         promise.fail(response.statusMessage());
+                     }
+                 });
+             } else {
+                 Buffer responseBuffer = new BufferImpl();
+                 response.handler(responseBuffer::appendBuffer);
+                 response.endHandler(aVoid -> {
+                     JsonObject resources = new JsonObject(decompress(responseBuffer));
+                     beautifyRessourcesResult(promise, uai, structureName, resources);
+                 });
+                 response.exceptionHandler(throwable -> {
+                         log.error("[GAR@DefaultResourceService::garRequest] failed to get GAR response : " + throwable.getMessage());
+                         promise.fail(throwable.getMessage());
+                 });
+             }
+         })
+         .onFailure(err -> {
+             log.error("[GAR@DefaultResourceService::garRequest] failed to request : " + err.getCause().getMessage());
+             promise.fail(err.getCause().getMessage());
+         });
+        return promise.future();
+    }
+
+    private void beautifyRessourcesResult(Promise<JsonArray> promise, String uai, String structureName,
                                           JsonObject resources) {
         JsonArray ressourcesResult = resources.getJsonObject("listeRessources").getJsonArray("ressource");
         for (Object ressourceO : ressourcesResult) {
@@ -168,7 +188,7 @@ public class DefaultResourceService implements ResourceService {
             ressource.put("structure_name", structureName);
             ressource.put("structure_uai", uai);
         }
-        handler.handle(new Either.Right<>(ressourcesResult));
+        promise.complete(ressourcesResult);
     }
 
     private String decompress(Buffer buffer) {
