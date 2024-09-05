@@ -1,7 +1,7 @@
 package fr.openent.gar.constants;
 
-public class ResourceExamples {
-    public static final String GAR_RESOURCE_EXAMPLE = "[\n" +
+public class ExternalResourceExamples {
+    public static final String GAR_EXTERNAL_RESOURCE_EXAMPLE = "[\n" +
             "  {\n" +
             "    \"idRessource\":\"ark:/32151/LA.FLE\",\n" +
             "    \"idType\":\"ARK\",\n" +

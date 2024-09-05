@@ -2,8 +2,9 @@ package fr.openent.gar.controller;
 
 import fr.openent.gar.Gar;
 import fr.openent.gar.constants.Field;
+import fr.openent.gar.constants.ManualExamples;
 import fr.openent.gar.export.impl.ExportWorker;
-import fr.openent.gar.constants.ResourceExamples;
+import fr.openent.gar.constants.ExternalResourceExamples;
 import fr.openent.gar.security.WorkflowUtils;
 import fr.openent.gar.service.EventService;
 import fr.openent.gar.service.ParameterService;
@@ -176,7 +177,8 @@ public class GarController extends ControllerHelper {
                     if (config.getBoolean(Field.DEV_DASH_MODE, false)) {
                         JsonArray garResources = new JsonArray();
                         if (result.isRight()) garResources.addAll(result.right().getValue());
-                        garResources.addAll(new JsonArray(ResourceExamples.GAR_RESOURCE_EXAMPLE));
+                        garResources.addAll(new JsonArray(ExternalResourceExamples.GAR_EXTERNAL_RESOURCE_EXAMPLE));
+                        garResources.addAll(new JsonArray(ManualExamples.GAR_MANUAL_EXAMPLE));
 
                         JsonObject response = new JsonObject()
                                 .put("status", "ok")
