@@ -103,6 +103,7 @@ public class DefaultResourceService implements ResourceService {
                         return;
                     }
                     String resourcesUri = garHost + "/ressources/" + idEnt + "/" + uai + "/" + userId;
+                    log.info("[GAR@DefaultResourceService::get] " + resourcesUri);
                     final HttpClient httpClient = httpClientByIdENT.get(idEnt);
                     if (httpClient == null) {
                         log.error("no gar ressources httpClient available for this entId : " + idEnt);
@@ -135,7 +136,9 @@ public class DefaultResourceService implements ResourceService {
                                     response.handler(responseBuffer::appendBuffer);
                                     response.endHandler(aVoid -> {
                                         JsonObject resources = new JsonObject(decompress(responseBuffer));
+                                        log.info("[GAR@DefaultResourceService::get] " + resources);
                                         beautifyRessourcesResult(handler, uai, structureName, resources);
+                                        log.info("[GAR@DefaultResourceService::get] " + resources);
                                     });
                                     response.exceptionHandler(throwable ->
                                             handler.handle(new Either.Left<>("[DefaultResourceService@get] " +
@@ -149,6 +152,7 @@ public class DefaultResourceService implements ResourceService {
 
                     clientRequest.end();
                 } else{
+                    log.info("[GAR@DefaultResourceService::get] Result size <= 0");
                     handler.handle(new Either.Right<>(new JsonArray()));
                 }
             } else {

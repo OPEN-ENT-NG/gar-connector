@@ -94,12 +94,13 @@ public class GarController extends ControllerHelper {
             String structureId = request.params().contains("structure") ? request.getParam("structure") : user.getStructures().get(0);
             String userId = user.getUserId();
             this.resourceService.get(userId, structureId, result -> {
-                            if (result.isRight()) {
-                                Renders.renderJson(request, result.right().getValue());
-                            } else {
-                                Renders.renderJson(request, new JsonArray());
-                            }
-                        }
+                if (result.isRight()) {
+                    Renders.renderJson(request, result.right().getValue());
+                } else {
+                    log.info("[GAR@DefaultResourceService::get] " + result.left().getValue());
+                    Renders.renderJson(request, new JsonArray());
+                }
+            }
             );
         });
     }
