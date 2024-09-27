@@ -286,6 +286,7 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
                     profileUser = uaiProfile[1];
             }
             String profileType = TEACHER_PROFILE;
+            final List documentaliste_code = Arrays.asList(DOCUMENTALIST_CODE, CIO_CODE, DCT_CODE);
             if (profileUser.equals("Personnel")) {
                 profileType = PERSONNEL_ETAB_PROFILE;
 
@@ -300,8 +301,6 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
                         profileType = TEACHER_PROFILE;
                         break;
                 }
-
-                List documentaliste_code = Arrays.asList(DOCUMENTALIST_CODE, CIO_CODE, DCT_CODE);
 
                 List vie_scolaire_code = Arrays.asList(EDUCATION_CODE, EDUCATION_ASSISTANT_CODE, ACCOMPAGNEMENT_HANDICAP_2_CODE,
                         ACCOMPAGNMENT_HANDICAP_CODE, ETRANGER_ASSISTANT_CODE, SURVEILLANCE_CODE, CPE_CODE, AUXILIAIRE_VIE_SCOLAIRE_CODE,
@@ -328,6 +327,10 @@ public class DataServiceTeacherImpl extends DataServiceBaseImpl implements DataS
                     profileType = VIE_SCOLAIRE_PROFILE;
                 } else if (personnel_etab_code.contains(functionCode)) {
                     profileType = PERSONNEL_ETAB_PROFILE;
+                }
+            } else {
+                if (documentaliste_code.contains(functionCode)) {
+                    profileType = DOCUMENTALIST_PROFILE;
                 }
             }
 
