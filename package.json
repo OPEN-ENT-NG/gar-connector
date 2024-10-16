@@ -1,6 +1,6 @@
 {
   "name": "Mediacentre",
-  "version": "2.2.6-%branch%.%generateVersion%",
+  "version": "2.2.6",
   "description": "Mediacentre",
   "main": "gulpfile.js",
   "scripts": {
