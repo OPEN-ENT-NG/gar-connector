@@ -33,7 +33,7 @@
         <mockitoVersion>[2.0,3.0)</mockitoVersion>
         <entCoreVersion>6.0-SNAPSHOT</entCoreVersion>
         <gatlingHighchartsVersion>2.2.2</gatlingHighchartsVersion>
-        <vertxCronTimer>2.0.0</vertxCronTimer>
+        <vertxCronTimerVersion>2.0.0</vertxCronTimerVersion>
         <commonsCompress>1.18</commonsCompress>
         <reflectionsVersion>0.10.2</reflectionsVersion>
     </properties>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>fr.wseduc</groupId>
             <artifactId>vertx-cron-timer</artifactId>
-            <version>${vertxCronTimer}</version>
+            <version>${vertxCronTimerVersion}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
