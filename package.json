@@ -1,6 +1,6 @@
 {
   "name": "Mediacentre",
-  "version": "3.0.0",
+  "version": "3.0.0-dev.0",
   "description": "Mediacentre",
   "main": "gulpfile.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "homepage": "",
   "dependencies": {
-    "entcore": "4.8.11",
+    "entcore": "dev",
     "entcore-toolkit": "^1.0.1",
     "@types/core-js": "0.9.42",
     "awesome-typescript-loader": "3.2.1",
