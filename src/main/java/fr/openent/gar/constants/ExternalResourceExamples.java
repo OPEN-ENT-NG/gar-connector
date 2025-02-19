@@ -1273,4 +1273,546 @@ public class ExternalResourceExamples {
             "    \"structure_uai\":\"9999991F\"\n" +
             "  }\n" +
             "]";
+    public static final String GAR_EXTERNAL_RESOURCE_EXAMPLE_1D = "[\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/22577/TACIT\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"TACIT - Testing Adaptatif des Compétences Individuelles Transversales\",\n" +
+            "      \"idEditeur\":\"193509379_0000000000000000\",\n" +
+            "      \"nomEditeur\":\"Plateforme TACIT Université Rennes 2\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/VAprod/gar/19644.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"MUL\",\n" +
+            "         \"nom\":\"ressources d\\u0027enseignement multimédias\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-029\",\n" +
+            "            \"nom\":\"diagnostic\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-007\",\n" +
+            "            \"nom\":\"évaluation\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027\",\n" +
+            "            \"nom\":\"activité pédagogique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/exercise\",\n" +
+            "            \"nom\":\"exercice\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/table\",\n" +
+            "            \"nom\":\"tableau\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/questionnaire\",\n" +
+            "            \"nom\":\"questionnaire\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-136\",\n" +
+            "            \"nom\":\"application\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-138\",\n" +
+            "            \"nom\":\"3e professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018\",\n" +
+            "            \"nom\":\"6e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015\",\n" +
+            "            \"nom\":\"CM2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013\",\n" +
+            "            \"nom\":\"CE2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014\",\n" +
+            "            \"nom\":\"CM1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023\",\n" +
+            "            \"nom\":\"3e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020\",\n" +
+            "            \"nom\":\"5e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021\",\n" +
+            "            \"nom\":\"4e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127\",\n" +
+            "            \"nom\":\"1re professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-103\",\n" +
+            "            \"nom\":\"CAP - 1re année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027\",\n" +
+            "            \"nom\":\"2de professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-104\",\n" +
+            "            \"nom\":\"CAP - 2e année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011\",\n" +
+            "            \"nom\":\"CE1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-097\",\n" +
+            "            \"nom\":\"BP - 1re année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-098\",\n" +
+            "            \"nom\":\"BP - 2e année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-095\",\n" +
+            "            \"nom\":\"BMA - 1re année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-096\",\n" +
+            "            \"nom\":\"BMA - 2e année\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050\",\n" +
+            "            \"nom\":\"terminale professionnelle\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1333\",\n" +
+            "            \"nom\":\"français (discipline)\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dUjAw\\u0026idEtab\\u003dMDg1MDMzNUM\\u003d\\u0026idRessource\\u003dark%3A%2F22577%2FTACIT\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"193509379_0000000000000000\",\n" +
+            "      \"validateurTech\":\"193509379_0000000000000000\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   },\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/19498/calculatice\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"calcul@TICE\",\n" +
+            "      \"idEditeur\":\"110043015_0000000000000000\",\n" +
+            "      \"nomEditeur\":\"Ministère de l’Éducation nationale, de la jeunesse et des Sports\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/VAprod/gar/14580.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"MUL\",\n" +
+            "         \"nom\":\"ressources d\\u0027enseignement multimédias\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-013\",\n" +
+            "            \"nom\":\"jeu éducatif\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/exercise\",\n" +
+            "            \"nom\":\"exercice\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014\",\n" +
+            "            \"nom\":\"collection de documents\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003\",\n" +
+            "            \"nom\":\"article\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-138\",\n" +
+            "            \"nom\":\"3e professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018\",\n" +
+            "            \"nom\":\"6e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015\",\n" +
+            "            \"nom\":\"CM2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013\",\n" +
+            "            \"nom\":\"CE2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014\",\n" +
+            "            \"nom\":\"CM1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011\",\n" +
+            "            \"nom\":\"CE1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023\",\n" +
+            "            \"nom\":\"3e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020\",\n" +
+            "            \"nom\":\"5e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010\",\n" +
+            "            \"nom\":\"CP\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021\",\n" +
+            "            \"nom\":\"4e\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-920\",\n" +
+            "            \"nom\":\"mathématiques (cycle 2)\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dUjAw\\u0026idEtab\\u003dMDg1MDMzNUM\\u003d\\u0026idRessource\\u003dark%3A%2F19498%2Fcalculatice\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"175904309_0000000000000000\",\n" +
+            "      \"validateurTech\":\"110043015_0000000000000000\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   },\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/54037/lmnd222r17sm\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"Lumni Enseignement\",\n" +
+            "      \"idEditeur\":\"302421193_0000000122433761\",\n" +
+            "      \"nomEditeur\":\"INSTITUT NATIONAL DE L\\u0027AUDIOVISUEL (INA)\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/VAprod/gar/9993.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"DOC\",\n" +
+            "         \"nom\":\"ressources documentaires et de presse\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         \n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-051\",\n" +
+            "            \"nom\":\"banque de sons\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-002\",\n" +
+            "            \"nom\":\"archives\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-006\",\n" +
+            "            \"nom\":\"banque de vidéos\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018\",\n" +
+            "            \"nom\":\"6e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015\",\n" +
+            "            \"nom\":\"CM2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-136\",\n" +
+            "            \"nom\":\"2de générale et technologique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013\",\n" +
+            "            \"nom\":\"CE2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014\",\n" +
+            "            \"nom\":\"CM1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-023\",\n" +
+            "            \"nom\":\"3e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-020\",\n" +
+            "            \"nom\":\"5e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-021\",\n" +
+            "            \"nom\":\"4e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-027\",\n" +
+            "            \"nom\":\"2de professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-088\",\n" +
+            "            \"nom\":\"terminale générale et technologique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-006\",\n" +
+            "            \"nom\":\"moyenne section\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-127\",\n" +
+            "            \"nom\":\"1re professionnelle\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-007\",\n" +
+            "            \"nom\":\"grande section\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-004\",\n" +
+            "            \"nom\":\"toute petite section\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-005\",\n" +
+            "            \"nom\":\"petite section\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-123\",\n" +
+            "            \"nom\":\"1re générale et technologique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011\",\n" +
+            "            \"nom\":\"CE1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010\",\n" +
+            "            \"nom\":\"CP\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-050\",\n" +
+            "            \"nom\":\"terminale professionnelle\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         \n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dUjAw\\u0026idEtab\\u003dMDg1MDMzNUM\\u003d\\u0026idRessource\\u003dark%3A%2F54037%2Flmnd222r17sm\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"302421193_0000000122433761\",\n" +
+            "      \"validateurTech\":\"302421193_0000000122433761\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   },\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/32835/AdaptivMath\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"Adaptiv\\u0027Math\",\n" +
+            "      \"idEditeur\":\"831042148_0000000000000000\",\n" +
+            "      \"nomEditeur\":\"EvidenceB\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/OAI_GarNinja_prod/gar/16068.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"MUL\",\n" +
+            "         \"nom\":\"ressources d\\u0027enseignement multimédias\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/self_assessment\",\n" +
+            "            \"nom\":\"autoévaluation\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-0082\",\n" +
+            "            \"nom\":\"préparation à l\\u0027examen\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-013\",\n" +
+            "            \"nom\":\"jeu éducatif\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-029\",\n" +
+            "            \"nom\":\"diagnostic\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-007\",\n" +
+            "            \"nom\":\"évaluation\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-017\",\n" +
+            "            \"nom\":\"outil\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027\",\n" +
+            "            \"nom\":\"activité pédagogique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/problem_statement\",\n" +
+            "            \"nom\":\"énoncé de problème\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/exercise\",\n" +
+            "            \"nom\":\"exercice\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         \n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013\",\n" +
+            "            \"nom\":\"CE2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011\",\n" +
+            "            \"nom\":\"CE1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010\",\n" +
+            "            \"nom\":\"CP\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-920\",\n" +
+            "            \"nom\":\"mathématiques (cycle 2)\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dQTcw\\u0026idEtab\\u003dMDU0MjIxMUs\\u003d\\u0026idRessource\\u003dark%3A%2F32835%2FAdaptivMath\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"831042148_0000000000000000\",\n" +
+            "      \"validateurTech\":\"831042148_0000000000000000\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   },\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/17787/Lalilo\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"Lalilo\",\n" +
+            "      \"idEditeur\":\"821893930_0000000000000000\",\n" +
+            "      \"nomEditeur\":\"Lalilo\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/VAprod/gar/15954.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"ACC\",\n" +
+            "         \"nom\":\"ressources d\\u0027entrąînement et d\\u0027accompagnement scolaire\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-013\",\n" +
+            "            \"nom\":\"jeu éducatif\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/questionnaire\",\n" +
+            "            \"nom\":\"questionnaire\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-029\",\n" +
+            "            \"nom\":\"diagnostic\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-027\",\n" +
+            "            \"nom\":\"activité pédagogique\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/exercise\",\n" +
+            "            \"nom\":\"exercice\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/lecture\",\n" +
+            "            \"nom\":\"cours / présentation\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         \n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-011\",\n" +
+            "            \"nom\":\"CE1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-010\",\n" +
+            "            \"nom\":\"CP\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-007\",\n" +
+            "            \"nom\":\"grande section\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-013\",\n" +
+            "            \"nom\":\"CE2\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-014\",\n" +
+            "            \"nom\":\"CM1\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-018\",\n" +
+            "            \"nom\":\"6e\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-015\",\n" +
+            "            \"nom\":\"CM2\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1333\",\n" +
+            "            \"nom\":\"français (discipline)\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dQTcw\\u0026idEtab\\u003dMDU0MjIxMUs\\u003d\\u0026idRessource\\u003dark%3A%2F17787%2FLalilo\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"821893930_0000000000000000\",\n" +
+            "      \"validateurTech\":\"821893930_0000000000000000\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   },\n" +
+            "   {\n" +
+            "      \"idRessource\":\"ark:/49250/edu/\",\n" +
+            "      \"idType\":\"ARK\",\n" +
+            "      \"nomRessource\":\"Philharmonie de Paris - Eduthèque\",\n" +
+            "      \"idEditeur\":\"391718970_0000000000000000\",\n" +
+            "      \"nomEditeur\":\"Cité de la musique - Philharmonie de Paris\",\n" +
+            "      \"urlVignette\":\"https://vignette.gar.education.fr/VAprod/gar/9090.png\",\n" +
+            "      \"typePresentation\":{\n" +
+            "         \"code\":\"MUL\",\n" +
+            "         \"nom\":\"ressources d\\u0027enseignement multimédias\"\n" +
+            "      },\n" +
+            "      \"typePedagogique\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-010-num-015\",\n" +
+            "            \"nom\":\"matériel de référence\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"typologieDocument\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-014\",\n" +
+            "            \"nom\":\"collection de documents\"\n" +
+            "         },\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-005-num-003\",\n" +
+            "            \"nom\":\"article\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"niveauEducatif\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-022-num-008\",\n" +
+            "            \"nom\":\"école élémentaire\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"domaineEnseignement\":[\n" +
+            "         {\n" +
+            "            \"uri\":\"http://data.education.fr/voc/scolomfr/concept/scolomfr-voc-015-num-1200\",\n" +
+            "            \"nom\":\"éducation musicale (discipline)\"\n" +
+            "         }\n" +
+            "      ],\n" +
+            "      \"urlAccesRessource\":\"https://idp-auth.gar.education.fr/domaineGar?idENT\\u003dQTcw\\u0026idEtab\\u003dMDU0MjIxMUs\\u003d\\u0026idRessource\\u003dark%3A%2F49250%2Fedu%2F\",\n" +
+            "      \"nomSourceEtiquetteGar\":\"Accessible via le Gestionnaire d’accès aux ressources (GAR)\",\n" +
+            "      \"distributeurTech\":\"391718970_0000000000000000\",\n" +
+            "      \"validateurTech\":\"391718970_0000000000000000\",\n" +
+            "      \"structure_name\":\"Formations\",\n" +
+            "      \"structure_uai\":\"9999990A\"\n" +
+            "   }\n" +
+            "]";
 }

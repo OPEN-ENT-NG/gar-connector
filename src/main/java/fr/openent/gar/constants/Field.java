@@ -11,6 +11,7 @@ public class Field {
     public static final String STRUCTURE_IDS = "structureIds";
     public static final String GROUP_NAME = "groupName";
     public static final String DEV_DASH_MODE = "dev-mode";
+    public static final String DEMO_STRUCTURE_1D = "gar-structures-demo1d";
     public static final String IDENT = "idEnt";
     public static final String UAI = "uai";
     public static final String DATA = "data";

@@ -177,8 +177,12 @@ public class GarController extends ControllerHelper {
                     if (config.getBoolean(Field.DEV_DASH_MODE, false)) {
                         JsonArray garResources = new JsonArray();
                         if (result.isRight()) garResources.addAll(result.right().getValue());
-                        garResources.addAll(new JsonArray(ExternalResourceExamples.GAR_EXTERNAL_RESOURCE_EXAMPLE));
-                        garResources.addAll(new JsonArray(ManualExamples.GAR_MANUAL_EXAMPLE));
+                        if (config.getJsonArray(Field.DEMO_STRUCTURE_1D, new JsonArray()).contains(structureId)) {
+                            garResources.addAll(new JsonArray(ExternalResourceExamples.GAR_EXTERNAL_RESOURCE_EXAMPLE_1D));
+                        } else {
+                            garResources.addAll(new JsonArray(ExternalResourceExamples.GAR_EXTERNAL_RESOURCE_EXAMPLE));
+                            garResources.addAll(new JsonArray(ManualExamples.GAR_MANUAL_EXAMPLE));
+                        }
 
                         JsonObject response = new JsonObject()
                                 .put("status", "ok")
