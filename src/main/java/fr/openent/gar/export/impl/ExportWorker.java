@@ -38,7 +38,7 @@ public class ExportWorker extends BusModBase implements Handler<Message<JsonObje
             if (entId != null) {
                 //default AAF
                 source = (source == null) ? Gar.AAF : source;
-                this.export = new ExportImpl(vertx, entId, source, s -> export = null);
+                this.export = new ExportImpl(vertx, entId, source, null, s -> export = null);
             } else {
                 export(0);
             }
@@ -50,7 +50,7 @@ public class ExportWorker extends BusModBase implements Handler<Message<JsonObje
         final List ids = config.getJsonArray("entid-sources", new JsonArray()).getList();
         if (index < ids.size()) {
             final List<String> idSource = StringUtils.split((String)ids.get(index), "-");
-            this.export = new ExportImpl(vertx, idSource.get(0), idSource.get(1), s -> export(index+1));
+            this.export = new ExportImpl(vertx, idSource.get(0), idSource.get(1), (idSource.size() > 2) ? idSource.get(2) : null, s -> export(index+1));
         } else {
             export = null;
         }

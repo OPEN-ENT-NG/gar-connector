@@ -3,6 +3,10 @@ package fr.openent.gar.constants;
 public class GarConstants {
     public static final String EXPORT_1D_SUFFIX = "-1D";
     public static final String DEFAULT_CONTROL_GROUP = "GAR";
+    public static final String RA_ASSIGNMENT = "a";
+    public static final String RA_PURGE = "p";
+    public static final String RA_ASSIGNMENT_PURGE = "ap";
+    public static final String RA_PURGE_ASSIGNMENT = "pa";
 
     public static final String STUDENT_ROOT = "men:GAR-ENT-Eleve";
     public static final String STUDENT_FILE_PARAM = "Eleve";
