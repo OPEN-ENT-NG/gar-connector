@@ -31,7 +31,7 @@
         <junitVersion>4.12</junitVersion>
         <powerMockVersion>2.0.2</powerMockVersion>
         <mockitoVersion>[2.0,3.0)</mockitoVersion>
-        <entCoreVersion>6.5-SNAPSHOT</entCoreVersion>
+        <entCoreVersion>6.6-SNAPSHOT</entCoreVersion>
         <gatlingHighchartsVersion>2.2.2</gatlingHighchartsVersion>
         <vertxCronTimerVersion>3.0-SNAPSHOT</vertxCronTimerVersion>
         <commonsCompress>1.18</commonsCompress>
