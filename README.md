@@ -1,6 +1,6 @@
 # À propos de l'application gar-connector
 * Licence : [AGPL v3](http://www.gnu.org/licenses/agpl.txt) - Copyright Régions Ile De France et Nouvelle Aquitaine, Département de Seine et Marne et ville de Paris
-* Développeur : CGI/ODE
+* Développeur : CGI, Edifice
 * Financeurs : Régions Ile De France et Nouvelle Aquitaine, Département de Seine et Marne et ville de Paris
 * Description : Module permettant de se connecter au GAR du Ministère et de réaliser les exports des utilisateurs de la plateforme voulue
 
