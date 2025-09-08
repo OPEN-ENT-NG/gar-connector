@@ -9,7 +9,7 @@
     </parent>
     <groupId>fr.openent</groupId>
     <artifactId>gar-connector</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0-zookeper-SNAPSHOT</version>
     <scm>
         <connection>scm:git:https://github.com/OPEN-ENT-NG/gar-connector.git</connection>
         <developerConnection>scm:git:https://github.com/OPEN-ENT-NG/gar-connector.git</developerConnection>
@@ -31,7 +31,7 @@
         <junitVersion>4.12</junitVersion>
         <powerMockVersion>2.0.2</powerMockVersion>
         <mockitoVersion>[2.0,3.0)</mockitoVersion>
-        <entCoreVersion>6.11-SNAPSHOT</entCoreVersion>
+        <entCoreVersion>6.10-zookeeper-SNAPSHOT</entCoreVersion>
         <gatlingHighchartsVersion>2.2.2</gatlingHighchartsVersion>
         <vertxCronTimerVersion>3.0-SNAPSHOT</vertxCronTimerVersion>
         <commonsCompress>1.18</commonsCompress>
@@ -55,12 +55,6 @@
             <groupId>org.entcore</groupId>
             <artifactId>tests</artifactId>
             <version>${entCoreVersion}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.gatling.highcharts</groupId>
-            <artifactId>gatling-charts-highcharts</artifactId>
-            <version>2.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -10,10 +10,15 @@ pipeline {
         }
     }
     stage('Build') {
-        steps {
-          checkout scm
-          sh './build.sh init clean install publish'
-        }
+      steps {
+        checkout scm
+        sh './build.sh init clean install publish'
       }
     }
+    stage('Build image') {
+      steps {
+        sh 'edifice image'
+      }
+    }
+  }
 }

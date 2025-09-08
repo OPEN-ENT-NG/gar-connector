@@ -93,7 +93,7 @@ public class SettingController extends ControllerHelper {
     @ResourceFilter(SuperAdminFilter.class)
     @ApiDoc("Test send mail")
     public void testMail(HttpServerRequest request) {
-        ExportImpl export = new ExportImpl(vertx);
+        ExportImpl export = new ExportImpl(vertx, "");
         export.sendReport("This is a test mail");
         ok(request);
     }

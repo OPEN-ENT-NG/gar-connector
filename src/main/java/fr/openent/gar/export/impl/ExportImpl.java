@@ -49,14 +49,18 @@ public class ExportImpl {
     private EventBus eb;
     private Vertx vertx;
     private final EmailSender emailSender;
+    private final String node;
 
-    public ExportImpl(Vertx vertx, String entId, String source, String purgeAssignment, Handler<String> handler) {
+    public ExportImpl(Vertx vertx, String entId, String source, String purgeAssignment,
+                      final String node,
+                      Handler<String> handler) {
         this.vertx = vertx;
         this.eb = vertx.eventBus();
         this.exportService = new ExportServiceImpl(CONFIG);
         this.tarService = new DefaultTarService();
         this.sftpGarConfig = CONFIG.getJsonObject("gar-sftp");
-        this.emailSender = new EmailFactory(vertx, CONFIG).getSender();
+        this.emailSender = EmailFactory.getInstance().getSender();
+        this.node = node;
 
         if (StringUtils.isEmpty(purgeAssignment)) {
             this.exportAndSend(entId, source, handler);
@@ -85,8 +89,9 @@ public class ExportImpl {
         }
     }
 
-    public ExportImpl(Vertx vertx) {
-        this.emailSender = new EmailFactory(vertx, CONFIG).getSender();
+    public ExportImpl(Vertx vertx, final String node) {
+        this.emailSender = EmailFactory.getInstance().getSender();
+        this.node = node;
     }
 
     private void exportAndSend(String entId, final String source, Handler<String> handler) {
@@ -130,9 +135,6 @@ public class ExportImpl {
                                 .put("passphrase", tenant.getString("passphrase"))
                                 .put("local-file", FileUtils.appendPath(exportArchivePath, archiveName))
                                 .put("dist-file", FileUtils.appendPath(tenant.getString("dir-dest"), archiveName));
-
-                        String n = (String) vertx.sharedData().getLocalMap("server").get("node");
-                        String node = (n != null) ? n : "";
 
                         eb.request(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
                                 handlerToAsyncHandler((Message<JsonObject> messageResponse) -> {
