@@ -1,0 +1,69 @@
+{
+  "name": "fr.openent~gar-connector",
+  {% if (inventory_hostname_short is defined and inventory_hostname_short == 'jobs') %}
+    "worker" : true,
+  {% endif %}
+  "config": {
+    "main" : "fr.openent.gar.Gar",
+    "port" : 8164,
+    "app-name" : "Mediacentre",
+    "app-address" : "/mediacentre",
+    "app-icon" : "Mediacentre-large",
+    "host": "https://{{ host }}",
+    "ssl" : true,
+    "event-collection": "gar-events",
+    "auto-redeploy": false,
+    "userbook-host": "https://{{ host }}",
+    "integration-mode": "{{ integration_mode|default('HTTP') }}",
+    "app-registry.port" : 8012,
+    {% if garDemoMode is defined %}
+      "dev-mode" : {{ garDemoMode }},
+      {% if garStructuresDemo1d is defined %}
+        "gar-structures-demo1d": {{ garStructuresDemo1d }},
+      {% endif %}
+    {% endif %}
+    "mode": "prod",
+    "entcore.port" : 8009,
+    "export-path": "{{ garExportPath | default('/srv/mediacentre/tmp') }}/data/",
+    "export-archive-path": "{{ garExportPath | default('/srv/mediacentre/tmp') }}/data-compress/",
+    {% if garRaAssignmentPolicy is defined %}"gar-ra-assignment-policy": {{ garRaAssignmentPolicy }},{% endif %}
+    {% if garIdEnt is defined %}
+      "id-ent" : "{{ garIdEnt }}",
+    {% else %}
+      "id-ent" : {{ garIdsEnt | default('{}') }},
+    {% endif %}
+    "control-group" : "RESP-AFFECT-GAR",
+    {% if (ha is defined and not(ha)) or (inventory_hostname_short is defined and inventory_hostname_short == 'jobs') %}
+      "export-cron": "{{ garExportCron|default('0 0 21 * * ? *')}}",
+    {% else %}
+      "export-cron": "0 0 21 * * ? 2099",
+    {% endif %}
+    {% if garXsdRecipientList is defined %}"xsd-recipient-list": {{ garXsdRecipientList }},{% endif %}
+    {% if garAcademyPrefix is defined %}"academy-prefix": "{{ garAcademyPrefix }}",{% endif %}
+    {% if garEntIdSources is defined %}"entid-sources": {{ garEntIdSources }},{% endif %}
+    "pagination-limit": {{ garPaginationLimit|default('100') }},
+    {% if garRessourcesHost is defined %}
+      "gar-ressources" : {
+        "host": "{{ garRessourcesHost }}",
+        "cert": "{{ garRessourcesCert }}",
+        "key": "{{ garRessourcesKey }}"
+      },
+    {% else %}
+      "gar-ressources" : {{ garRessources|default('{}') }},
+    {% endif %}
+    {% if garSftpHost is defined %}
+      "gar-sftp" : {
+        "host": "{{ garSftpHost }}",
+        "port": {{ garSftpPort }},
+        "username": "{{garSftpUsername }}",
+        "passphrase": "{{ garSftpPassphrase }}",
+        "sshkey": "{{ garSftpSshkey }}",
+        "dir-dest": "{{garSftpDirDest }}",
+        "known-hosts": "{{ garSftpKnownHost}}"
+      },
+    {% else %}
+      "gar-sftp" : {{ garSftp | default('{}') }},
+    {% endif %}
+    "max-nodes": 10000
+  }
+}
