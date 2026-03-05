@@ -3,6 +3,7 @@ package fr.openent.gar;
 import fr.openent.gar.controller.DevController;
 import fr.openent.gar.controller.GarController;
 import fr.openent.gar.controller.SettingController;
+import fr.openent.gar.controller.TaskController;
 import fr.openent.gar.export.ExportTask;
 import fr.wseduc.cron.CronTrigger;
 import io.vertx.core.DeploymentOptions;
@@ -87,8 +88,6 @@ public class Gar extends BaseServer {
         addController(new GarController(vertx, config));
         addController(new SettingController(eb));
 
-        final String exportCron = config.getString("export-cron", "");
-
         startGarFuture = vertx.deployVerticle("fr.openent.gar.export.impl.ExportWorker", new DeploymentOptions().setConfig(config)
             .setIsolationGroup("mediacentre_worker_group")
             .setIsolatedClasses(Arrays.asList("fr.openent.mediacentre.export.impl.*",
@@ -99,12 +98,20 @@ public class Gar extends BaseServer {
             addController(new DevController(vertx, config));
         }
 
-        try{
-            new CronTrigger(vertx, exportCron).schedule(new ExportTask(vertx.eventBus()));
-        }catch (ParseException e) {
-            log.fatal("An error occurred while setting cron task", e);
-            startGarFuture = Future.failedFuture(e);
+        final ExportTask exportTask = new ExportTask(vertx.eventBus());
+        // Enable export task to be triggered via API
+        addController(new TaskController(exportTask));
+        // Schedule export task from cron expression
+        final String exportCron = config.getString("export-cron", "");
+        if (exportCron != null && !exportCron.trim().isEmpty()) {
+            try{
+                new CronTrigger(vertx, exportCron).schedule(exportTask);
+            }catch (ParseException e) {
+                log.fatal("An error occurred while setting cron task", e);
+                startGarFuture = Future.failedFuture(e);
+            }
         }
+
         return startGarFuture;
     }
 
