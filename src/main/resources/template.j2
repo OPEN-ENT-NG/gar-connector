@@ -5,6 +5,10 @@
   {% endif %}
   "config": {
     "main" : "fr.openent.gar.Gar",
+    "probes": [
+      "org.entcore.common.http.health.Neo4jProbe",
+      "org.entcore.common.http.health.MongoProbe"
+    ],
     "port" : 8164,
     "app-name" : "Mediacentre",
     "app-address" : "/mediacentre",
