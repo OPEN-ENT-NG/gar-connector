@@ -39,6 +39,7 @@
     <entCoreLibsVersion>6.14-separation-SNAPSHOT</entCoreLibsVersion>
     <modMongoVersion>4.1-separation-SNAPSHOT</modMongoVersion>
     <modJsonSchemaValidatorVersion>2.1-SNAPSHOT</modJsonSchemaValidatorVersion>
+    <modSftpVersion>2.1-separation-SNAPSHOT</modSftpVersion>
   </properties>
   <dependencies>
     <dependency>
@@ -150,6 +151,13 @@
       <groupId>com.opendigitaleducation</groupId>
       <artifactId>mod-json-schema-validator</artifactId>
       <version>${modJsonSchemaValidatorVersion}</version>
+      <scope>runtime</scope>
+      <classifier>fat</classifier>
+    </dependency>
+    <dependency>
+      <groupId>fr.cgi</groupId>
+      <artifactId>mod-sftp</artifactId>
+      <version>${modSftpVersion}</version>
       <scope>runtime</scope>
       <classifier>fat</classifier>
     </dependency>
