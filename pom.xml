@@ -36,10 +36,10 @@
     <vertxCronTimerVersion>3.0-SNAPSHOT</vertxCronTimerVersion>
     <commonsCompress>1.18</commonsCompress>
     <reflectionsVersion>0.10.2</reflectionsVersion>
-    <entCoreLibsVersion>6.14-separation-SNAPSHOT</entCoreLibsVersion>
+    <entCoreLibsVersion>6.14-SNAPSHOT</entCoreLibsVersion>
     <modMongoVersion>4.1-SNAPSHOT</modMongoVersion>
     <modJsonSchemaValidatorVersion>2.1-SNAPSHOT</modJsonSchemaValidatorVersion>
-    <modSftpVersion>2.1-separation-SNAPSHOT</modSftpVersion>
+    <modSftpVersion>2.1-SNAPSHOT</modSftpVersion>
   </properties>
   <dependencies>
     <dependency>
