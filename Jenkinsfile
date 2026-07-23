@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Build image') {
       steps {
-        sh './edifice image --rebuild=false'
+        sh './edifice image --rebuild=false --extra-directories=/srv/mediacentre/tmp'
       }
     }
   }
