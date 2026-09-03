@@ -1,6 +1,6 @@
 {
   "name": "fr.openent~gar-connector",
-  {% if (inventory_hostname_short is defined and inventory_hostname_short == 'jobs') %}
+  {% if (garWorkerMode is defined and garWorkerMode == 'worker') %}
     "worker" : true,
   {% endif %}
   "config": {
@@ -37,11 +37,7 @@
       "id-ent" : {{ garIdsEnt | default('{}') }},
     {% endif %}
     "control-group" : "RESP-AFFECT-GAR",
-    {% if (ha is defined and not(ha)) or (inventory_hostname_short is defined and inventory_hostname_short == 'jobs') %}
-      "export-cron": "{{ garExportCron|default('0 0 21 * * ? *')}}",
-    {% else %}
-      "export-cron": "0 0 21 * * ? 2099",
-    {% endif %}
+    "export-cron": "{{ garExportCron|default(0 0 21 * * ? 2099 }}",
     {% if garXsdRecipientList is defined %}"xsd-recipient-list": {{ garXsdRecipientList }},{% endif %}
     {% if garAcademyPrefix is defined %}"academy-prefix": "{{ garAcademyPrefix }}",{% endif %}
     {% if garEntIdSources is defined %}"entid-sources": {{ garEntIdSources }},{% endif %}

@@ -136,7 +136,7 @@ public class ExportImpl {
                                 .put("local-file", FileUtils.appendPath(exportArchivePath, archiveName))
                                 .put("dist-file", FileUtils.appendPath(tenant.getString("dir-dest"), archiveName));
 
-                        eb.request(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L),
+                        eb.request(node + "sftp", sendTOGar, new DeliveryOptions().setSendTimeout(300 * 1000L).setLocalOnly(true),
                                 handlerToAsyncHandler((Message<JsonObject> messageResponse) -> {
                             if (messageResponse.body().containsKey("status") && messageResponse.body().getString("status").equals("error")) {
                                 log.error("[GAR@ExportImpl::exportAndSend] Send to GAR tar GZ by sftp but received an error : " + messageResponse.body().getString("message"));
@@ -147,7 +147,7 @@ public class ExportImpl {
                                 sendTOGar
                                         .put("local-file", FileUtils.appendPath(exportArchivePath, md5File))
                                         .put("dist-file", FileUtils.appendPath(tenant.getString("dir-dest"), md5File));
-                                eb.request(node + "sftp", sendTOGar, handlerToAsyncHandler(message1 -> {
+                                eb.request(node + "sftp", sendTOGar,  new DeliveryOptions().setLocalOnly(true), handlerToAsyncHandler(message1 -> {
                                     if (message1.body().containsKey("status") && message1.body().getString("status").equals("error")) {
                                         log.error("[GAR@ExportImpl::exportAndSend] FAILED Send to Md5 by sftp : " + messageResponse.body().getString("message"));
                                         handler.handle(messageResponse.body().getString("message"));
