@@ -37,7 +37,7 @@
       "id-ent" : {{ garIdsEnt | default('{}') }},
     {% endif %}
     "control-group" : "RESP-AFFECT-GAR",
-    "export-cron": "{{ garExportCron|default(0 0 21 * * ? 2099 }}",
+    "export-cron": "{{ garExportCron|default('0 0 21 * * ? 2099') }}",
     {% if garXsdRecipientList is defined %}"xsd-recipient-list": {{ garXsdRecipientList }},{% endif %}
     {% if garAcademyPrefix is defined %}"academy-prefix": "{{ garAcademyPrefix }}",{% endif %}
     {% if garEntIdSources is defined %}"entid-sources": {{ garEntIdSources }},{% endif %}
