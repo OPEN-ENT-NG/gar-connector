@@ -1,10 +1,12 @@
 import { Event } from "../index";
 import data from "../__mocks__/ressources";
 
-import http from "axios";
-import MockAdapter from "axios-mock-adapter";
+import { http } from "entcore-toolkit";
+import { mockHttpResponse } from "../../test-utils/httpMock";
 
-const httpMock = new MockAdapter(http);
+jest.mock("entcore-toolkit", () => Object.assign({}, (jest as any).requireActual("entcore-toolkit"), {
+  http: { get: jest.fn(), post: jest.fn(), put: jest.fn(), delete: jest.fn(), postFile: jest.fn(), putFile: jest.fn() }
+}));
 
 const resource = data.listeRessources.ressource[0];
 const event = new Event(resource);
@@ -43,14 +45,10 @@ describe("toJSON()", () => {
 
 describe("save(): Promise<any>", () => {
   it("should send data in body matching mocked event", async () => {
-    // Here is a little be tricky. You can't expect a body sent with a Post request. So here we
-    // mock the post data and return it to expect the response and compare the response body with the
-    // mocked event
-    httpMock
-      .onPost("/gar/event")
-      .reply(config => [200, JSON.parse(config.data)]);
+    (http.post as jest.Mock).mockResolvedValueOnce(mockHttpResponse(mockedEvent));
     const { data } = await event.save();
 
+    expect(http.post).toHaveBeenCalledWith("/gar/event", mockedEvent);
     expect(data).toEqual(mockedEvent);
   });
 });

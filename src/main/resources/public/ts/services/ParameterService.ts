@@ -1,5 +1,5 @@
 import {ng} from 'entcore'
-import http from 'axios';
+import { http } from 'entcore-toolkit';
 
 export interface StructureGar {
    uai: string;

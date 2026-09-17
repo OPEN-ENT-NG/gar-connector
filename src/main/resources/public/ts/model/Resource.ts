@@ -2,7 +2,7 @@ import { _ } from "entcore";
 import { Mix, Eventer } from "entcore-toolkit";
 import { Type, Types, Helper, Structure, Event } from "./index";
 import { TYPES } from "../definitions";
-import http from 'axios';
+import { http } from 'entcore-toolkit';
 
 export class Resource {
   idRessource: string;

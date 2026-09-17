@@ -1,5 +1,5 @@
 import { ng, routes } from "entcore";
-import http, {AxiosRequestConfig} from 'axios';
+import { http, HttpRequestConfig } from 'entcore-toolkit';
 import data from './model/__mocks__/ressources';
 import * as controllers from "./controllers";
 
@@ -16,7 +16,7 @@ routes.define(function($routeProvider) {
 });
 
 if (demo) {
-    http.get = async function(url: string, config?: AxiosRequestConfig) {
+    http.get = async function(url: string, config?: HttpRequestConfig) {
         return {
             status: 200,
             statusText: 'OK',

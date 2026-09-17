@@ -1,5 +1,5 @@
 import { angular } from "entcore";
-import http from "axios";
+import { http } from "entcore-toolkit";
 
 import { Resource, Type } from "./index";
 

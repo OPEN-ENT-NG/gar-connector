@@ -20,10 +20,9 @@
   "homepage": "",
   "dependencies": {
     "entcore": "dev",
-    "entcore-toolkit": "^1.0.1",
+    "entcore-toolkit": "2.0.0-dev.2",
     "@types/core-js": "0.9.42",
     "awesome-typescript-loader": "3.2.1",
-    "axios": "0.16.2",
     "core-js": "2.4.1",
     "gulp": "3.9.1",
     "gulp-clean": "^0.3.2",
@@ -37,7 +36,6 @@
   "devDependencies": {
     "@types/jest": "^22.2.0",
     "@types/jquery": "^2.0.34",
-    "axios-mock-adapter": "^1.14.1",
     "jest": "^22.4.2",
     "jest-environment-node": "^23.0.0-alpha.0",
     "moment": "^2.21.0",
